@@ -13,5 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
         // BICA 개발 공간 입니다.
         // TODO : 메인 액티비티 개발해야된다.
+
+        // Test 코드입니다.
     }
 }
