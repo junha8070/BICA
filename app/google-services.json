@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "639921390429",
+    "project_id": "bica-68326",
+    "storage_bucket": "bica-68326.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639921390429:android:304ea7ac77caf26a81deb4",
+        "android_client_info": {
+          "package_name": "com.example.bica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639921390429-i937uv25kgds5uu07p6qp6hufgaandm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiCPNcshU0Wsmu1JOz6vPidmfV72gQqmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639921390429-i937uv25kgds5uu07p6qp6hufgaandm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
