@@ -22,28 +22,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Fragment AddCard = new AddCardFragment().newInstance();
-        Fragment Card = new CardFragment().newInstance();
-        Fragment Favorite = new FavoriteFragment().newInstance();
-        Fragment MyCard = new MyCardFragment().newInstance();
-        Fragment Setting = new SettingFragment().newInstance();
-        mViewPager = findViewById(R.id.viewpager);
-        mViewPager.setOffscreenPageLimit(3);
-        tabLayout = findViewById(R.id.tab_layout);
-        viewPagerAdapter = new ViewPagerAdapter(this);
-        viewPagerAdapter.addFrag(Card);
-        viewPagerAdapter.addFrag(Favorite);
-        viewPagerAdapter.addFrag(AddCard);
-        viewPagerAdapter.addFrag(MyCard);
-        viewPagerAdapter.addFrag(Setting);
-        mViewPager.setAdapter(viewPagerAdapter);
-
-        new TabLayoutMediator(tabLayout, mViewPager, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setIcon(arr[position]);
-            }
-        }).attach();
+//        Fragment AddCard = new AddCardFragment().newInstance();
+//        Fragment Card = new CardFragment().newInstance();
+//        Fragment Favorite = new FavoriteFragment().newInstance();
+//        Fragment MyCard = new MyCardFragment().newInstance();
+//        Fragment Setting = new SettingFragment().newInstance();
+//        mViewPager = findViewById(R.id.viewpager);
+//        mViewPager.setOffscreenPageLimit(3);
+//        tabLayout = findViewById(R.id.tab_layout);
+//        viewPagerAdapter = new ViewPagerAdapter(this);
+//        viewPagerAdapter.addFrag(Card);
+//        viewPagerAdapter.addFrag(Favorite);
+//        viewPagerAdapter.addFrag(AddCard);
+//        viewPagerAdapter.addFrag(MyCard);
+//        viewPagerAdapter.addFrag(Setting);
+//        mViewPager.setAdapter(viewPagerAdapter);
+//
+//        new TabLayoutMediator(tabLayout, mViewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+//            @Override
+//            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+//                tab.setIcon(arr[position]);
+//            }
+//        }).attach();
 
     }
 }
