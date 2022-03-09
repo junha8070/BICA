@@ -12,5 +12,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // BICA 개발 공간 입니다.
+        // TODO : 메인 액티비티 개발해야된다.
     }
 }
