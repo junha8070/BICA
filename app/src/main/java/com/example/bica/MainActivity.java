@@ -2,6 +2,7 @@ package com.example.bica;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -47,12 +48,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (id) {
             case R.id.fab_main:
                 anim();
-                Toast.makeText(this, "main btn", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.fab_camera:
                 anim();
-                Toast.makeText(this, "camera btn", Toast.LENGTH_SHORT).show();
+                Intent startScanQR = new Intent(MainActivity.this, ScanQR.class);
+                startActivity(startScanQR);
                 break;
             case R.id.fab_nfc:
                 anim();
