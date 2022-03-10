@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class AddCardFragment extends Fragment {
-
     public AddCardFragment() {
         // Required empty public constructor
     }

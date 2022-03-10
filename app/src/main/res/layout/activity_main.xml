@@ -34,6 +34,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3번 탭" />
-
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/item4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4번 탭" />
+        <com.google.android.material.tabs.TabItem
+        android:id="@+id/item5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5번 탭" />
     </com.google.android.material.tabs.TabLayout>
 </LinearLayout>

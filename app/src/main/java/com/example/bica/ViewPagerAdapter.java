@@ -20,6 +20,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         mFragmentList.add(fragment);
     }
 
+
     @NonNull
     @Override
     public Fragment createFragment(int position) {
