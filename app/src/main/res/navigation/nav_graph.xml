@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/settingFragment">
+    <fragment
+        android:id="@+id/cardFragment"
+        android:name="com.example.bica.CardFragment"
+        android:label="fragment_card"
+        tools:layout="@layout/fragment_card" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.bica.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/myCardFragment"
+        android:name="com.example.bica.MyCardFragment"
+        android:label="fragment_my_card"
+        tools:layout="@layout/fragment_my_card" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.bica.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+</navigation>
