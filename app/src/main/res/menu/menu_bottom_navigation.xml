@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/listFragment"
+    <item android:id="@+id/cardFragment"
         android:icon="@drawable/ic_view_list_24"
         android:title="@string/Business_Card"
         android:enabled="true"/>
 
-    <item android:id="@+id/rankingFragment"
+    <item android:id="@+id/favoriteFragment"
         android:icon="@drawable/ic_star_24"
         android:title="@string/Favorite"
         android:enabled="true" />
@@ -14,12 +14,12 @@
         android:title=""
         android:enabled="false"/>
 
-    <item android:id="@+id/chatFragment"
+    <item android:id="@+id/myCardFragment"
         android:icon="@drawable/ic_person_24"
         android:title="@string/My_Card"
         android:enabled="true"/>
 
-    <item android:id="@+id/moreFragment"
+    <item android:id="@+id/settingFragment"
         android:icon="@drawable/ic_settings_24"
         android:title="@string/Setting"
         android:enabled="true"/>
