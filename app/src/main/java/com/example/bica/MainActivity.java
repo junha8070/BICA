@@ -4,46 +4,33 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
-
-    private ViewPager2 mViewPager;
-    private ViewPagerAdapter viewPagerAdapter;
-    private TabLayout tabLayout;
-    int[] arr = new int[]{R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Fragment AddCard = new AddCardFragment().newInstance();
-//        Fragment Card = new CardFragment().newInstance();
-//        Fragment Favorite = new FavoriteFragment().newInstance();
-//        Fragment MyCard = new MyCardFragment().newInstance();
-//        Fragment Setting = new SettingFragment().newInstance();
-//        mViewPager = findViewById(R.id.viewpager);
-//        mViewPager.setOffscreenPageLimit(3);
-//        tabLayout = findViewById(R.id.tab_layout);
-//        viewPagerAdapter = new ViewPagerAdapter(this);
-//        viewPagerAdapter.addFrag(Card);
-//        viewPagerAdapter.addFrag(Favorite);
-//        viewPagerAdapter.addFrag(AddCard);
-//        viewPagerAdapter.addFrag(MyCard);
-//        viewPagerAdapter.addFrag(Setting);
-//        mViewPager.setAdapter(viewPagerAdapter);
-//
-//        new TabLayoutMediator(tabLayout, mViewPager, new TabLayoutMediator.TabConfigurationStrategy() {
-//            @Override
-//            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-//                tab.setIcon(arr[position]);
-//            }
-//        }).attach();
+        // 하단 탭 각 프래그먼트와 연결하는 코드
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        NavController navController = navHostFragment.getNavController();
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
+        NavigationUI.setupWithNavController(bottomNav, navController);
 
     }
 }
