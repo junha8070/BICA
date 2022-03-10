@@ -5,4 +5,8 @@
     <string name="Login_Activity_Welcome_text">안녕하세요,\nBICA 입니다.\n로그인을 해주세요 :)</string>
     <string name="Find_ID">아이디 찾기</string>
     <string name="Find_PW">비밀번호 찾기</string>
+    <string name="Business_Card">명함</string>
+    <string name="Favorite">즐겨찾기</string>
+    <string name="My_Card">내 명함</string>
+    <string name="Setting">설정</string>
 </resources>
