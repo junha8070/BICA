@@ -1,5 +1,6 @@
 package com.example.bica;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -59,7 +60,6 @@ public class CardFragment extends Fragment {
 
         public CardFragmentRecyclerViewAdapter(){
 
-
         }
 
 
@@ -72,7 +72,13 @@ public class CardFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), ShowCardActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override

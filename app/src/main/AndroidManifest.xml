@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BICA" >
         <activity
+            android:name=".ShowCardActivity"
+            android:exported="false" />
+        <activity
             android:name=".ScanQR"
             android:exported="false"
             android:screenOrientation="fullSensor"
