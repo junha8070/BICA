@@ -19,6 +19,13 @@
             android:name=".ShowCardActivity"
             android:exported="false" />
         <activity
+            android:name=".member.FindIDActivity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".member.LoginActivity"/>
+        </activity>
+        <activity
             android:name=".ScanQR"
             android:exported="false"
             android:screenOrientation="fullSensor"
