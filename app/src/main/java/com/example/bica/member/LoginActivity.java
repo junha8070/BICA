@@ -33,6 +33,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        tv_Find_ID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startMain = new Intent(LoginActivity.this, FindIDActivity.class);
+                startActivity(startMain);
+            }
+        });
+
         // TODO: 로그인 구현
 
 
