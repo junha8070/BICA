@@ -3,12 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FavoriteFragment">
+    tools:context=".favorite.FavoriteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="favorite fragment" />
-
+        android:id="@+id/vp_favorite"/>
 </FrameLayout>

@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_card" />
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.bica.FavoriteFragment"
+        android:name="com.example.bica.favorite.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
     <fragment
