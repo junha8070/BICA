@@ -11,6 +11,17 @@ public class Card {
     String email;
     String address;
 
+    public Card(int image, String company, String depart, String name, String position, String phone, String email, String address){
+        this.image = image;
+        this.company = company;
+        this.depart = depart;
+        this.name = name;
+        this.position = position;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+    }
+
     public int getImage() {
         return image;
     }
