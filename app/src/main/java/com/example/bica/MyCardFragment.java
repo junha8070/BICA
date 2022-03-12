@@ -2,6 +2,7 @@ package com.example.bica;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
@@ -13,11 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class MyCardFragment extends Fragment {
+
+    Toolbar toolbar;
 
     public MyCardFragment() {
         // Required empty public constructor
     }
+
     public static MyCardFragment newInstance() {
         MyCardFragment fragment = new MyCardFragment();
         Bundle args = new Bundle();
@@ -36,28 +42,28 @@ public class MyCardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_card, container, false);
+
+        // Fragment에서 Toolbar 셋업
+        toolbar = view.findViewById(R.id.tb_mycard);
+        toolbar.inflateMenu(R.menu.menu_mycard); // 메뉴 어떤거 뜰건지 정하는 코드
+        toolbar.setOnMenuItemClickListener(item -> { // 메뉴 눌렀을때 뭐할지 정해주는 코드
+            switch (item.getItemId()) {
+                case R.id.mycard_share: {
+                    // navigate to settings screen
+                    Toast.makeText(getActivity(), "공유", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                case R.id.mycard_edit: {
+                    // save profile changes
+                    Toast.makeText(getActivity(), "수정", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        });
+
         return view;
-
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_mycard, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.mycard_share:
-                Toast.makeText(getActivity(), "공유", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.mycard_edit:
-                Toast.makeText(getActivity(), "편집", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }
