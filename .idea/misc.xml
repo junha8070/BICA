@@ -4,6 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.13958333333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/layout/activity_find_id.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/layout/fragment_card.xml" value="0.33" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/layout/fragment_card_info.xml" value="0.2689969604863222" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/layout/fragment_favorite.xml" value="0.14444444444444443" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/layout/fragment_my_card.xml" value="0.33" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/layout/item_card.xml" value="0.2689969604863222" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/layout/item_favorite_card.xml" value="0.33" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/layout/swip_mycard.xml" value="0.2689969604863222" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/menu/menu_card.xml" value="0.5446153846153846" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/BICA/app/src/main/res/menu/menu_mycard.xml" value="0.33" />
         <entry key="app/src/main/res/drawable-anydpi-v24/ic_search.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-anydpi-v24/ic_stat_name.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
