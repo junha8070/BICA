@@ -66,4 +66,33 @@ public class MyCardFragment extends Fragment {
         return view;
     }
 
+/*
+    public View onOptionsItemSelected(LayoutInflater inflater, ViewGroup container,
+                                      Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_my_card, container, false);
+
+        // Fragment에서 Toolbar 셋업
+        toolbar = view.findViewById(R.id.tb_mycard);
+        toolbar.inflateMenu(R.menu.menu_mycard); // 메뉴 어떤거 뜰건지 정하는 코드
+        toolbar.setOnMenuItemClickListener(item -> { // 메뉴 눌렀을때 뭐할지 정해주는 코드
+            switch (item.getItemId()) {
+                case R.id.mycard_share: {
+                    // navigate to settings screen
+                    Toast.makeText(getActivity(), "공유", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                case R.id.mycard_edit: {
+                    // save profile changes
+                    Toast.makeText(getActivity(), "수정", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        });
+
+        return view;
+    }
+*/
+
 }

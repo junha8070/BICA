@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MyCardFragment">
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
         android:background="@color/brown"
         android:backgroundTint="@color/brown"
@@ -160,13 +169,11 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="20dp">
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="전화번호"
-                android:textColor="@color/black"
-                android:textSize="17dp"/>
+                android:src="@drawable/baseline_call_24"/>
             <TextView
                 android:id="@+id/tv_PhoneNum"
                 android:layout_width="wrap_content"
@@ -174,7 +181,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/PhoneNum"
                 android:textColor="@color/black"
-                android:paddingLeft="10dp"
+                android:layout_marginLeft="10dp"
                 android:textSize="17dp"/>
 
         </LinearLayout>
@@ -188,13 +195,11 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="20dp">
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="이메일"
-                android:textColor="@color/black"
-                android:textSize="17dp"/>
+                android:src="@drawable/baseline_email_24"/>
             <TextView
                 android:id="@+id/tv_User_Email"
                 android:layout_width="wrap_content"
@@ -202,7 +207,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/User_Email"
                 android:textColor="@color/black"
-                android:paddingLeft="10dp"
+                android:layout_marginLeft="10dp"
                 android:textSize="17dp"/>
 
         </LinearLayout>
@@ -216,13 +221,11 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="20dp">
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="주소"
-                android:textColor="@color/black"
-                android:textSize="17dp"/>
+                android:src="@drawable/baseline_place_24"/>
             <TextView
                 android:id="@+id/tv_Company_Address"
                 android:layout_width="wrap_content"
@@ -230,7 +233,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/Company_Address"
                 android:textColor="@color/black"
-                android:paddingLeft="10dp"
+                android:layout_marginLeft="10dp"
                 android:textSize="17dp"/>
 
         </LinearLayout>
@@ -243,15 +246,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="20dp"
-            android:layout_marginBottom="60dp">
-            <TextView
+            android:padding="20dp">
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="메모"
-                android:textColor="@color/black"
-                android:textSize="17dp"/>
+                android:src="@drawable/baseline_note_alt_24"/>
             <TextView
                 android:id="@+id/tv_Memo"
                 android:layout_width="wrap_content"
@@ -259,7 +259,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/Memo"
                 android:textColor="@color/black"
-                android:paddingLeft="10dp"
+                android:layout_marginLeft="10dp"
                 android:textSize="17dp"/>
 
         </LinearLayout>
@@ -267,5 +267,5 @@
         </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
