@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="@string/FindID_Activity_guide_name"
+                android:text="@string/Guide_name"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
 
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="@string/FindID_Activity_guide_phonenum"
+                android:text="@string/Guide_phonenum"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
 
