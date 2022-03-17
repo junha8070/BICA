@@ -41,6 +41,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        tv_Find_PW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startMain = new Intent(LoginActivity.this, FindPWActivity.class);
+                startActivity(startMain);
+            }
+        });
+
         // TODO: 로그인 구현
 
 

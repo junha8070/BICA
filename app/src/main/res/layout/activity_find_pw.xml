@@ -4,18 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".member.FindIDActivity">
+    tools:context=".member.FindPWActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:background="@color/brown"
         android:backgroundTint="@color/brown"
-        android:id="@+id/tb_findID"
+        android:id="@+id/findPW"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Find_ID"
+            android:text="@string/Find_PW"
             android:textColor="@color/black"
             android:textSize="20dp"/>
     </androidx.appcompat.widget.Toolbar>
@@ -85,6 +85,47 @@
 
                 <Button
                     android:id="@+id/phonenum_check"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/brown"
+                    android:text="@string/Check"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tv_guide_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/Guide_Email"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/user_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:hint="@string/User_Email"
+                    android:inputType="textEmailAddress"
+                    android:padding="15dp"/>
+
+                <Button
+                    android:id="@+id/email_check"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
