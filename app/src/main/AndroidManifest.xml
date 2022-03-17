@@ -26,6 +26,13 @@
                 android:value=".member.LoginActivity"/>
         </activity>
         <activity
+            android:name=".member.FindPWActivity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".member.LoginActivity"/>
+        </activity>
+        <activity
             android:name=".ScanQR"
             android:exported="false"
             android:screenOrientation="fullSensor"
