@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:hint="@string/User_Name"
+                android:hint="@string/Card_Username"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:hint="@string/User_Email"
+                android:hint="@string/Card_email"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:hint="@string/PhoneNum"
+                android:hint="@string/Card_Phonenum"
                 android:inputType="phone"
                 android:maxLength="13" />
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:hint="@string/Company_Name"
-                android:inputType="text"/>
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/company_address"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:hint="@string/Company_Address"
-                android:inputType="textPostalAddress"/>
+                android:inputType="textPostalAddress" />
 
             <EditText
                 android:id="@+id/occupation"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:hint="@string/Occupation"
-                android:inputType="text"/>
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/teamname"
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:hint="@string/TeamName"
-                android:inputType="text"/>
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/position"
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:hint="@string/Position"
-                android:inputType="text"/>
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/groupname"
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:hint="@string/GroupName"
-                android:inputType="text"/>
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/memo"
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:hint="@string/Memo"
-                android:inputType="text"/>
+                android:inputType="text" />
 
         </LinearLayout>
 
