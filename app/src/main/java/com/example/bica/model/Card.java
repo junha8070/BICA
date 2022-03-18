@@ -10,8 +10,10 @@ public class Card {
     String phone;
     String email;
     String address;
+    String occupation;
+    String memo;
 
-    public Card(int image, String company, String depart, String name, String position, String phone, String email, String address){
+    public Card(int image, String company, String depart, String name, String position, String phone, String email, String address, String occupation, String memo){
         this.image = image;
         this.company = company;
         this.depart = depart;
@@ -20,6 +22,8 @@ public class Card {
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.occupation = occupation;
+        this.memo = memo;
     }
 
     public int getImage() {
@@ -84,5 +88,21 @@ public class Card {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 }
