@@ -38,6 +38,7 @@ dependencies {
 
     // QR코드 라이브러리
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
+    implementation 'com.google.zxing:core:3.4.1'
 
     // Viewpager2
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
