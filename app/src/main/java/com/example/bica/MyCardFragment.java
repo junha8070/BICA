@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -19,11 +20,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bica.model.Card;
 import com.example.bica.model.PreferenceManager;
 import com.example.bica.nfc.Nfc_Write_Activity;
 import com.example.bica.qr.QR_Make_Activity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -38,6 +50,7 @@ import java.util.Date;
 
 public class MyCardFragment extends Fragment {
 
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
     Toolbar toolbar;        // 툴바
     AlertDialog.Builder builder;        //다이얼로그 창
 //    private int WRITE_REQUEST_CODE = 43;
@@ -70,9 +83,39 @@ public class MyCardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_card, container, false);
+        TextView tv_mycardname = view.findViewById(R.id.tv_mycardname);
+        TextView tv_myPosition = view.findViewById(R.id.tv_myPosition);
+        TextView tv_myOccupation = view.findViewById(R.id.tv_myOccupation);
+        TextView tv_myTeamName = view.findViewById(R.id.tv_myTeamName);
+        TextView tv_myCompany_Name = view.findViewById(R.id.tv_myCompany_Name);
+        TextView tv_myGroupName = view.findViewById(R.id.tv_myGroupName);
+        TextView tv_myPhoneNum = view.findViewById(R.id.tv_myPhoneNum);
+        TextView tv_my_Email = view.findViewById(R.id.tv_my_Email);
+        TextView tv_myCompany_Address = view.findViewById(R.id.tv_myCompany_Address);
+        TextView tv_myMemo = view.findViewById(R.id.tv_myMemo);
+        System.out.println("test "+ auth.getCurrentUser().getEmail());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("cards").document(auth.getCurrentUser().getEmail()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Card card = documentSnapshot.toObject(Card.class);
 
+                        tv_mycardname.setText(card.getName());
+                        tv_myPosition .setText(card.getPosition());
+                        tv_myOccupation .setText(card.getOccupation());
+                        tv_myTeamName .setText(card.getDepart());
+                        tv_myCompany_Name .setText(card.getCompany());
+
+                        tv_myPhoneNum .setText(card.getPhone());
+                        tv_my_Email .setText(card.getEmail());
+                        tv_myCompany_Address .setText(card.getAddress());
+                        tv_myMemo .setText(card.getMemo());
+                        System.out.println("test "+ card.getAddress());
+                    }
+                });
         // Fragment에서 Toolbar 셋업
-        toolbar = view.findViewById(R.id.tb_mycard);
+        toolbar = view.findViewById(R.id.tb_mycard1);
         toolbar.inflateMenu(R.menu.menu_mycard); // 메뉴 어떤거 뜰건지 정하는 코드
         toolbar.setOnMenuItemClickListener(item -> { // 메뉴 눌렀을때 뭐할지 정해주는 코드
             switch (item.getItemId()) {

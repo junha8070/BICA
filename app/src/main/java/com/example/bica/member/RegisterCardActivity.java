@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bica.MainActivity;
 import com.example.bica.R;
+import com.example.bica.model.Card;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -69,6 +70,18 @@ public class RegisterCardActivity extends AppCompatActivity {
                     if(memo.isEmpty()){
                         memo = "";
                     }
+
+                    Card cardAccount = new Card();
+                    cardAccount.setEmail(name);
+                    cardAccount.setEmail(email);
+                    cardAccount.setEmail(phone);
+                    cardAccount.setEmail(company);
+                    cardAccount.setEmail(address);
+                    cardAccount.setEmail(occupation);
+                    cardAccount.setEmail(depart);
+                    cardAccount.setEmail(position);
+                    cardAccount.setEmail(groupname);
+                    cardAccount.setEmail(memo);
 
                     Map<Object, String> card = new HashMap<>();
                     card.put("name", name);

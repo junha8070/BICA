@@ -25,6 +25,9 @@ public class Card {
         this.occupation = occupation;
         this.memo = memo;
     }
+    public Card(){
+
+    }
 
     public int getImage() {
         return image;

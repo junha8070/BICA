@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     HashMap<Object, String> hashMap = new HashMap<>();
 
                                     hashMap.put("uid",uid);
-                                    hashMap.put("email", email);
+                                    hashMap.put("email", email.replace(".", ">"));
                                     hashMap.put("name", name);
                                     hashMap.put("phonenum", phonenum);
 
