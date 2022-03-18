@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
-    private FloatingActionButton fab_main, fab_camera, fab_nfc;
+    private FloatingActionButton fab_main, fab_camera, fab_nfc, fab_qrcode;
 //    final int PERMISSIONS_REQUEST_CODE = 1;
 
 //    PowerManager powerManager;
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab_main.setOnClickListener(this);
         fab_camera.setOnClickListener(this);
         fab_nfc.setOnClickListener(this);
-
+        fab_qrcode.setOnClickListener(this);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 anim();
                 break;
 
-            case R.id.fab_camera:
+            case R.id.fab_qrcode:
                 anim();
                 Intent startScanQR = new Intent(MainActivity.this, ScanQR.class);
                 startActivity(startScanQR);
@@ -113,6 +113,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 anim();
                 Intent startNfcRead = new Intent(MainActivity.this, Nfc_Read_Activity.class);
                 startActivity(startNfcRead);
+                break;
+            case R.id.fab_camera:
+                anim();
+                Intent startOCR = new Intent(MainActivity.this, OCR_Activity.class);
+                startActivity(startOCR);
                 break;
 
             default:
@@ -126,12 +131,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (isFabOpen) {
             fab_camera.startAnimation(fab_close);
             fab_nfc.startAnimation(fab_close);
+            fab_qrcode.startAnimation(fab_close);
             fab_camera.setClickable(false);
             fab_nfc.setClickable(false);
+            fab_qrcode.setClickable(false);
             isFabOpen = false;
         } else {
             fab_camera.startAnimation(fab_open);
             fab_nfc.startAnimation(fab_open);
+            fab_qrcode.startAnimation(fab_open);
+            fab_qrcode.setClickable(true);
             fab_camera.setClickable(true);
             fab_nfc.setClickable(true);
             isFabOpen = true;
@@ -148,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab_main = findViewById(R.id.fab_main);
         fab_camera = findViewById(R.id.fab_camera);
         fab_nfc = findViewById(R.id.fab_nfc);
+        fab_qrcode = findViewById(R.id.fab_qrcode);
     }
 
 //    private void requestPermission() {

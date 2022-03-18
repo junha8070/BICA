@@ -3,42 +3,40 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/baseline_call_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/baseline_email_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/baseline_note_alt_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/baseline_person_18.xml" value="0.1" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/baseline_place_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/ic_bica_background.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/ic_person_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/ic_search_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/ic_settings_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/ic_share_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/ic_star_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/ic_swap_vert_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/ic_view_list_24.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/drawable/menu_selector_color.xml" value="0.1755" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/layout/fragment_card.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/layout/fragment_my_card.xml" value="0.264" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/menu/menu_card.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/menu/menu_mycard.xml" value="0.25364583333333335" />
-        <entry key="app/src/main/res/drawable/menu_selector_color.xml" value="0.3045" />
-        <entry key="app/src/main/res/layout/activity_initial.xml" value="0.3962962962962963" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.5911458333333334" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.17407407407407408" />
-        <entry key="app/src/main/res/layout/activity_model_card.xml" value="0.22395833333333334" />
-        <entry key="app/src/main/res/layout/activity_qr_reader.xml" value="0.42864583333333334" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.5911458333333334" />
-        <entry key="app/src/main/res/layout/activity_register_card.xml" value="0.42864583333333334" />
-        <entry key="app/src/main/res/layout/activity_scanqr.xml" value="0.42864583333333334" />
-        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.17407407407407408" />
-        <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.1388888888888889" />
-        <entry key="app/src/main/res/layout/fragment_my_card.xml" value="0.1388888888888889" />
-        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/item_card.xml" value="0.22395833333333334" />
-        <entry key="app/src/main/res/layout/item_favorite_card.xml" value="0.20379638671875" />
-        <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.24858757062146894" />
-        <entry key="app/src/main/res/menu/menu_mycard.xml" value="0.34322916666666664" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.13958333333333334" />
+        <entry key="app/src/main/res/drawable-anydpi-v24/ic_search.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-anydpi-v24/ic_stat_name.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-hdpi/ic_qrcode.xml" value="0.124" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_bica_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_menu_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_person_24.xml" value="0.207" />
+        <entry key="app/src/main/res/drawable/ic_search_24.xml" value="0.11" />
+        <entry key="app/src/main/res/drawable/ic_settings_24.xml" value="0.207" />
+        <entry key="app/src/main/res/drawable/ic_share_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_star_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_swap_vert_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_view_list_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/menu_selector_color.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_add_card.xml" value="0.15162455240885409" />
+        <entry key="app/src/main/res/layout/activity_camera.xml" value="0.10572916666666667" />
+        <entry key="app/src/main/res/layout/activity_initial.xml" value="0.5770833333333333" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.24129333496093752" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.28567199707031254" />
+        <entry key="app/src/main/res/layout/activity_nfc_write.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_ocr.xml" value="0.1298095703125" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.21229095458984376" />
+        <entry key="app/src/main/res/layout/activity_register_card.xml" value="0.2109375" />
+        <entry key="app/src/main/res/layout/activity_scanqr.xml" value="0.203125" />
+        <entry key="app/src/main/res/layout/activity_show_card.xml" value="0.11302083333333333" />
+        <entry key="app/src/main/res/layout/fragment_add_card.xml" value="0.23358449946178686" />
+        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.6035858154296876" />
+        <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_my_card.xml" value="0.2330352783203125" />
+        <entry key="app/src/main/res/layout/item_card.xml" value="0.4844936024058949" />
+        <entry key="app/src/main/res/layout/item_favorite_card.xml" value="0.7109591172818416" />
+        <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.1" />
       </map>
     </option>
   </component>
@@ -47,5 +45,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>
