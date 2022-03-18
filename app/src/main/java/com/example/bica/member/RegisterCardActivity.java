@@ -26,7 +26,7 @@ public class RegisterCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_card);
 
         init();
-
+//ToDo: 명함 DB올리기
         btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

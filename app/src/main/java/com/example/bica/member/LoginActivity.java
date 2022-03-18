@@ -11,12 +11,15 @@ import android.widget.TextView;
 
 import com.example.bica.MainActivity;
 import com.example.bica.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     Button btn_login;
     EditText edt_ID,edt_PW;
     TextView tv_Find_ID, tv_Find_PW;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +44,26 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        tv_Find_PW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startMain = new Intent(LoginActivity.this, FindPWActivity.class);
+                startActivity(startMain);
+            }
+        });
+
         // TODO: 로그인 구현
+        mAuth = FirebaseAuth.getInstance();
 
+    }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            currentUser.reload();
+        }
     }
 
     public void init(){
