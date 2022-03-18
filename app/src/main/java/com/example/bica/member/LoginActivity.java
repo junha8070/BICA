@@ -21,9 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btn_login;
-    EditText edt_ID,edt_PW;
-    TextView tv_Find_ID, tv_Find_PW;
+    private Button btn_login;
+    private EditText edt_ID, edt_PW;
+    private TextView tv_Find_ID, tv_Find_PW;
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -31,8 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // 요소 초기화
         init();
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();  // 파이어베이스 auth 인스턴스 생성
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,23 +42,40 @@ public class LoginActivity extends AppCompatActivity {
                 String id = edt_ID.getText().toString().trim();
                 String pw = edt_PW.getText().toString().trim();
 
+                // 아이디 입력 안했으면
+                if (id.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                // 아이디가 이메일 형식을 벗어낫을경우
+                if (!id.contains("@")) {
+                    Toast.makeText(LoginActivity.this, "아이디를 이메일 형식으로 작성해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                // 비밀번호 입력 안했으면
+                if (pw.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // 위 조건 다 통과시 로그인 수행
                 firebaseAuth.signInWithEmailAndPassword(id, pw)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                                     Intent startMain = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(startMain);
-                                }
-                                else{
-                                    Toast.makeText(LoginActivity.this, "로그인 오류", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "아이디나 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             }
         });
 
+        // 아이디 찾기
         tv_Find_ID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // 비밀번호 찾기
         tv_Find_PW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,10 +92,10 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(startMain);
             }
         });
-
     }
 
-    public void init(){
+    // 요소 초기화
+    public void init() {
         edt_ID = findViewById(R.id.edt_id);
         edt_PW = findViewById(R.id.edt_pw);
         tv_Find_ID = findViewById(R.id.tv_Find_ID);
