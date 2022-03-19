@@ -49,10 +49,10 @@ public class FavoriteFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
 
         models = new ArrayList<>();
-        models.add(new Card(R.drawable.bica, "강남대학교", "EASY", "황준하", "개발자", "010-8070-1071", "junha5021301@kakao.com", "경기도 용인시 기흥구 구갈동", "",""));
-        models.add(new Card(R.drawable.bica, "강남대학교", "WWW", "황진영", "개발자", "010-2850-3725", "510cara@naver.com", "경기도 용인시 기흥구 구갈동","", ""));
-        models.add(new Card(R.drawable.bica, "강남대학교", "KIS", "강보현", "개발자", "010-4101-5869", "bhyn9785@naver.com", "경기도 안양시 범계역 2번출구","", ""));
-        models.add(new Card(R.drawable.bica, "강남대학교", "WWW", "김다은", "개발자", "010-6607-7935", "ekqhddl@naver.com", "인천광역시 미추홀구","", ""));
+//        models.add(new Card(R.drawable.bica, "강남대학교", "EASY", "황준하", "개발자", "010-8070-1071", "junha5021301@kakao.com", "경기도 용인시 기흥구 구갈동", "",""));
+//        models.add(new Card(R.drawable.bica, "강남대학교", "WWW", "황진영", "개발자", "010-2850-3725", "510cara@naver.com", "경기도 용인시 기흥구 구갈동","", ""));
+//        models.add(new Card(R.drawable.bica, "강남대학교", "KIS", "강보현", "개발자", "010-4101-5869", "bhyn9785@naver.com", "경기도 안양시 범계역 2번출구","", ""));
+//        models.add(new Card(R.drawable.bica, "강남대학교", "WWW", "김다은", "개발자", "010-6607-7935", "ekqhddl@naver.com", "인천광역시 미추홀구","", ""));
 
         adapter = new FavoriteAdapter(models, this.viewPager2);
 
