@@ -16,16 +16,16 @@ import android.widget.Toast;
 
 import java.util.Objects;
 
-public class CardInfoFragment extends Fragment {
+public class MyCardEditFragment extends Fragment {
 
     Toolbar toolbar;
 
-    public CardInfoFragment() {
+    public MyCardEditFragment() {
         // Required empty public constructor
     }
 
-    public static CardInfoFragment newInstance() {
-        CardInfoFragment fragment = new CardInfoFragment();
+    public static MyCardEditFragment newInstance() {
+        MyCardEditFragment fragment = new MyCardEditFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -41,21 +41,16 @@ public class CardInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_card_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_mycard, container, false);
 
         // Fragment에서 Toolbar 셋업
-        toolbar = view.findViewById(R.id.tb_mycard2);
-        toolbar.inflateMenu(R.menu.menu_card); // 메뉴 어떤거 뜰건지 정하는 코드
+        toolbar = view.findViewById(R.id.tb_mycard3);
+        toolbar.inflateMenu(R.menu.menu_edit_mycard); // 메뉴 어떤거 뜰건지 정하는 코드
         toolbar.setOnMenuItemClickListener(item -> { // 메뉴 눌렀을때 뭐할지 정해주는 코드
             switch (item.getItemId()) {
-                case R.id.card_share: {
+                case R.id.commit: {
                     // navigate to settings screen
-                    Toast.makeText(getActivity(), "공유", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                case R.id.card_del: {
-                    // save profile changes
-                    Toast.makeText(getActivity(), "삭제", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "완료", Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 default:

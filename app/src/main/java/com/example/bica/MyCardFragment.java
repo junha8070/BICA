@@ -1,10 +1,15 @@
 package com.example.bica;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,14 +17,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +57,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MyCardFragment extends Fragment {
-
+    private TextView tv_mycardname,tv_myPosition,tv_myOccupation,tv_myTeamName,tv_myCompany_Name,tv_myGroupName,tv_myPhoneNum,tv_my_Email,tv_myCompany_Address,tv_myMemo,tv_Pnum;
+    private View view;
+    private String Pnum;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     Toolbar toolbar;        // 툴바
     AlertDialog.Builder builder;        //다이얼로그 창
@@ -82,17 +92,19 @@ public class MyCardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_card, container, false);
-        TextView tv_mycardname = view.findViewById(R.id.tv_mycardname);
-        TextView tv_myPosition = view.findViewById(R.id.tv_myPosition);
-        TextView tv_myOccupation = view.findViewById(R.id.tv_myOccupation);
-        TextView tv_myTeamName = view.findViewById(R.id.tv_myTeamName);
-        TextView tv_myCompany_Name = view.findViewById(R.id.tv_myCompany_Name);
-        TextView tv_myGroupName = view.findViewById(R.id.tv_myGroupName);
-        TextView tv_myPhoneNum = view.findViewById(R.id.tv_myPhoneNum);
-        TextView tv_my_Email = view.findViewById(R.id.tv_my_Email);
-        TextView tv_myCompany_Address = view.findViewById(R.id.tv_myCompany_Address);
-        TextView tv_myMemo = view.findViewById(R.id.tv_myMemo);
+        view = inflater.inflate(R.layout.fragment_my_card, container, false);
+        tv_mycardname = view.findViewById(R.id.tv_mycardname);
+        tv_myPosition = view.findViewById(R.id.tv_myPosition);
+        tv_myOccupation = view.findViewById(R.id.tv_myOccupation);
+        tv_myTeamName = view.findViewById(R.id.tv_myTeamName);
+        tv_myCompany_Name = view.findViewById(R.id.tv_myCompany_Name);
+        tv_myGroupName = view.findViewById(R.id.tv_myGroupName);
+        tv_myPhoneNum = view.findViewById(R.id.tv_myPhoneNum);
+        tv_my_Email = view.findViewById(R.id.tv_my_Email);
+        tv_myCompany_Address = view.findViewById(R.id.tv_myCompany_Address);
+        tv_myMemo = view.findViewById(R.id.tv_myMemo);
+
+        tv_Pnum = view.findViewById(R.id.tv_Pnum);
         System.out.println("test "+ auth.getCurrentUser().getEmail());
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("cards").document(auth.getCurrentUser().getEmail()).get()
@@ -106,8 +118,9 @@ public class MyCardFragment extends Fragment {
                         tv_myOccupation .setText(card.getOccupation());
                         tv_myTeamName .setText(card.getDepart());
                         tv_myCompany_Name .setText(card.getCompany());
-
+                        //그룹이름
                         tv_myPhoneNum .setText(card.getPhone());
+                        Pnum=card.getPhone();
                         tv_my_Email .setText(card.getEmail());
                         tv_myCompany_Address .setText(card.getAddress());
                         tv_myMemo .setText(card.getMemo());
@@ -137,6 +150,43 @@ public class MyCardFragment extends Fragment {
                 }
                 default:
                     return super.onOptionsItemSelected(item);
+            }
+        });
+
+        tv_myPhoneNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final View popupView = getLayoutInflater().inflate(R.layout.fragment_card_call, null);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setView(popupView);
+
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                TextView tv_Pnum = alertDialog.findViewById(R.id.tv_Pnum);
+                tv_Pnum.setText(tv_myPhoneNum.getText());
+
+                Button pnum_call = popupView.findViewById(R.id.pnum_call);
+                pnum_call.setOnClickListener(new Button.OnClickListener(){
+                    public void onClick(View v){
+                        String tel = "tel:" + Pnum;
+                        startActivity(new Intent("android.intent.action.CALL", Uri.parse(tel)));
+                    }
+                });
+//취소버튼
+                Button pnum_save = popupView.findViewById(R.id.pnum_save);
+                pnum_save.setOnClickListener(new Button.OnClickListener(){
+                    public void onClick(View v){
+                        // Creates a new Intent to insert a contact
+                        Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+                        // Sets the MIME type to match the Contacts Provider
+                        intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                        intent.putExtra(ContactsContract.Intents.Insert.PHONE, Pnum);
+                        startActivity(intent);
+                    }
+                });
             }
         });
 
@@ -273,5 +323,6 @@ public class MyCardFragment extends Fragment {
 //        pfd.close();
 //
 //    }
+
 
 }

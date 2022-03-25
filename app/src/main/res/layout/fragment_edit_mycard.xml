@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".MyCardFragment">
+    tools:context=".MyCardEditFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -18,7 +18,7 @@
         <androidx.appcompat.widget.Toolbar
             android:background="@color/brown"
             android:backgroundTint="@color/brown"
-            android:id="@+id/tb_mycard1"
+            android:id="@+id/tb_mycard3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </androidx.appcompat.widget.Toolbar>
@@ -44,7 +44,7 @@
                     android:gravity="center_vertical"
                     android:src="@drawable/cardpic"/>
 
-        </LinearLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -75,20 +75,20 @@
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical">
-                                <TextView
+                                <EditText
+                                    android:hint="@string/User_Name"
                                     android:id="@+id/tv_mycardname"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
-                                    android:text="@string/User_Name"
                                     android:textColor="@color/black"
                                     android:textSize="30dp" />
-                                <TextView
+                                <EditText
+                                    android:hint="@string/Position"
                                     android:id="@+id/tv_myPosition"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
-                                    android:text="@string/Position"
                                     android:textColor="@color/black"
                                     android:textSize="17dp"
                                     android:paddingLeft="5dp"/>
@@ -100,12 +100,12 @@
                                 android:gravity="center_vertical"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginLeft="6dp">
-                                <TextView
+                                <EditText
+                                    android:hint="@string/Occupation"
                                     android:id="@+id/tv_myOccupation"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
-                                    android:text="@string/Occupation"
                                     android:textColor="@color/black"
                                     android:textSize="17dp"/>
                                 <View
@@ -113,30 +113,30 @@
                                     android:layout_width="2px"
                                     android:layout_height="match_parent"
                                     android:background="@color/black"/>
-                                <TextView
+                                <EditText
+                                    android:hint="@string/TeamName"
                                     android:id="@+id/tv_myTeamName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
-                                    android:text="@string/TeamName"
                                     android:textColor="@color/black"
                                     android:textSize="17dp"/>
                             </LinearLayout>
-                            <TextView
+                            <EditText
+                                android:hint="@string/Company_Name"
                                 android:id="@+id/tv_myCompany_Name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="@string/Company_Name"
                                 android:textColor="@color/black"
                                 android:layout_marginLeft="6dp"
                                 android:textSize="17dp"/>
-                            <TextView
+                            <EditText
+                                android:hint="@string/GroupName"
                                 android:id="@+id/tv_myGroupName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="@string/GroupName"
                                 android:textColor="@color/black"
                                 android:layout_marginLeft="6dp"
                                 android:textSize="17dp"/>
@@ -156,7 +156,7 @@
                                 android:layout_height="50dp"
                                 android:src="@drawable/bica_portrait" />
 
-            </LinearLayout>
+                        </LinearLayout>
 
                     </LinearLayout>
                     <View
@@ -174,12 +174,12 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:src="@drawable/baseline_call_24"/>
-                        <TextView
+                        <EditText
+                            android:hint="@string/PhoneNum"
                             android:id="@+id/tv_myPhoneNum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:text="@string/PhoneNum"
                             android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
                             android:textSize="17dp"/>
@@ -200,12 +200,12 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:src="@drawable/baseline_email_24"/>
-                        <TextView
+                        <EditText
+                            android:hint="@string/User_Email"
                             android:id="@+id/tv_my_Email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:text="@string/User_Email"
                             android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
                             android:textSize="17dp"/>
@@ -226,12 +226,12 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:src="@drawable/baseline_place_24"/>
-                        <TextView
+                        <EditText
+                            android:hint="@string/Company_Address"
                             android:id="@+id/tv_myCompany_Address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:text="@string/Company_Address"
                             android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
                             android:textSize="17dp"/>
@@ -252,12 +252,12 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:src="@drawable/baseline_note_alt_24"/>
-                        <TextView
+                        <EditText
+                            android:hint="@string/Memo"
                             android:id="@+id/tv_myMemo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:text="@string/Memo"
                             android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
                             android:textSize="17dp"/>
