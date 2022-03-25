@@ -8,6 +8,8 @@ import com.example.bica.R;
 import com.example.bica.model.Card;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.app.ProgressDialog;
@@ -31,6 +33,8 @@ public class RegisterCardActivity extends AppCompatActivity {
     ImageView img_face;
     TextView tv_title;
     EditText edt_username, edt_useremail, edt_phonenum, edt_companyname, edt_companyadr, edt_occupation, edt_teamname, edt_position, edt_groupname, edt_memo;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,6 @@ public class RegisterCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 //ToDo: 이미지 추가
                 String name = edt_username.getText().toString().trim();
@@ -64,50 +67,54 @@ public class RegisterCardActivity extends AppCompatActivity {
                     mDialog.setMessage("명함입력중입니다.");
                     mDialog.show();
 
-                    if(position.isEmpty()){
+                    if (position.isEmpty()) {
                         position = "";
                     }
-                    if(memo.isEmpty()){
+                    if (memo.isEmpty()) {
                         memo = "";
                     }
 
                     Card cardAccount = new Card();
-                    cardAccount.setEmail(name);
+                    cardAccount.setName(name);
                     cardAccount.setEmail(email);
-                    cardAccount.setEmail(phone);
-                    cardAccount.setEmail(company);
-                    cardAccount.setEmail(address);
-                    cardAccount.setEmail(occupation);
-                    cardAccount.setEmail(depart);
-                    cardAccount.setEmail(position);
-                    cardAccount.setEmail(groupname);
-                    cardAccount.setEmail(memo);
-
-                    Map<Object, String> card = new HashMap<>();
-                    card.put("name", name);
-                    card.put("email", email);
-                    card.put("phone", phone);
-                    card.put("company", company);
-                    card.put("address", address);
-                    card.put("occupation", occupation);
-                    card.put("depart", depart);
-                    card.put("position", position);
-                    card.put("groupname", groupname);
-                    card.put("memo", memo);
+                    cardAccount.setPhone(phone);
+                    cardAccount.setCompany(company);
+                    cardAccount.setAddress(address);
+                    cardAccount.setOccupation(occupation);
+                    cardAccount.setDepart(depart);
+                    cardAccount.setPosition(position);
+                    cardAccount.setGroupname(groupname);
+                    cardAccount.setMemo(memo);
+//                    Map<Object, String> user = new HashMap<>();
+//
+//                    user.put("cardUid", );
+//
+//                    db.collection("users").document(auth.getUid()).set("cardUid").
+//
+//                    Map<Object, String> card = new HashMap<>();
+//                    card.put("name", name);
+//                    card.put("email", email);
+//                    card.put("phone", phone);
+//                    card.put("company", company);
+//                    card.put("address", address);
+//                    card.put("occupation", occupation);
+//                    card.put("depart", depart);
+//                    card.put("position", position);
+//                    card.put("groupname", groupname);
+//                    card.put("memo", memo);
 
                     //파이어베이스에 신규정보등록
-                    db.collection("cards").document(email)
-                            .set(card)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    db.collection("cards")
+                            .add(cardAccount)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
-                                public void onSuccess(Void unused) {
-                                    Log.d(TAG, "성공적으로 입력되었습니다");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "오류가 발생하였습니다", e);
+                                public void onSuccess(DocumentReference documentReference) {
+                                    System.out.println("카드 등록 완료");
+//
+//                                    System.out.println("test cardUid " + documentReference.get);
+//                                    Map<Object, String> user = new HashMap<>();
+//                                    user.put("cardUid", documentReference.getId());
+//                                    db.collection("users").document(auth.getUid()).
                                 }
                             });
 
@@ -137,7 +144,8 @@ public class RegisterCardActivity extends AppCompatActivity {
             }
         });
     }
-    public void init(){
+
+    public void init() {
         btn_complete = findViewById(R.id.btn_complete);
         btn_later = findViewById(R.id.btn_later);
         img_face = findViewById(R.id.img_face);

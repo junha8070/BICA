@@ -14,22 +14,28 @@ import android.widget.Toast;
 
 import com.example.bica.MainActivity;
 import com.example.bica.R;
+import com.example.bica.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
     Button btn_next, btn_check;
     EditText edt_username, edt_useremail, edt_pw, edt_pw_check, edt_phonenum;
     private static final String TAG = "RegisterActivity";
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();;
+    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         init();
-        // 파이어베이스 접근 설정
-        firebaseAuth = FirebaseAuth.getInstance();
+        //Todo: 한 전화번호당 한 아이디 제한걸기
 
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
                 String pwdcheck = edt_pw_check.getText().toString().trim();
                 String username = edt_username.getText().toString().trim();
                 String phonenum = edt_phonenum.getText().toString().trim();
-
 
                 if(username.isEmpty()==false && email.isEmpty()==false && pwd.isEmpty()==false && pwdcheck.isEmpty()==false && phonenum.isEmpty()==false){
                     if(pwd.equals(pwdcheck)){
@@ -84,6 +88,31 @@ public class RegisterActivity extends AppCompatActivity {
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference reference = database.getReference("Users");
                                     reference.child(uid).setValue(hashMap);
+
+                                    User userAccount = new User();
+                                    userAccount.setEmail(email);
+                                    userAccount.setUsername(name);
+                                    userAccount.setPhonenum(phonenum);
+
+                                    Map<Object, String> users = new HashMap<>();
+                                    users.put("email", email);
+                                    users.put("name", name);
+                                    users.put("phonenum", phonenum);
+
+                                    firestore.collection("users").document(uid)
+                                            .set(users)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    Log.d(TAG, "성공적으로 입력되었습니다");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "오류가 발생하였습니다", e);
+                                                }
+                                            });
 
                                     //가입이 이루어졌을시 가입 화면을 빠져나감.
                                     Intent startMain = new Intent(RegisterActivity.this, RegisterCardActivity.class);
