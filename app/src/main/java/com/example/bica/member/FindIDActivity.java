@@ -1,14 +1,28 @@
 package com.example.bica.member;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.bica.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -17,6 +31,10 @@ public class FindIDActivity extends AppCompatActivity {
     private EditText edt_username, edt_phonenum;
     private Button btn_check;
     private Toolbar tb_findID;
+    private static final String TAG = "FindIDActivity";
+    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    public String foundId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +42,46 @@ public class FindIDActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_id);
 
         init();
+
+        btn_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                String name = edt_username.getText().toString().trim();
+                String phonenum = edt_phonenum.getText().toString().trim();
+
+                //ToDo: document에서 아이디 꺼내오기
+                firestore.collection("users")
+                        .whereEqualTo("name", name)
+                        .whereEqualTo("phonenum", phonenum)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    for(QueryDocumentSnapshot document : task.getResult()){
+                                        document.get("email");
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        foundId = document.get("email").toString();
+                                        Log.d(TAG,"아이디"+document.get("email"));
+                                    }
+                                    Intent startMain = new Intent(FindIDActivity.this, FoundIDActivity.class);
+                                    startMain.putExtra("Email", foundId);
+                                    startActivity(startMain);
+                                    finish();
+                                    Toast.makeText(FindIDActivity.this, "아이디 찾기 성공", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Log.d(TAG, "일치하는 회원정보가 없습니다.");
+                                    Toast.makeText(FindIDActivity.this, "일치하는 회원정보가 없습니다.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+                        });
+
+            }
+        });
 
         // Toolbar 활성화
         setSupportActionBar(tb_findID);

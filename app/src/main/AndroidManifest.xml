@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BICA">
         <activity
+            android:name=".member.FoundIDActivity"
+            android:exported="false" />
+        <activity
             android:name=".qr.QR_Make_Activity"
             android:exported="false" />
         <activity
@@ -49,7 +52,7 @@
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
-            tools:replace="screenOrientation"></activity>
+            tools:replace="screenOrientation" />
         <activity
             android:name=".member.RegisterCardActivity"
             android:exported="false" />
