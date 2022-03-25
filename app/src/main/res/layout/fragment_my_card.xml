@@ -22,6 +22,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </androidx.appcompat.widget.Toolbar>
+        <androidx.appcompat.widget.Toolbar
+            android:background="@color/brown"
+            android:backgroundTint="@color/brown"
+            android:id="@+id/tb_mycard_commit"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,6 +91,15 @@
                                     android:text="@string/User_Name"
                                     android:textColor="@color/black"
                                     android:textSize="30dp" />
+                                <EditText
+                                    android:id="@+id/et_mycardname"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/User_Name"
+                                    android:textColor="@color/black"
+                                    android:textSize="30dp"
+                                    android:visibility="gone"/>
                                 <TextView
                                     android:id="@+id/tv_myPosition"
                                     android:layout_width="wrap_content"
@@ -92,6 +109,16 @@
                                     android:textColor="@color/black"
                                     android:textSize="17dp"
                                     android:paddingLeft="5dp"/>
+                                <EditText
+                                    android:id="@+id/et_myPosition"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/Position"
+                                    android:textColor="@color/black"
+                                    android:textSize="17dp"
+                                    android:paddingLeft="5dp"
+                                    android:visibility="gone"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -108,6 +135,15 @@
                                     android:text="@string/Occupation"
                                     android:textColor="@color/black"
                                     android:textSize="17dp"/>
+                                <EditText
+                                    android:id="@+id/et_myOccupation"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/Occupation"
+                                    android:textColor="@color/black"
+                                    android:textSize="17dp"
+                                    android:visibility="gone"/>
                                 <View
                                     android:layout_margin="5dp"
                                     android:layout_width="2px"
@@ -121,6 +157,15 @@
                                     android:text="@string/TeamName"
                                     android:textColor="@color/black"
                                     android:textSize="17dp"/>
+                                <EditText
+                                    android:id="@+id/et_myTeamName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/TeamName"
+                                    android:textColor="@color/black"
+                                    android:textSize="17dp"
+                                    android:visibility="gone"/>
                             </LinearLayout>
                             <TextView
                                 android:id="@+id/tv_myCompany_Name"
@@ -131,6 +176,16 @@
                                 android:textColor="@color/black"
                                 android:layout_marginLeft="6dp"
                                 android:textSize="17dp"/>
+                            <EditText
+                                android:id="@+id/et_myCompany_Name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="@string/Company_Name"
+                                android:textColor="@color/black"
+                                android:layout_marginLeft="6dp"
+                                android:textSize="17dp"
+                                android:visibility="gone"/>
                             <TextView
                                 android:id="@+id/tv_myGroupName"
                                 android:layout_width="wrap_content"
@@ -140,6 +195,16 @@
                                 android:textColor="@color/black"
                                 android:layout_marginLeft="6dp"
                                 android:textSize="17dp"/>
+                            <EditText
+                                android:id="@+id/et_myGroupName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="@string/GroupName"
+                                android:textColor="@color/black"
+                                android:layout_marginLeft="6dp"
+                                android:textSize="17dp"
+                                android:visibility="gone"/>
                         </LinearLayout>
 
 
@@ -183,6 +248,16 @@
                             android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
                             android:textSize="17dp"/>
+                        <EditText
+                            android:id="@+id/et_myPhoneNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/PhoneNum"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="17dp"
+                            android:visibility="gone"/>
 
                     </LinearLayout>
                     <View
@@ -209,6 +284,16 @@
                             android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
                             android:textSize="17dp"/>
+                        <EditText
+                            android:id="@+id/et_my_Email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/User_Email"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="17dp"
+                            android:visibility="gone"/>
 
                     </LinearLayout>
                     <View
@@ -235,6 +320,16 @@
                             android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
                             android:textSize="17dp"/>
+                        <EditText
+                            android:id="@+id/et_myCompany_Address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/Company_Address"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="17dp"
+                            android:visibility="gone"/>
 
                     </LinearLayout>
                     <View
@@ -251,7 +346,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:src="@drawable/baseline_note_alt_24"/>
+                            android:src="@drawable/baseline_note_alt_24"
+                           />
                         <TextView
                             android:id="@+id/tv_myMemo"
                             android:layout_width="wrap_content"
@@ -260,10 +356,25 @@
                             android:text="@string/Memo"
                             android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
-                            android:textSize="17dp"/>
+                            android:textSize="17dp"
+                            />
+                        <EditText
+                            android:id="@+id/et_myMemo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/Memo"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="17dp"
+                            android:visibility="gone"
+                            />
 
                     </LinearLayout>
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="#ffffff"/>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
