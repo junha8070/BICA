@@ -11,9 +11,10 @@ public class Card {
     String email;
     String address;
     String occupation;
+    String groupname;
     String memo;
 
-    public Card(int image, String company, String depart, String name, String position, String phone, String email, String address, String occupation, String memo){
+    public Card(int image, String company, String depart, String name, String position, String phone, String email, String address, String occupation, String groupname, String memo){
         this.image = image;
         this.company = company;
         this.depart = depart;
@@ -23,6 +24,7 @@ public class Card {
         this.email = email;
         this.address = address;
         this.occupation = occupation;
+        this.groupname = groupname;
         this.memo = memo;
     }
     public Card(){
@@ -100,6 +102,10 @@ public class Card {
     public void setOccupation(String occupation) {
         this.occupation = occupation;
     }
+
+    public String getGroupname() { return groupname; }
+
+    public void setGroupname(String groupname) { this.groupname = groupname; }
 
     public String getMemo() {
         return memo;
