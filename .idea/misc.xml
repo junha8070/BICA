@@ -4,11 +4,6 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.13958333333333334" />
-        <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/activity_find_id.xml" value="0.16" />
-        <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/activity_find_pw.xml" value="0.10729166666666666" />
-        <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/activity_found_id.xml" value="0.2" />
-        <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/activity_login.xml" value="0.16" />
-        <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/activity_register_card.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/drawable-anydpi-v24/ic_search.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-anydpi-v24/ic_stat_name.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-hdpi/ic_qrcode.xml" value="0.124" />

@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
@@ -367,7 +368,7 @@ public class MyCardFragment extends Fragment {
         });
 
 
-/*
+
         tv_myPhoneNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -387,7 +388,9 @@ public class MyCardFragment extends Fragment {
                 pnum_call.setOnClickListener(new Button.OnClickListener(){
                     public void onClick(View v){
                         String tel = "tel:" + Pnum;
-                        startActivity(new Intent("android.intent.action.CALL", Uri.parse(tel)));
+                        //startActivity(new Intent("android.intent.action.CALL", Uri.parse(tel)));
+                        Intent intent =new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
+                        startActivity(intent);
                     }
                 });
 
@@ -404,7 +407,7 @@ public class MyCardFragment extends Fragment {
                 });
             }
         });
-*/
+
 
         return view;
     }
