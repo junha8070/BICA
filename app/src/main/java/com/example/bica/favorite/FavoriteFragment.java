@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.bica.R;
 import com.example.bica.model.Card;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -30,6 +31,7 @@ public class FavoriteFragment extends Fragment {
     List<Card> models;
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private ViewModelProvider.AndroidViewModelFactory viewModelFactory;
     private FavoriteViewModel favoriteViewModel;
@@ -76,7 +78,7 @@ public class FavoriteFragment extends Fragment {
         viewPager2 = view.findViewById(R.id.vp_favorite);
 
 
-        favoriteViewModel.cardInfo("510cara@naver.com");
+        favoriteViewModel.cardInfo(firebaseAuth.getCurrentUser().getEmail());
 
 //        models.add(card);
 
