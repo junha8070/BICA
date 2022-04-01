@@ -43,7 +43,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
-        holder.iv_profile.setImageResource(cardModel.get(position).getImage());
+//        holder.iv_profile.setImageResource(cardModel.get(position).getImage());
         holder.tv_company.setText(cardModel.get(position).getCompany());
         holder.tv_depart.setText(cardModel.get(position).getDepart());
         holder.tv_name.setText(cardModel.get(position).getName());
