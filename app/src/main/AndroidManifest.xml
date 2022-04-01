@@ -6,7 +6,6 @@
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DIAL_PHONE" />
 
@@ -21,6 +20,15 @@
         android:roundIcon="@mipmap/ic_bica_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BICA">
+        <activity
+            android:name=".EditInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HelpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NoticeActivity"
+            android:exported="false" />
         <activity
             android:name=".member.FoundIDActivity"
             android:exported="false" />

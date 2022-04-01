@@ -39,4 +39,10 @@
     <string name="Favorite">즐겨찾기</string>
     <string name="My_Card">내 명함</string>
     <string name="Setting">설정</string>
+    <string name="Notice">공지사항</string>
+    <string name="Help">도움말</string>
+    <string name="EditInfo">비밀번호 변경</string>
+    <string name="EditInfo_origin">기존 비밀번호</string>
+    <string name="EditInfo_new">새 비밀번호</string>
+    <string name="Logout">로그아웃</string>
 </resources>
