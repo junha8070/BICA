@@ -71,8 +71,7 @@ import java.util.Date;
 
 public class MyCardFragment extends Fragment {
     private TextView tv_mycardname,tv_myPosition,tv_myOccupation,tv_myTeamName,tv_myCompany_Name,tv_myGroupName,tv_myPhoneNum,tv_my_Email,tv_myCompany_Address,tv_myMemo,tv_Pnum;
-    private EditText et_mycardname,et_myPosition,et_myOccupation,et_myTeamName,et_myCompany_Name,et_myGroupName,et_myPhoneNum,et_my_Email,et_myMemo;
-    private String address;
+    private EditText et_mycardname,et_myPosition,et_myOccupation,et_myTeamName,et_myCompany_Name,et_myGroupName,et_myPhoneNum,et_my_Email,et_myMemo,et_myCompany_Address;
     private View view;
     private String Pnum;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -130,6 +129,7 @@ public class MyCardFragment extends Fragment {
         et_myGroupName=view.findViewById(R.id.et_myGroupName);
         et_myPhoneNum=view.findViewById(R.id.et_myPhoneNum);
         et_my_Email=view.findViewById(R.id.et_my_Email);
+        et_myCompany_Address=view.findViewById(R.id.et_myCompany_Address);
         et_myMemo=view.findViewById(R.id.et_myMemo);
 
         System.out.println("test " + auth.getCurrentUser().getEmail());
@@ -145,7 +145,7 @@ public class MyCardFragment extends Fragment {
                         tv_myOccupation.setText(card.getOccupation());
                         tv_myTeamName.setText(card.getDepart());
                         tv_myCompany_Name.setText(card.getCompany());
-                        //그룹이름
+                        tv_myGroupName.setText(card.getGroupname());
                         tv_myPhoneNum.setText(card.getPhone());
                         Pnum = card.getPhone();
                         tv_my_Email.setText(card.getEmail());
@@ -222,22 +222,22 @@ public class MyCardFragment extends Fragment {
                                 String my_Email = et_my_Email.getText().toString();
                                 tv_my_Email.setText(my_Email);
 
-                                tv_myCompany_Address.setText(address);
+                                String myCompany_Address = tv_myCompany_Address.getText().toString();
+                                tv_myCompany_Address.setText(myCompany_Address);
 
                                 et_myMemo.setVisibility(View.GONE);
                                 tv_myMemo.setVisibility(View.VISIBLE);
                                 String myMemo = et_myMemo.getText().toString();
                                 tv_myMemo.setText(myMemo);
 
-
                                 DocumentReference sfDocRef = db.collection("cards").document(auth.getCurrentUser().getEmail());
 
                                 db.runTransaction(new Transaction.Function<Void>() {
                                     @Override
                                     public Void apply(Transaction transaction) throws FirebaseFirestoreException {
-                                        if (!tv_mycardname.equals(et_mycardname.getText().toString())) {
-                                            transaction.update(sfDocRef, "name", et_mycardname.getText().toString());
-                                        }
+
+                                            transaction.update(sfDocRef, "name", tv_mycardname.getText().toString());
+
                                         if (!tv_myPosition.equals(et_myPosition.getText().toString())) {
                                             transaction.update(sfDocRef, "position", et_myPosition.getText().toString());
                                         }
@@ -251,7 +251,7 @@ public class MyCardFragment extends Fragment {
                                             transaction.update(sfDocRef, "company", et_myCompany_Name.getText().toString());
                                         }
                                         if (!tv_myGroupName.equals(et_myGroupName.getText().toString())) {
-                                            transaction.update(sfDocRef, "name", et_myGroupName.getText().toString());
+                                            transaction.update(sfDocRef, "groupname", et_myGroupName.getText().toString());
                                         }
                                         if (!tv_myPhoneNum.equals(et_myPhoneNum.getText().toString())) {
                                             transaction.update(sfDocRef, "phone", et_myPhoneNum.getText().toString());
@@ -260,7 +260,7 @@ public class MyCardFragment extends Fragment {
                                             transaction.update(sfDocRef, "email", et_my_Email.getText().toString());
                                         }
 
-                                            transaction.update(sfDocRef, "address", address);
+                                            transaction.update(sfDocRef, "address", tv_myCompany_Address.getText().toString());
 
                                         if (!tv_myMemo.equals(et_myMemo.getText().toString())) {
                                             transaction.update(sfDocRef, "memo", et_myMemo.getText().toString());
@@ -297,7 +297,7 @@ public class MyCardFragment extends Fragment {
                                     tv_myOccupation.setText(card.getOccupation());
                                     tv_myTeamName.setText(card.getDepart());
                                     tv_myCompany_Name.setText(card.getCompany());
-                                    //그룹이름
+                                    tv_myGroupName.setText(card.getGroupname());
                                     tv_myPhoneNum.setText(card.getPhone());
                                     Pnum = card.getPhone();
                                     tv_my_Email.setText(card.getEmail());
@@ -425,13 +425,11 @@ public class MyCardFragment extends Fragment {
                 if(result.getResultCode()==RESULT_OK){
                     if(result.getData()!=null){
                         String data=result.getData().getStringExtra("data");
-                        address=data;
                         tv_myCompany_Address.setText(data);
                     }
                 }
             }
     );
-
 
     //다이얼로그 실행(공유방법 선택창)
     public void showDialog() {

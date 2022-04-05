@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DIAL_PHONE" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
@@ -29,6 +31,9 @@
             android:exported="false" />
         <activity
             android:name=".ShowCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchAddressActivity"
             android:exported="false" />
         <activity
             android:name=".member.FindIDActivity"
