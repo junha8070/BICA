@@ -15,6 +15,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
@@ -69,7 +71,8 @@ import java.util.Date;
 
 public class MyCardFragment extends Fragment {
     private TextView tv_mycardname,tv_myPosition,tv_myOccupation,tv_myTeamName,tv_myCompany_Name,tv_myGroupName,tv_myPhoneNum,tv_my_Email,tv_myCompany_Address,tv_myMemo,tv_Pnum;
-    private EditText et_mycardname,et_myPosition,et_myOccupation,et_myTeamName,et_myCompany_Name,et_myGroupName,et_myPhoneNum,et_my_Email,et_myCompany_Address,et_myMemo;
+    private EditText et_mycardname,et_myPosition,et_myOccupation,et_myTeamName,et_myCompany_Name,et_myGroupName,et_myPhoneNum,et_my_Email,et_myMemo;
+    private String address;
     private View view;
     private String Pnum;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -127,7 +130,6 @@ public class MyCardFragment extends Fragment {
         et_myGroupName=view.findViewById(R.id.et_myGroupName);
         et_myPhoneNum=view.findViewById(R.id.et_myPhoneNum);
         et_my_Email=view.findViewById(R.id.et_my_Email);
-        et_myCompany_Address=view.findViewById(R.id.et_myCompany_Address);
         et_myMemo=view.findViewById(R.id.et_myMemo);
 
         System.out.println("test " + auth.getCurrentUser().getEmail());
@@ -220,10 +222,7 @@ public class MyCardFragment extends Fragment {
                                 String my_Email = et_my_Email.getText().toString();
                                 tv_my_Email.setText(my_Email);
 
-                                et_myCompany_Address.setVisibility(View.GONE);
-                                tv_myCompany_Address.setVisibility(View.VISIBLE);
-                                String myCompany_Address = et_myCompany_Address.getText().toString();
-                                tv_myCompany_Address.setText(myCompany_Address);
+                                tv_myCompany_Address.setText(address);
 
                                 et_myMemo.setVisibility(View.GONE);
                                 tv_myMemo.setVisibility(View.VISIBLE);
@@ -251,18 +250,18 @@ public class MyCardFragment extends Fragment {
                                         if (!tv_myCompany_Name.equals(et_myCompany_Name.getText().toString())) {
                                             transaction.update(sfDocRef, "company", et_myCompany_Name.getText().toString());
                                         }
-                                        /*if (!tv_myGroupName.equals(et_myGroupName.getText().toString())) {
+                                        if (!tv_myGroupName.equals(et_myGroupName.getText().toString())) {
                                             transaction.update(sfDocRef, "name", et_myGroupName.getText().toString());
-                                        }*/
+                                        }
                                         if (!tv_myPhoneNum.equals(et_myPhoneNum.getText().toString())) {
                                             transaction.update(sfDocRef, "phone", et_myPhoneNum.getText().toString());
                                         }
                                         if (!tv_my_Email.equals(et_my_Email.getText().toString())) {
                                             transaction.update(sfDocRef, "email", et_my_Email.getText().toString());
                                         }
-                                        if (!tv_myCompany_Address.equals(et_myCompany_Address.getText().toString())) {
-                                            transaction.update(sfDocRef, "address", et_myCompany_Address.getText().toString());
-                                        }
+
+                                            transaction.update(sfDocRef, "address", address);
+
                                         if (!tv_myMemo.equals(et_myMemo.getText().toString())) {
                                             transaction.update(sfDocRef, "memo", et_myMemo.getText().toString());
                                         }
@@ -350,10 +349,7 @@ public class MyCardFragment extends Fragment {
                     String my_Email = (String)tv_my_Email.getText();
                     et_my_Email.setText(my_Email);
 
-                    tv_myCompany_Address.setVisibility(view.GONE);
-                    et_myCompany_Address.setVisibility(view.VISIBLE);
-                    String myCompany_Address = (String)tv_myCompany_Address.getText();
-                    et_myCompany_Address.setText(myCompany_Address);
+                    tv_myCompany_Address.setEnabled(true);
 
                     tv_myMemo.setVisibility(view.GONE);
                     et_myMemo.setVisibility(view.VISIBLE);
@@ -409,8 +405,32 @@ public class MyCardFragment extends Fragment {
         });
 
 
+
+        tv_myCompany_Address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent=new Intent(getContext(),SearchAddressActivity.class);
+                getSearchResult.launch(intent);
+            }
+        });
+
+
         return view;
     }
+
+    private final ActivityResultLauncher<Intent> getSearchResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result.getResultCode()==RESULT_OK){
+                    if(result.getData()!=null){
+                        String data=result.getData().getStringExtra("data");
+                        address=data;
+                        tv_myCompany_Address.setText(data);
+                    }
+                }
+            }
+    );
 
 
     //다이얼로그 실행(공유방법 선택창)
