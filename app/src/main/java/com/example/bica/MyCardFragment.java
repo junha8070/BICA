@@ -235,9 +235,9 @@ public class MyCardFragment extends Fragment {
                                 db.runTransaction(new Transaction.Function<Void>() {
                                     @Override
                                     public Void apply(Transaction transaction) throws FirebaseFirestoreException {
-
+                                        if (!tv_mycardname.equals(et_mycardname.getText().toString())) {
                                             transaction.update(sfDocRef, "name", tv_mycardname.getText().toString());
-
+                                        }
                                         if (!tv_myPosition.equals(et_myPosition.getText().toString())) {
                                             transaction.update(sfDocRef, "position", et_myPosition.getText().toString());
                                         }
