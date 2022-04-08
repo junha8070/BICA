@@ -1,9 +1,11 @@
 package com.example.bica.favorite;
 
 import android.app.Application;
+import android.os.Build;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +40,7 @@ public class FavoriteModel {
         cardMutableLiveData = new MutableLiveData<>();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     public void cardInfo(String email){
         firestore.collection("cards").document(email).get().addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<DocumentSnapshot>() {
             @Override

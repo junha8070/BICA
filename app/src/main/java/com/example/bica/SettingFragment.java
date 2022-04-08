@@ -17,11 +17,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.bica.member.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class SettingFragment extends Fragment {
 
     private Toolbar tb_setting;
     private ListView lv_setting;
+    private FirebaseAuth firebaseAuth;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -49,6 +53,8 @@ public class SettingFragment extends Fragment {
         //Fragment에서 Toolbar 셋업
         tb_setting = view.findViewById(R.id.tb_setting);
         lv_setting = view.findViewById(R.id.listview);
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         tb_setting.setTitle(null);
         final String[] mid = {"공지사항", "도움말", "비밀번호 변경", "로그아웃"};
@@ -79,9 +85,8 @@ public class SettingFragment extends Fragment {
                                 .setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        Intent intent = new Intent(getContext(), InitialActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                        startActivity(intent);
+                                        firebaseAuth.signOut();
+                                        requireActivity().finish();
                                     }
                                 })
                                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {

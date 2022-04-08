@@ -1,6 +1,8 @@
 package com.example.bica;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.bica.member.LoginActivity;
+import com.example.bica.member.MemberViewModel;
 import com.example.bica.member.RegisterActivity;
+import com.google.firebase.auth.FirebaseUser;
 
 public class InitialActivity extends AppCompatActivity {
 
@@ -19,10 +23,21 @@ public class InitialActivity extends AppCompatActivity {
     private TextView tv_first, tv_second, tv_third;
     private Animation fade_in;
 
+    private MemberViewModel memberViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
+
+        memberViewModel = new ViewModelProvider(this).get(MemberViewModel.class);
+        memberViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                Intent startMain = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(startMain);
+            }
+        });
 
         // 초기화
         init();

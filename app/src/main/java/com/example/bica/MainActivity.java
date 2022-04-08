@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.bica.AddCard.ScanQR;
+import com.example.bica.member.LoginActivity;
 import com.example.bica.nfc.Nfc_Read_Activity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // 초기화
         init();
+
+
 
 //        powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
 //        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "WAKELOCK");
