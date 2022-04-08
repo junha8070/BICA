@@ -1,7 +1,8 @@
 package com.example.bica.member;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +14,6 @@ import android.widget.Toast;
 
 import com.example.bica.MainActivity;
 import com.example.bica.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -26,10 +24,21 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tv_Find_ID, tv_Find_PW;
     private FirebaseAuth firebaseAuth;
 
+    private MemberViewModel memberViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        memberViewModel = new ViewModelProvider(this).get(MemberViewModel.class);
+        memberViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                Intent startMain = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(startMain);
+            }
+        });
 
         // 요소 초기화
         init();
@@ -58,20 +67,8 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                // 위 조건 다 통과시 로그인 수행
-                firebaseAuth.signInWithEmailAndPassword(id, pw)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                                    Intent startMain = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(startMain);
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "아이디나 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                memberViewModel.login(id, pw);
+
             }
         });
 
