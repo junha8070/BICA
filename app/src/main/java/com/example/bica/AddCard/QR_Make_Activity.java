@@ -11,15 +11,21 @@ import android.widget.ImageView;
 
 import com.example.bica.R;
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.encoder.ByteMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+
+import java.util.Hashtable;
 
 public class QR_Make_Activity extends AppCompatActivity {
     String TAG = "QR_Make_Activity";
 
     ImageView iv_qrcode;
     private String str_card;
+    QRCodeWriter writer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +43,12 @@ public class QR_Make_Activity extends AppCompatActivity {
 
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try{
-            BitMatrix bitMatrix = multiFormatWriter.encode(str_card, BarcodeFormat.QR_CODE,200,200);
+            Hashtable hints = new Hashtable();
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            BitMatrix matrix = writer.encode(str_card, BarcodeFormat.QR_CODE, 500, 500, hints);
+
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            Bitmap bitmap = barcodeEncoder.createBitmap(matrix);
             iv_qrcode.setImageBitmap(bitmap);
         }catch (Exception e){}
 
@@ -48,5 +57,6 @@ public class QR_Make_Activity extends AppCompatActivity {
 
     private void init(){
         iv_qrcode = findViewById(R.id.iv_qrcode);
+        writer = new QRCodeWriter();
     }
 }

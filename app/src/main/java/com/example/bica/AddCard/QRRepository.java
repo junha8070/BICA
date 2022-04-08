@@ -1,6 +1,7 @@
 package com.example.bica.AddCard;
 
 import android.app.Application;
+import android.os.Build;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ public class QRRepository {
 
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        SuccessMutableLiveData = new MutableLiveData<>();
+        SuccessMutableLiveData.setValue(false);
     }
 
     public void AddCard(String str_card_info){
@@ -39,22 +42,40 @@ public class QRRepository {
         card.setGroupname(info[5]);
         card.setPhone(info[6]);
         card.setEmail(info[7]);
-        card.setCompany(info[8]);
+        card.setAddress(info[8]);
         card.setMemo(info[9]);
 
-        firestore.collection("business")
-                .document(auth.getCurrentUser().getUid())
-                .collection("cards").document(info[10]).set(card).addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(application, "Upload Success", Toast.LENGTH_SHORT).show();
-                    SuccessMutableLiveData.postValue(true);
-                }else{
-                    Toast.makeText(application, "Upload Failed : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            firestore.collection("business")
+                    .document(auth.getCurrentUser().getUid())
+                    .collection("cards")
+                    .document(info[10])
+                    .set(card)
+                    .addOnCompleteListener(application.getMainExecutor(), task -> {
+                        if(task.isSuccessful()){
+                            Toast.makeText(application, "Upload Success", Toast.LENGTH_SHORT).show();
+                            SuccessMutableLiveData.postValue(true);
+                        }else{
+                            Toast.makeText(application, "Upload Failed : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }else{
+            firestore.collection("business")
+                    .document(auth.getCurrentUser().getUid())
+                    .collection("cards")
+                    .document(info[10])
+                    .set(card)
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            Toast.makeText(application, "Upload Success", Toast.LENGTH_SHORT).show();
+                            SuccessMutableLiveData.postValue(true);
+                        }else{
+                            Toast.makeText(application, "Upload Failed : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
+
 
     }
 

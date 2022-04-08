@@ -59,7 +59,7 @@ public class FavoriteFragment extends Fragment {
             public void onChanged(DocumentSnapshot documentSnapshot) {
                 models = new ArrayList<>();
                 card = documentSnapshot.toObject(Card.class);
-                Log.d("Favorite",card.getCompany());
+//                Log.d("Favorite",card.getCompany());
 
                 models.add(card);
 
