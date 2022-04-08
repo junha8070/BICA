@@ -4,10 +4,6 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.13958333333333334" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/layout/activity_edit_info.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/layout/activity_search.xml" value="0.1" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/layout/fragment_edit_mycard.xml" value="0.24974358974358973" />
-        <entry key="..\:/Users/ekqhd/StudioProjects/BICA/app/src/main/res/layout/fragment_my_card.xml" value="0.22685185185185186" />
         <entry key="app/src/main/res/drawable-anydpi-v24/ic_search.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-anydpi-v24/ic_stat_name.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-hdpi/ic_qrcode.xml" value="0.124" />
@@ -30,6 +26,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28567199707031254" />
         <entry key="app/src/main/res/layout/activity_nfc_write.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_ocr.xml" value="0.1298095703125" />
+        <entry key="app/src/main/res/layout/activity_qr_make.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.21229095458984376" />
         <entry key="app/src/main/res/layout/activity_register_card.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/activity_scanqr.xml" value="0.203125" />
@@ -38,9 +35,13 @@
         <entry key="app/src/main/res/layout/fragment_card.xml" value="0.6035858154296876" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_my_card.xml" value="0.2330352783203125" />
+        <entry key="app/src/main/res/layout/fragment_scan_q_r.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/item_card.xml" value="0.4844936024058949" />
         <entry key="app/src/main/res/layout/item_favorite_card.xml" value="0.7109591172818416" />
-        <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.27766571044921884" />
+        <entry key="app/src/main/res/menu/menu_card.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/menu/menu_edit_mycard.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/menu/menu_mycard.xml" value="0.3333333333333333" />
       </map>
     </option>
   </component>

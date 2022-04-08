@@ -1,10 +1,12 @@
-package com.example.bica.qr;
+package com.example.bica.AddCard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.bica.R;
@@ -14,6 +16,7 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class QR_Make_Activity extends AppCompatActivity {
+    String TAG = "QR_Make_Activity";
 
     ImageView iv_qrcode;
     private String str_card;
@@ -26,7 +29,11 @@ public class QR_Make_Activity extends AppCompatActivity {
         // 요소 초기화
         init();
 
-        str_card = "https://www.naver.com";
+        Intent receiveCardId = getIntent();
+        str_card = receiveCardId.getStringExtra("cardId");
+        Log.d(TAG, "아이디"+str_card);
+
+//        str_card = "https://www.naver.com";
 
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try{

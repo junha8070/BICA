@@ -3,36 +3,21 @@ package com.example.bica;
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.os.Environment;
-import android.os.ParcelFileDescriptor;
 import android.provider.ContactsContract;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -41,39 +26,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bica.model.Card;
-import com.example.bica.model.PreferenceManager;
-import com.example.bica.nfc.Nfc_Write_Activity;
-import com.example.bica.qr.QR_Make_Activity;
+import com.example.bica.AddCard.QR_Make_Activity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
-import com.google.firebase.storage.FirebaseStorage;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class MyCardFragment extends Fragment {
     private TextView tv_mycardname,tv_myPosition,tv_myOccupation,tv_myTeamName,tv_myCompany_Name,tv_myGroupName,tv_myPhoneNum,tv_my_Email,tv_myCompany_Address,tv_myMemo,tv_Pnum;
     private EditText et_mycardname,et_myPosition,et_myOccupation,et_myTeamName,et_myCompany_Name,et_myGroupName,et_myPhoneNum,et_my_Email,et_myMemo,et_myCompany_Address;
     private View view;
-    private String Pnum;
+    private String Pnum, str_card_info;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     Toolbar toolbar,tb_mycard_commit;        // 툴바
     AlertDialog.Builder builder;        //다이얼로그 창
@@ -134,26 +105,38 @@ public class MyCardFragment extends Fragment {
 
         System.out.println("test " + auth.getCurrentUser().getEmail());
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("cards").document(auth.getCurrentUser().getEmail()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Card card = documentSnapshot.toObject(Card.class);
-
-                        tv_mycardname.setText(card.getName());
-                        tv_myPosition.setText(card.getPosition());
-                        tv_myOccupation.setText(card.getOccupation());
-                        tv_myTeamName.setText(card.getDepart());
-                        tv_myCompany_Name.setText(card.getCompany());
-                        tv_myGroupName.setText(card.getGroupname());
-                        tv_myPhoneNum.setText(card.getPhone());
-                        Pnum = card.getPhone();
-                        tv_my_Email.setText(card.getEmail());
-                        tv_myCompany_Address.setText(card.getAddress());
-                        tv_myMemo.setText(card.getMemo());
-                        System.out.println("test " + card.getAddress());
-                    }
-                });
+        db.collection("cards").whereEqualTo("email", auth.getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for(DocumentSnapshot documentSnapshot : task.getResult()){
+                    Card card = documentSnapshot.toObject(Card.class);
+                    tv_mycardname.setText(card.getName());
+                    tv_myPosition.setText(card.getPosition());
+                    tv_myOccupation.setText(card.getOccupation());
+                    tv_myTeamName.setText(card.getDepart());
+                    tv_myCompany_Name.setText(card.getCompany());
+                    tv_myGroupName.setText(card.getGroupname());
+                    tv_myPhoneNum.setText(card.getPhone());
+                    Pnum = card.getPhone();
+                    tv_my_Email.setText(card.getEmail());
+                    tv_myCompany_Address.setText(card.getAddress());
+                    tv_myMemo.setText(card.getMemo());
+                    System.out.println("test " + card.getAddress());
+                    Log.d("MyCardFragment", documentSnapshot.getId());
+                    str_card_info = card.getName()+"///"+
+                            card.getPosition()+"///"+
+                            card.getOccupation()+"///"+
+                            card.getDepart()+"///"+
+                            card.getCompany()+"///"+
+                            card.getGroupname()+"///"+
+                            card.getPhone()+"///"+
+                            card.getEmail()+"///"+
+                            card.getAddress()+"///"+
+                            card.getMemo()+"///"+
+                            documentSnapshot.getId();
+                }
+            }
+        });
         // Fragment에서 Toolbar 셋업
         tb_mycard_commit= view.findViewById(R.id.tb_mycard_commit);
         tb_mycard_commit.inflateMenu(R.menu.menu_edit_mycard);
@@ -163,7 +146,7 @@ public class MyCardFragment extends Fragment {
             switch (item.getItemId()) {
                 case R.id.mycard_share: {
                     // 공유 뭘로 할지 다이얼로그 창 띄움
-                    showDialog();
+                    showDialog(str_card_info);
                     // navigate to settings screen
 //                    StartRecord();
 //
@@ -432,7 +415,7 @@ public class MyCardFragment extends Fragment {
     );
 
     //다이얼로그 실행(공유방법 선택창)
-    public void showDialog() {
+    public void showDialog(String str_card_Id) {
 
         String[] navigate = {"QR 코드", "NFC"};
 
@@ -448,6 +431,7 @@ public class MyCardFragment extends Fragment {
                 switch (which) {
                     case 0:
                         Intent startQR = new Intent(getContext(), QR_Make_Activity.class);
+                        startQR.putExtra("cardId", str_card_Id);
                         startActivity(startQR);
                         break;
                     case 1:

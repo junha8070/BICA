@@ -24,4 +24,14 @@
         android:name="com.example.bica.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/makeQRFragment"
+        android:name="com.example.bica.AddCard.MakeQRFragment"
+        android:label="fragment_make_q_r"
+        tools:layout="@layout/fragment_make_q_r" />
+    <fragment
+        android:id="@+id/scanQRFragment"
+        android:name="com.example.bica.AddCard.ScanQRFragment"
+        android:label="fragment_scan_q_r"
+        tools:layout="@layout/fragment_scan_q_r" />
 </navigation>

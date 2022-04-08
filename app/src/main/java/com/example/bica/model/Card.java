@@ -1,5 +1,7 @@
 package com.example.bica.model;
 
+
+
 public class Card {
 
     int image;

@@ -24,7 +24,7 @@
             android:name=".member.FoundIDActivity"
             android:exported="false" />
         <activity
-            android:name=".qr.QR_Make_Activity"
+            android:name=".AddCard.QR_Make_Activity"
             android:exported="false" />
         <activity
             android:name=".OCR_Activity"
@@ -50,14 +50,17 @@
                 android:value=".member.LoginActivity" />
         </activity>
         <activity
-            android:name=".ScanQR"
+            android:name=".AddCard.ScanQR"
             android:exported="false"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
+
+<!--        바코드 스캔 방향 전환 위한 Activity-->
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
+
         <activity
             android:name=".member.RegisterCardActivity"
             android:exported="false" />
