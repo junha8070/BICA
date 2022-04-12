@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
@@ -32,10 +33,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
@@ -105,7 +110,8 @@ public class MyCardFragment extends Fragment {
 
         System.out.println("test " + auth.getCurrentUser().getEmail());
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("cards").whereEqualTo("email", auth.getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("cards").whereEqualTo("email", auth.getCurrentUser().getEmail()).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for(DocumentSnapshot documentSnapshot : task.getResult()){
@@ -213,7 +219,11 @@ public class MyCardFragment extends Fragment {
                                 String myMemo = et_myMemo.getText().toString();
                                 tv_myMemo.setText(myMemo);
 
-                                DocumentReference sfDocRef = db.collection("cards").document(auth.getCurrentUser().getEmail());
+                                //Query query =db.collection("cards").whereEqualTo("email", auth.getCurrentUser().getEmail());
+
+                                String user=auth.getCurrentUser().getUid().toString();
+                                final DocumentReference sfDocRef=db.collection("cards").document(user);
+
 
                                 db.runTransaction(new Transaction.Function<Void>() {
                                     @Override
@@ -269,24 +279,37 @@ public class MyCardFragment extends Fragment {
                                 return super.onOptionsItemSelected(item);
                         }
                     });
-                    db.collection("cards").document(auth.getCurrentUser().getEmail()).get()
-                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    db.collection("cards").whereEqualTo("email", auth.getCurrentUser().getEmail()).get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    Card card = documentSnapshot.toObject(Card.class);
-
-                                    tv_mycardname.setText(card.getName());
-                                    tv_myPosition.setText(card.getPosition());
-                                    tv_myOccupation.setText(card.getOccupation());
-                                    tv_myTeamName.setText(card.getDepart());
-                                    tv_myCompany_Name.setText(card.getCompany());
-                                    tv_myGroupName.setText(card.getGroupname());
-                                    tv_myPhoneNum.setText(card.getPhone());
-                                    Pnum = card.getPhone();
-                                    tv_my_Email.setText(card.getEmail());
-                                    tv_myCompany_Address.setText(card.getAddress());
-                                    tv_myMemo.setText(card.getMemo());
-                                    System.out.println("test " + card.getAddress());
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    for(DocumentSnapshot documentSnapshot : task.getResult()){
+                                        Card card = documentSnapshot.toObject(Card.class);
+                                        tv_mycardname.setText(card.getName());
+                                        tv_myPosition.setText(card.getPosition());
+                                        tv_myOccupation.setText(card.getOccupation());
+                                        tv_myTeamName.setText(card.getDepart());
+                                        tv_myCompany_Name.setText(card.getCompany());
+                                        tv_myGroupName.setText(card.getGroupname());
+                                        tv_myPhoneNum.setText(card.getPhone());
+                                        Pnum = card.getPhone();
+                                        tv_my_Email.setText(card.getEmail());
+                                        tv_myCompany_Address.setText(card.getAddress());
+                                        tv_myMemo.setText(card.getMemo());
+                                        System.out.println("test " + card.getAddress());
+                                        Log.d("MyCardFragment", documentSnapshot.getId());
+                                        str_card_info = card.getName()+"///"+
+                                                card.getPosition()+"///"+
+                                                card.getOccupation()+"///"+
+                                                card.getDepart()+"///"+
+                                                card.getCompany()+"///"+
+                                                card.getGroupname()+"///"+
+                                                card.getPhone()+"///"+
+                                                card.getEmail()+"///"+
+                                                card.getAddress()+"///"+
+                                                card.getMemo()+"///"+
+                                                documentSnapshot.getId();
+                                    }
                                 }
                             });
 
