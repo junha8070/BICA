@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +44,8 @@ public class FindIDActivity extends AppCompatActivity {
 
         init();
 
+        edt_phonenum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,23 +54,25 @@ public class FindIDActivity extends AppCompatActivity {
                 String name = edt_username.getText().toString().trim();
                 String phonenum = edt_phonenum.getText().toString().trim();
 
-                //ToDo: document에서 아이디 꺼내오기
                 firestore.collection("users")
-                        .whereEqualTo("name", name)
+                        .whereEqualTo("username", name)
                         .whereEqualTo("phonenum", phonenum)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if(task.isSuccessful()){
+                                    System.out.println("test FindIDActivity");
                                     for(QueryDocumentSnapshot document : task.getResult()){
-                                        document.get("email");
                                         Log.d(TAG, document.getId() + " => " + document.getData());
                                         foundId = document.get("email").toString();
                                         Log.d(TAG,"아이디"+document.get("email"));
+                                        System.out.println("test FindIDActivity ID "+ document.get("email").toString());
+                                        System.out.println("test FindIDActivity foundID "+ foundId);
+
                                     }
                                     Intent startMain = new Intent(FindIDActivity.this, FoundIDActivity.class);
-                                    startMain.putExtra("Email", foundId);
+                                    startMain.putExtra("email", foundId);
                                     startActivity(startMain);
                                     finish();
                                     Toast.makeText(FindIDActivity.this, "아이디 찾기 성공", Toast.LENGTH_SHORT).show();

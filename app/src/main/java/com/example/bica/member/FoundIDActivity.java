@@ -29,16 +29,14 @@ public class FoundIDActivity extends AppCompatActivity {
         init();
 
         Intent intent = getIntent();
-        tv_foundID.setText(intent.getStringExtra("Email"));
-
-        //ToDo: FindIDActivity에서 찾은 아이디 출력
-        //tv_foundID = FindIDActivity.foundId.trim();
+        tv_foundID.setText(intent.getStringExtra("email"));
 
         btn_move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startMain = new Intent(FoundIDActivity.this, LoginActivity.class);
                 startActivity(startMain);
+                finish();
             }
         });
 
