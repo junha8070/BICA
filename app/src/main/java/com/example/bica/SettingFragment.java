@@ -57,7 +57,7 @@ public class SettingFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
 
         tb_setting.setTitle(null);
-        final String[] mid = {"공지사항", "도움말", "비밀번호 변경", "로그아웃"};
+        final String[] mid = {"비밀번호 변경", "로그아웃"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, mid);
         lv_setting.setAdapter(adapter);
@@ -68,25 +68,20 @@ public class SettingFragment extends Fragment {
                 //switch ()
                 switch (i){
                     case 0:
-                        Intent startNoticeActivity = new Intent(getContext(), NoticeActivity.class);
-                        startActivity(startNoticeActivity);
-                        break;
-                    case 1:
-                        Intent startHelpActivity = new Intent(getContext(), HelpActivity.class);
-                        startActivity(startHelpActivity);
-                        break;
-                    case 2:
                         Intent startEditInfoActivity = new Intent(getContext(), EditInfoActivity.class);
                         startActivity(startEditInfoActivity);
                         break;
-                    case 3:
+                    case 1:
                         new AlertDialog.Builder(getContext())
                                 .setTitle("로그아웃").setMessage("로그아웃 하시겠습니까?")
                                 .setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         firebaseAuth.signOut();
-                                        requireActivity().finish();
+                                       // requireActivity().finish();
+                                        Intent startInitialActivity = new Intent(getContext(), InitialActivity.class);
+                                        startActivity(startInitialActivity);
+                                        getActivity().finish();
                                     }
                                 })
                                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {

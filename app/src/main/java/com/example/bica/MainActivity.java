@@ -16,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.bica.AddCard.CameraActivity;
 import com.example.bica.AddCard.ScanQR;
 import com.example.bica.member.LoginActivity;
+import com.example.bica.member.RegisterCardActivity;
 import com.example.bica.nfc.Nfc_Read_Activity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
-    private FloatingActionButton fab_main, fab_camera, fab_nfc, fab_qrcode;
+    private FloatingActionButton fab_main, fab_camera, fab_nfc, fab_qrcode, fab_direct;
 //    final int PERMISSIONS_REQUEST_CODE = 1;
 
 //    PowerManager powerManager;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab_camera.setOnClickListener(this);
         fab_nfc.setOnClickListener(this);
         fab_qrcode.setOnClickListener(this);
+        fab_direct.setOnClickListener(this);
     }
 
     @Override
@@ -110,6 +112,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent startOCR = new Intent(MainActivity.this, CameraActivity.class);
                 startActivity(startOCR);
                 break;
+            case R.id.fab_direct:
+                anim();
+                Intent startDirect = new Intent(MainActivity.this, RegisterCardActivity.class);
+                startActivity(startDirect);
+                break;
 
             default:
                 break;
@@ -122,17 +129,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fab_camera.startAnimation(fab_close);
             fab_nfc.startAnimation(fab_close);
             fab_qrcode.startAnimation(fab_close);
+            fab_direct.startAnimation(fab_close);
             fab_camera.setClickable(false);
             fab_nfc.setClickable(false);
             fab_qrcode.setClickable(false);
+            fab_direct.setClickable(false);
             isFabOpen = false;
         } else {
             fab_camera.startAnimation(fab_open);
             fab_nfc.startAnimation(fab_open);
             fab_qrcode.startAnimation(fab_open);
+            fab_direct.startAnimation(fab_open);
             fab_qrcode.setClickable(true);
             fab_camera.setClickable(true);
             fab_nfc.setClickable(true);
+            fab_direct.setClickable(true);
             isFabOpen = true;
         }
     }
@@ -148,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab_camera = findViewById(R.id.fab_camera);
         fab_nfc = findViewById(R.id.fab_nfc);
         fab_qrcode = findViewById(R.id.fab_qrcode);
+        fab_direct = findViewById(R.id.fab_direct);
     }
 
 //    private void requestPermission() {

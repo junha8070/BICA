@@ -6,15 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.bica.model.Card;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 
 public class FavoriteViewModel extends AndroidViewModel {
     private FavoriteModel favoriteModel;
     private FirebaseAuth auth;
 
-    private MutableLiveData<DocumentSnapshot> cardMutableLiveData;
+    private MutableLiveData<ArrayList<Card>> cardMutableLiveData;
 
     public FavoriteViewModel(@NonNull Application application) {
         super(application);
@@ -27,7 +31,7 @@ public class FavoriteViewModel extends AndroidViewModel {
         favoriteModel.cardInfo(email);
     }
 
-    public MutableLiveData<DocumentSnapshot> getCardMutableLiveData() {
+    public MutableLiveData<ArrayList<Card>> getCardMutableLiveData() {
         return cardMutableLiveData;
     }
 }

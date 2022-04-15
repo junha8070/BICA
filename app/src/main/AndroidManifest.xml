@@ -70,12 +70,6 @@
             android:name=".EditInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".HelpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".NoticeActivity"
-            android:exported="false" />
-        <activity
             android:name=".member.RegisterActivity"
             android:exported="false" />
         <activity

@@ -1,11 +1,14 @@
 package com.example.bica.member;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bica.MainActivity;
 import com.example.bica.R;
+import com.example.bica.SearchAddressActivity;
 import com.example.bica.model.Card;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,7 +37,7 @@ public class RegisterCardActivity extends AppCompatActivity {
     Button btn_complete, btn_later;
     ImageView img_face;
     TextView tv_title;
-    EditText edt_username, edt_useremail, edt_phonenum, edt_companyname, edt_companyadr, edt_occupation, edt_teamname, edt_position, edt_groupname, edt_memo;
+    EditText edt_username, edt_useremail, edt_phonenum, edt_companyname, edt_companyadr, edt_occupation, edt_teamname, edt_position, edt_memo;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -46,6 +49,15 @@ public class RegisterCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_card);
 
         init();
+
+        edt_companyadr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent=new Intent(RegisterCardActivity.this, SearchAddressActivity.class);
+                getSearchResult.launch(intent);
+            }
+        });
 
         edt_phonenum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
@@ -65,7 +77,6 @@ public class RegisterCardActivity extends AppCompatActivity {
                 String occupation = edt_occupation.getText().toString().trim();
                 String depart = edt_teamname.getText().toString().trim();
                 String position = edt_position.getText().toString().trim();
-                String groupname = edt_groupname.getText().toString().trim();
                 String memo = edt_memo.getText().toString().trim();
 
                 ProgressDialog mDialog = null;
@@ -74,6 +85,13 @@ public class RegisterCardActivity extends AppCompatActivity {
                     mDialog = new ProgressDialog(RegisterCardActivity.this);
                     mDialog.setMessage("명함입력중입니다.");
                     mDialog.show();
+
+                    if (position.isEmpty()) {
+                        position = "";
+                    }
+                    if (memo.isEmpty()) {
+                        memo = "";
+                    }
 
                     Card cardAccount = new Card();
                     cardAccount.setName(name);
@@ -84,7 +102,6 @@ public class RegisterCardActivity extends AppCompatActivity {
                     cardAccount.setOccupation(occupation);
                     cardAccount.setDepart(depart);
                     cardAccount.setPosition(position);
-                    cardAccount.setGroupname(groupname);
                     cardAccount.setMemo(memo);
 
                     memberViewModel.registerCard(cardAccount);
@@ -175,6 +192,18 @@ public class RegisterCardActivity extends AppCompatActivity {
         });
     }
 
+    private final ActivityResultLauncher<Intent> getSearchResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result.getResultCode()==RESULT_OK){
+                    if(result.getData()!=null){
+                        String data=result.getData().getStringExtra("data");
+                        edt_companyadr.setText(data);
+                    }
+                }
+            }
+    );
+
     public void init() {
         btn_complete = findViewById(R.id.btn_complete);
         btn_later = findViewById(R.id.btn_later);
@@ -188,7 +217,6 @@ public class RegisterCardActivity extends AppCompatActivity {
         edt_occupation = findViewById(R.id.occupation);
         edt_teamname = findViewById(R.id.teamname);
         edt_position = findViewById(R.id.position);
-        edt_groupname = findViewById(R.id.groupname);
         edt_memo = findViewById(R.id.memo);
     }
 }

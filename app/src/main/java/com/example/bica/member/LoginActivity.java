@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onChanged(FirebaseUser firebaseUser) {
                 Intent startMain = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(startMain);
+                finish();
             }
         });
 

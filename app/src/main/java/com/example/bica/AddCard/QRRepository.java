@@ -39,7 +39,7 @@ public class QRRepository {
         card.setOccupation(info[2]);
         card.setDepart(info[3]);
         card.setCompany(info[4]);
-        card.setGroupname(info[5]);
+        //card.setGroupname(info[5]);
         card.setPhone(info[6]);
         card.setEmail(info[7]);
         card.setAddress(info[8]);
