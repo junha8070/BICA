@@ -45,11 +45,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MyCardFragment extends Fragment {
     private TextView tv_mycardname,tv_myPosition,tv_myOccupation,tv_myTeamName,tv_myCompany_Name,tv_myGroupName,tv_myPhoneNum,tv_my_Email,tv_myCompany_Address,tv_myMemo,tv_Pnum;
     private EditText et_mycardname,et_myPosition,et_myOccupation,et_myTeamName,et_myCompany_Name,et_myGroupName,et_myPhoneNum,et_my_Email,et_myMemo,et_myCompany_Address;
     private View view;
-    private String Pnum, str_card_info;
+    private String Pnum, str_card_info, cardUid;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     Toolbar toolbar,tb_mycard_commit;        // 툴바
     AlertDialog.Builder builder;        //다이얼로그 창
@@ -129,6 +132,7 @@ public class MyCardFragment extends Fragment {
                     tv_myMemo.setText(card.getMemo());
                     System.out.println("test " + card.getAddress());
                     Log.d("MyCardFragment", documentSnapshot.getId());
+                    cardUid = documentSnapshot.getId();
                     str_card_info = card.getName()+"///"+
                             card.getPosition()+"///"+
                             card.getOccupation()+"///"+
@@ -213,16 +217,14 @@ public class MyCardFragment extends Fragment {
 
                                 String myCompany_Address = tv_myCompany_Address.getText().toString();
                                 tv_myCompany_Address.setText(myCompany_Address);
+                                tv_myCompany_Address.setEnabled(false);
 
                                 et_myMemo.setVisibility(View.GONE);
                                 tv_myMemo.setVisibility(View.VISIBLE);
                                 String myMemo = et_myMemo.getText().toString();
                                 tv_myMemo.setText(myMemo);
 
-                                //Query query =db.collection("cards").whereEqualTo("email", auth.getCurrentUser().getEmail());
-
-                                String user=auth.getCurrentUser().getUid().toString();
-                                final DocumentReference sfDocRef=db.collection("cards").document(user);
+                                final DocumentReference sfDocRef=db.collection("cards").document(cardUid);
 
 
                                 db.runTransaction(new Transaction.Function<Void>() {
