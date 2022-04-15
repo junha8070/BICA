@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.bica.AddCard.CameraActivity;
 import com.example.bica.AddCard.ScanQR;
 import com.example.bica.member.LoginActivity;
 import com.example.bica.nfc.Nfc_Read_Activity;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.fab_camera:
                 anim();
-                Intent startOCR = new Intent(MainActivity.this, OCR_Activity.class);
+                Intent startOCR = new Intent(MainActivity.this, CameraActivity.class);
                 startActivity(startOCR);
                 break;
 
@@ -115,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //
     public void anim() {
 
         if (isFabOpen) {
