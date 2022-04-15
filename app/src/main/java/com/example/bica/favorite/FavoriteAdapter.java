@@ -20,17 +20,18 @@ import com.example.bica.model.Card;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
 
 
-    private List<Card> cardModel;
+    private ArrayList<Card> cardModel;
     private LayoutInflater layoutInflater;
     private Context context;
     private ViewPager2 viewPager2;
 
-    public FavoriteAdapter(List<Card> cardModel, ViewPager2 viewPager2) {
+    public FavoriteAdapter(ArrayList<Card> cardModel, ViewPager2 viewPager2) {
         this.cardModel = cardModel;
         this.viewPager2 = viewPager2;
     }
