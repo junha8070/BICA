@@ -7,12 +7,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.bica.model.Card;
 import com.example.bica.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MemberModel {
@@ -27,8 +30,9 @@ public class MemberModel {
     private MutableLiveData<Boolean> logoutMutableLiveData;
     private MutableLiveData<Boolean> saveUserInfoMutableLiveData;
     private MutableLiveData<FirebaseFirestore> userInfoMutableLiveData;
+    private MutableLiveData<FirebaseFirestore> cardMutableLiveData;
 
-    public MemberModel(Application application){
+    public MemberModel(Application application) {
         this.application = application;
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -37,63 +41,74 @@ public class MemberModel {
         logoutMutableLiveData = new MutableLiveData<>();
         saveUserInfoMutableLiveData = new MutableLiveData<>();
         isSuccessful = new MutableLiveData<>();
+        cardMutableLiveData = new MutableLiveData<>();
 
-        if(firebaseAuth.getCurrentUser() != null){
+        if (firebaseAuth.getCurrentUser() != null) {
             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
             logoutMutableLiveData.postValue(false);
         }
     }
 
-    public void register(String email, String password, User userAccount){
-        firebaseAuth.createUserWithEmailAndPassword(email,password)
+    public void register(String email, String password, User userAccount) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());   // 현재 로그인된 사용자 정보 저장
                             firestore.collection("users").document(firebaseAuth.getCurrentUser().getUid()).set(userAccount).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         saveUserInfoMutableLiveData.postValue(true);
                                         Log.d(TAG, "회원정보 저장 성공");
-                                    }
-                                    else{
+                                    } else {
                                         saveUserInfoMutableLiveData.postValue(false);
                                         Log.w(TAG, "회원정보 저장 오류");
                                     }
                                 }
                             });
-                        }
-                        else{
+                        } else {
                             saveUserInfoMutableLiveData.postValue(false);
-                            Toast.makeText(application, "회원가입 오류"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application, "회원가입 오류" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-    public void login(String email, String password){
+    public void registerCard(Card cardAccount) {
+        firestore.collection("users")
+                .document(firebaseAuth.getCurrentUser().getUid())
+                .collection("myCard")
+                .add(cardAccount)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        System.out.println("카드 등록 완료");
+                    }
+                });
+    }
+
+    public void login(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
-                        }
-                        else{
-                            Toast.makeText(application, "로그인 오류"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(application, "로그인 오류" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-    public void logout(){
+    public void logout() {
         firebaseAuth.signOut();
         logoutMutableLiveData.postValue(true);
     }
 
-    public void saveUserInfo(String uid, User userAccount){
+    public void saveUserInfo(String uid, User userAccount) {
 
     }
 
@@ -115,5 +130,9 @@ public class MemberModel {
 
     public MutableLiveData<Boolean> getIsSuccessful() {
         return isSuccessful;
+    }
+
+    public MutableLiveData<FirebaseFirestore> getCardMutableLiveData() {
+        return cardMutableLiveData;
     }
 }
