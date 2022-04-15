@@ -124,7 +124,7 @@ public class MyCardFragment extends Fragment {
                     tv_myOccupation.setText(card.getOccupation());
                     tv_myTeamName.setText(card.getDepart());
                     tv_myCompany_Name.setText(card.getCompany());
-                    tv_myGroupName.setText(card.getGroupname());
+                   // tv_myGroupName.setText(card.getGroupname());
                     tv_myPhoneNum.setText(card.getPhone());
                     Pnum = card.getPhone();
                     tv_my_Email.setText(card.getEmail());
@@ -138,7 +138,7 @@ public class MyCardFragment extends Fragment {
                             card.getOccupation()+"///"+
                             card.getDepart()+"///"+
                             card.getCompany()+"///"+
-                            card.getGroupname()+"///"+
+                           // card.getGroupname()+"///"+
                             card.getPhone()+"///"+
                             card.getEmail()+"///"+
                             card.getAddress()+"///"+
@@ -200,10 +200,10 @@ public class MyCardFragment extends Fragment {
                                 String myCompany_Name = et_myCompany_Name.getText().toString();
                                 tv_myCompany_Name.setText(myCompany_Name);
 
-                                et_myGroupName.setVisibility(View.GONE);
-                                tv_myGroupName.setVisibility(View.VISIBLE);
-                                String myGroupName = et_myGroupName.getText().toString();
-                                tv_myGroupName.setText(myGroupName);
+//                                et_myGroupName.setVisibility(View.GONE);
+//                                tv_myGroupName.setVisibility(View.VISIBLE);
+//                                String myGroupName = et_myGroupName.getText().toString();
+//                                tv_myGroupName.setText(myGroupName);
 
                                 et_myPhoneNum.setVisibility(View.GONE);
                                 tv_myPhoneNum.setVisibility(View.VISIBLE);
@@ -245,9 +245,9 @@ public class MyCardFragment extends Fragment {
                                         if (!tv_myCompany_Name.equals(et_myCompany_Name.getText().toString())) {
                                             transaction.update(sfDocRef, "company", et_myCompany_Name.getText().toString());
                                         }
-                                        if (!tv_myGroupName.equals(et_myGroupName.getText().toString())) {
-                                            transaction.update(sfDocRef, "groupname", et_myGroupName.getText().toString());
-                                        }
+//                                        if (!tv_myGroupName.equals(et_myGroupName.getText().toString())) {
+//                                            transaction.update(sfDocRef, "groupname", et_myGroupName.getText().toString());
+//                                        }
                                         if (!tv_myPhoneNum.equals(et_myPhoneNum.getText().toString())) {
                                             transaction.update(sfDocRef, "phone", et_myPhoneNum.getText().toString());
                                         }
@@ -292,7 +292,7 @@ public class MyCardFragment extends Fragment {
                                         tv_myOccupation.setText(card.getOccupation());
                                         tv_myTeamName.setText(card.getDepart());
                                         tv_myCompany_Name.setText(card.getCompany());
-                                        tv_myGroupName.setText(card.getGroupname());
+                                        //tv_myGroupName.setText(card.getGroupname());
                                         tv_myPhoneNum.setText(card.getPhone());
                                         Pnum = card.getPhone();
                                         tv_my_Email.setText(card.getEmail());
@@ -305,7 +305,7 @@ public class MyCardFragment extends Fragment {
                                                 card.getOccupation()+"///"+
                                                 card.getDepart()+"///"+
                                                 card.getCompany()+"///"+
-                                                card.getGroupname()+"///"+
+                                               // card.getGroupname()+"///"+
                                                 card.getPhone()+"///"+
                                                 card.getEmail()+"///"+
                                                 card.getAddress()+"///"+
@@ -342,10 +342,10 @@ public class MyCardFragment extends Fragment {
                     String myCompany_Name = (String)tv_myCompany_Name.getText();
                     et_myCompany_Name.setText(myCompany_Name);
 
-                    tv_myGroupName.setVisibility(view.GONE);
-                    et_myGroupName.setVisibility(view.VISIBLE);
-                    String myGroupName = (String)tv_myGroupName.getText();
-                    et_myGroupName.setText(myGroupName);
+//                    tv_myGroupName.setVisibility(view.GONE);
+//                    et_myGroupName.setVisibility(view.VISIBLE);
+//                    String myGroupName = (String)tv_myGroupName.getText();
+//                    et_myGroupName.setText(myGroupName);
 
                     tv_myPhoneNum.setVisibility(view.GONE);
                     et_myPhoneNum.setVisibility(view.VISIBLE);
