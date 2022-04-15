@@ -23,6 +23,7 @@ public class MemberModel {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
     private MutableLiveData<FirebaseUser> userMutableLiveData;
+    private MutableLiveData<Boolean> isSuccessful;
     private MutableLiveData<Boolean> logoutMutableLiveData;
     private MutableLiveData<Boolean> saveUserInfoMutableLiveData;
     private MutableLiveData<FirebaseFirestore> userInfoMutableLiveData;
@@ -35,6 +36,7 @@ public class MemberModel {
         userMutableLiveData = new MutableLiveData<>();
         logoutMutableLiveData = new MutableLiveData<>();
         saveUserInfoMutableLiveData = new MutableLiveData<>();
+        isSuccessful = new MutableLiveData<>();
 
         if(firebaseAuth.getCurrentUser() != null){
             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
@@ -49,9 +51,22 @@ public class MemberModel {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());   // 현재 로그인된 사용자 정보 저장
-                            saveUserInfo(userMutableLiveData.getValue().getUid(), userAccount);
+                            firestore.collection("users").document(firebaseAuth.getCurrentUser().getUid()).set(userAccount).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        saveUserInfoMutableLiveData.postValue(true);
+                                        Log.d(TAG, "회원정보 저장 성공");
+                                    }
+                                    else{
+                                        saveUserInfoMutableLiveData.postValue(false);
+                                        Log.w(TAG, "회원정보 저장 오류");
+                                    }
+                                }
+                            });
                         }
                         else{
+                            saveUserInfoMutableLiveData.postValue(false);
                             Toast.makeText(application, "회원가입 오류"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -79,19 +94,7 @@ public class MemberModel {
     }
 
     public void saveUserInfo(String uid, User userAccount){
-        firestore.collection("users").document(uid).set(userAccount).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    saveUserInfoMutableLiveData.postValue(true);
-                    Log.d(TAG, "회원정보 저장 성공");
-                }
-                else{
-                    saveUserInfoMutableLiveData.postValue(false);
-                    Log.w(TAG, "회원정보 저장 오류");
-                }
-            }
-        });
+
     }
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
@@ -108,5 +111,9 @@ public class MemberModel {
 
     public MutableLiveData<FirebaseFirestore> getUserInfoMutableLiveData() {
         return userInfoMutableLiveData;
+    }
+
+    public MutableLiveData<Boolean> getIsSuccessful() {
+        return isSuccessful;
     }
 }

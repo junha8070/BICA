@@ -16,6 +16,7 @@ public class MemberViewModel extends AndroidViewModel {
     private MutableLiveData<FirebaseUser> userMutableLiveData;
     private MutableLiveData<Boolean> logoutMutableLiveData;
     private MutableLiveData<Boolean> saveUserInfoMutableLiveData;
+    private MutableLiveData<Boolean> isSuccessful;
 
     public MemberViewModel(@NonNull Application application){
         super(application);
@@ -24,6 +25,7 @@ public class MemberViewModel extends AndroidViewModel {
         userMutableLiveData = memberModel.getUserMutableLiveData();
         logoutMutableLiveData = memberModel.getLogoutMutableLiveData();
         saveUserInfoMutableLiveData = memberModel.getSaveUserInfoMutableLiveData();
+        isSuccessful = memberModel.getIsSuccessful();
     }
 
     public void register(String email, String password, User userAccount){
@@ -44,5 +46,9 @@ public class MemberViewModel extends AndroidViewModel {
 
     public MutableLiveData<Boolean> getSaveUserInfoMutableLiveData() {
         return saveUserInfoMutableLiveData;
+    }
+
+    public MutableLiveData<Boolean> getIsSuccessful() {
+        return isSuccessful;
     }
 }

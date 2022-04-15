@@ -2,6 +2,7 @@ package com.example.bica.member;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.ProgressDialog;
@@ -61,15 +62,34 @@ public class RegisterActivity extends AppCompatActivity {
                 String username = edt_username.getText().toString().trim();
                 String phonenum = edt_phonenum.getText().toString().trim();
 
+                if (email.isEmpty() || pwd.isEmpty() || pwdcheck.isEmpty() || username.isEmpty() || phonenum.isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "빈 칸을 채워주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 User userAccount = new User();
                 userAccount.setEmail(email);
                 userAccount.setUsername(username);
                 userAccount.setPhonenum(phonenum);
 
+                final ProgressDialog mDialog = new ProgressDialog(RegisterActivity.this);
+
                 memberViewModel.register(email, pwd, userAccount);
-                Intent registerCard = new Intent(RegisterActivity.this, RegisterCardActivity.class);
-                startActivity(registerCard);
-                finish();
+                mDialog.setMessage("가입중입니다");
+                mDialog.show();
+                memberViewModel.getSaveUserInfoMutableLiveData().observe(RegisterActivity.this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        if (aBoolean) {
+                            mDialog.dismiss();
+                            Intent intent = new Intent(RegisterActivity.this, RegisterCardActivity.class);
+                            startActivity(intent);
+                        }else{
+                            mDialog.dismiss();
+                        }
+                    }
+                });
+
 
 //                //가입 정보 가져오기
 //                final String email = edt_useremail.getText().toString().trim();
