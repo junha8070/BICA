@@ -51,12 +51,13 @@
                 android:gravity="center_vertical"
                 android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/iv_myPicCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:src="@drawable/cardpic"/>
+                <include layout="@layout/item_favorite_card"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/iv_myPicCard"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:src="@drawable/cardpic"/>-->
 
         </LinearLayout>
 

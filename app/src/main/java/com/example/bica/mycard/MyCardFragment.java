@@ -50,6 +50,7 @@ import com.google.firebase.firestore.Transaction;
 public class MyCardFragment extends Fragment {
     private TextView tv_mycardname,tv_myPosition,tv_myOccupation,tv_myTeamName,tv_myCompany_Name,tv_myGroupName,tv_myPhoneNum,tv_my_Email,tv_myCompany_Address,tv_myMemo,tv_Pnum;
     private EditText et_mycardname,et_myPosition,et_myOccupation,et_myTeamName,et_myCompany_Name,et_myGroupName,et_myPhoneNum,et_my_Email,et_myMemo,et_myCompany_Address;
+    private TextView tv_company, tv_depart, tv_name, tv_position, tv_Phone, tv_Email, tv_Address;
     private View view;
     private String Pnum, str_card_info, cardUid;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -82,6 +83,15 @@ public class MyCardFragment extends Fragment {
                 tv_my_Email.setText(card.getEmail());
                 tv_myCompany_Address.setText(card.getAddress());
                 tv_myMemo.setText(card.getMemo());
+                //이미지
+                tv_name.setText(card.getName());
+                tv_position.setText(card.getPosition());
+                tv_depart.setText(card.getOccupation());
+                tv_company.setText(card.getCompany());
+                tv_Phone.setText(card.getPhone());
+                tv_Email.setText(card.getEmail());
+                tv_Address.setText(card.getAddress());
+
             }
         });
     }
@@ -189,6 +199,14 @@ public class MyCardFragment extends Fragment {
                                 tv_myMemo.setText(myMemo);
                                 newCard.setMemo(myMemo);
 
+                                tv_name.setText(myname);
+                                tv_position.setText(myPosition);
+                                tv_depart.setText(myOccupation);
+                                tv_company.setText(myCompany_Name);
+                                tv_Phone.setText(myPhoneNum);
+                                tv_Email.setText(my_Email);
+                                tv_Address.setText(myCompany_Address);
+
                                 //편집데이터업데이트
                                 myCardViewModel.changeInfo(prevCard, newCard);
 
@@ -207,6 +225,15 @@ public class MyCardFragment extends Fragment {
                                         tv_my_Email.setText(card.getEmail());
                                         tv_myCompany_Address.setText(card.getAddress());
                                         tv_myMemo.setText(card.getMemo());
+
+                                        tv_name.setText(card.getName());
+                                        tv_position.setText(card.getPosition());
+                                        tv_depart.setText(card.getOccupation());
+                                        tv_company.setText(card.getCompany());
+                                        tv_Phone.setText(card.getPhone());
+                                        tv_Email.setText(card.getEmail());
+                                        tv_Address.setText(card.getAddress());
+
                                     }
                                 });
                             }
@@ -411,6 +438,14 @@ public class MyCardFragment extends Fragment {
         tb_mycard_commit.inflateMenu(R.menu.menu_edit_mycard);
         toolbar = view.findViewById(R.id.tb_mycard1);
         toolbar.inflateMenu(R.menu.menu_mycard); // 메뉴 어떤거 뜰건지 정하는 코드
+
+        tv_company= view.findViewById(R.id.tv_company);
+        tv_depart= view.findViewById(R.id.tv_depart);
+        tv_name= view.findViewById(R.id.tv_name);
+        tv_position= view.findViewById(R.id.tv_position);
+        tv_Phone= view.findViewById(R.id.tv_Phone);
+        tv_Email= view.findViewById(R.id.tv_Email);
+        tv_Address= view.findViewById(R.id.tv_Address);
     }
 
 }
