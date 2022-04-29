@@ -38,7 +38,6 @@ public class RegisterActivity extends AppCompatActivity {
     EditText edt_username, edt_useremail, edt_pw, edt_pw_check, edt_phonenum;
     private static final String TAG = "RegisterActivity";
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    ;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private MemberViewModel memberViewModel;
 

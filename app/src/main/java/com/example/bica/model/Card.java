@@ -1,25 +1,32 @@
 package com.example.bica.model;
 
-
-
 import android.net.Uri;
+
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.firebase.firestore.DocumentReference;
 
+@Entity
 public class Card {
 
+    @PrimaryKey(autoGenerate = true)    // ID 자동생성
+    private int roomId = 0;   // 하나의 사용자에 대한 고유 ID 값
+
     int image;
+    String email;
     String company;
     String depart;
     String name;
     String position;
     String phone;
-    String email;
     String address;
     String occupation;
     String memo;
 
-    public Card(int image, String company, String depart, String name, String position, String phone, String email, String address, String occupation, String memo){
+    public Card(int roomId, int image, String company, String depart, String name, String position, String phone, String email, String address, String occupation, String memo){
+        this.roomId = roomId;
         this.image = image;
         this.company = company;
         this.depart = depart;
@@ -35,13 +42,21 @@ public class Card {
 
     }
 
-//    public int getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(int image) {
-//        this.image = image;
-//    }
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
 
     public String getCompany() {
         return company;
