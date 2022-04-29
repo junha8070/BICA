@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentViewModelLazyKt;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 
 import com.example.bica.MainActivity;
 import com.example.bica.R;
+import com.example.bica.favorite.FavoriteAdapter;
 import com.example.bica.model.Card;
 import com.example.bica.AddCard.QR_Make_Activity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +48,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
+
+import java.util.ArrayList;
 
 public class MyCardFragment extends Fragment {
     private TextView tv_mycardname,tv_myPosition,tv_myOccupation,tv_myTeamName,tv_myCompany_Name,tv_myGroupName,tv_myPhoneNum,tv_my_Email,tv_myCompany_Address,tv_myMemo,tv_Pnum;
@@ -62,38 +66,49 @@ public class MyCardFragment extends Fragment {
 
     private Card card;
 
+    ViewPager2 viewPager2;
+    MyCardAdapter adapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
         myCardViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(MyCardViewModel.class);
-        myCardViewModel.getUserInfo().observe(this, new Observer<Card>() {
-            @Override
-            public void onChanged(Card card) {
-                Log.d("MyCardFragment", card.getName());
-                tv_mycardname.setText(card.getName());
-                tv_myPosition.setText(card.getPosition());
-                tv_myOccupation.setText(card.getOccupation());
-                tv_myTeamName.setText(card.getDepart());
-                tv_myCompany_Name.setText(card.getCompany());
-//                tv_myGroupName.setText(card.getGroupname());
-                tv_myPhoneNum.setText(card.getPhone());
-                Pnum = card.getPhone();
-                tv_my_Email.setText(card.getEmail());
-                tv_myCompany_Address.setText(card.getAddress());
-                tv_myMemo.setText(card.getMemo());
-                //이미지
-                tv_name.setText(card.getName());
-                tv_position.setText(card.getPosition());
-                tv_depart.setText(card.getOccupation());
-                tv_company.setText(card.getCompany());
-                tv_Phone.setText(card.getPhone());
-                tv_Email.setText(card.getEmail());
-                tv_Address.setText(card.getAddress());
-
-            }
-        });
+        myCardViewModel.getUserInfo().observe(this, new Observer<ArrayList<Card>>() {
+                    @Override
+                    public void onChanged(ArrayList<Card> cards) {
+                        Log.d("MyCardFragment", cards.get(0).getName());
+                        adapter = new MyCardAdapter(cards, viewPager2);
+                        viewPager2.setAdapter(adapter);
+                    }
+                });
+//                new Observer<Card>() {
+//            @Override
+//            public void onChanged(Card card) {
+//                Log.d("MyCardFragment", card.getName());
+//                tv_mycardname.setText(card.getName());
+//                tv_myPosition.setText(card.getPosition());
+//                tv_myOccupation.setText(card.getOccupation());
+//                tv_myTeamName.setText(card.getDepart());
+//                tv_myCompany_Name.setText(card.getCompany());
+////                tv_myGroupName.setText(card.getGroupname());
+//                tv_myPhoneNum.setText(card.getPhone());
+//                Pnum = card.getPhone();
+//                tv_my_Email.setText(card.getEmail());
+//                tv_myCompany_Address.setText(card.getAddress());
+//                tv_myMemo.setText(card.getMemo());
+//                //이미지
+//                tv_name.setText(card.getName());
+//                tv_position.setText(card.getPosition());
+//                tv_depart.setText(card.getOccupation());
+//                tv_company.setText(card.getCompany());
+//                tv_Phone.setText(card.getPhone());
+//                tv_Email.setText(card.getEmail());
+//                tv_Address.setText(card.getAddress());
+//
+//            }
+//    });
     }
 
     @Override
@@ -410,6 +425,8 @@ public class MyCardFragment extends Fragment {
     }
 
     private void init(View view){
+        viewPager2 = view.findViewById(R.id.my_card_viewpager);
+
         tv_mycardname = view.findViewById(R.id.tv_mycardname);
         tv_myPosition = view.findViewById(R.id.tv_myPosition);
         tv_myOccupation = view.findViewById(R.id.tv_myOccupation);

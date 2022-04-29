@@ -17,10 +17,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.bica.member.MemberModel;
 import com.example.bica.model.Card;
 
+import java.util.ArrayList;
+
 public class MyCardViewModel extends AndroidViewModel {
 
     private MyCardModel myCardModel;
-    private MutableLiveData<Card> userInfo;
+    private MutableLiveData<ArrayList<Card>> userInfo;
     private MutableLiveData<String> cardId;
     private MutableLiveData<Card> updateInfo;
 
@@ -42,7 +44,7 @@ public class MyCardViewModel extends AndroidViewModel {
         myCardModel.chageInfo(prevCard, newCard);
     }
 
-    public MutableLiveData<Card> getUserInfo() {
+    public MutableLiveData<ArrayList<Card>> getUserInfo() {
         return userInfo;
     }
 

@@ -51,13 +51,10 @@
                 android:gravity="center_vertical"
                 android:padding="10dp">
 
-                <include layout="@layout/item_favorite_card"/>
-<!--                <ImageView-->
-<!--                    android:id="@+id/iv_myPicCard"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:src="@drawable/cardpic"/>-->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/my_card_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
         </LinearLayout>
 
