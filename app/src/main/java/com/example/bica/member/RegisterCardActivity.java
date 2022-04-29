@@ -5,7 +5,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
 
+import com.example.bica.CardDao;
+import com.example.bica.CardRoomDB;
 import com.example.bica.MainActivity;
 import com.example.bica.R;
 import com.example.bica.model.Card;
@@ -34,6 +37,7 @@ import java.util.Map;
 public class RegisterCardActivity extends AppCompatActivity {
 
     private static final String TAG = "RegisterCardActivity";
+    private CardDao mcardDao;
     Button btn_complete, btn_later;
     ImageView img_face;
     TextView tv_title;
@@ -49,6 +53,13 @@ public class RegisterCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_card);
 
         init();
+
+        CardRoomDB cardRoomDB = Room.databaseBuilder(getApplicationContext(), CardRoomDB.class,"CardRoomDB")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+
+        mcardDao = cardRoomDB.cardDao();
 
         edt_companyadr.setOnClickListener(new View.OnClickListener() {
             @Override

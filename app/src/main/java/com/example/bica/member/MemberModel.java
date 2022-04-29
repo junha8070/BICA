@@ -6,7 +6,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
+import com.example.bica.CardDao;
+import com.example.bica.CardRoomDB;
 import com.example.bica.model.Card;
 import com.example.bica.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +25,7 @@ public class MemberModel {
 
     private String TAG = "MemberModel";
 
+    private CardDao mcardDao;
     private Application application;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
@@ -42,6 +46,13 @@ public class MemberModel {
         saveUserInfoMutableLiveData = new MutableLiveData<>();
         isSuccessful = new MutableLiveData<>();
         cardMutableLiveData = new MutableLiveData<>();
+
+        CardRoomDB cardRoomDB = Room.databaseBuilder(application.getApplicationContext(), CardRoomDB.class,"CardRoomDB")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+
+        mcardDao = cardRoomDB.cardDao();
 
         if (firebaseAuth.getCurrentUser() != null) {
             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
@@ -84,7 +95,11 @@ public class MemberModel {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+                        Card cardRoom = new Card();
+                        cardRoom.setEmail(firebaseAuth.getCurrentUser().getEmail());
+                        mcardDao.setInsertCard(cardAccount);
                         System.out.println("카드 등록 완료");
+
                     }
                 });
     }
