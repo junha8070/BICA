@@ -32,12 +32,7 @@
                     android:layout_height="175dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="8dp" />
-<!--                <androidx.camera.view.PreviewView-->
-<!--                    android:id="@+id/previewView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="200dp"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginBottom="8dp" />-->
+
                 <ImageView
                     android:id="@+id/card_imgv"
                     android:layout_width="wrap_content"
@@ -62,21 +57,31 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:text="시작" />
-                <Button
-                    android:id="@+id/stop_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:text="끝" />
+                    android:text="카메라 ON" />
+
                 <Button
                     android:id="@+id/capture_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:text="촬영" />
+                    android:text="명함 촬영하기" />
+
+                <Button
+                    android:id="@+id/btn_detection_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:text="텍스트 인식하기" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="15dp"
+                    android:textIsSelectable="true"
+                    android:id="@+id/text_info"/>
 
 
                 <EditText
@@ -117,11 +122,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:hint="주소"
+                    android:hint="회사주소"
                     android:inputType="textPostalAddress" />
 
                 <EditText
-                    android:id="@+id/occupation"
+                    android:id="@+id/company_occupation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
@@ -129,15 +134,15 @@
                     android:inputType="text" />
 
                 <EditText
-                    android:id="@+id/team_name"
+                    android:id="@+id/company_depart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:hint="팀이름"
+                    android:hint="부서"
                     android:inputType="text" />
 
                 <EditText
-                    android:id="@+id/position"
+                    android:id="@+id/company_position"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
@@ -145,15 +150,7 @@
                     android:inputType="text" />
 
                 <EditText
-                    android:id="@+id/group_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:hint="그룹이름"
-                    android:inputType="text" />
-
-                <EditText
-                    android:id="@+id/memo"
+                    android:id="@+id/card_memo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"

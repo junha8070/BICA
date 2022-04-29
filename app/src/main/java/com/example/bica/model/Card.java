@@ -19,7 +19,7 @@ public class Card {
     String occupation;
     String memo;
 
-    public Card(int image, String company, String depart, String name, String position, String phone, String email, String address, String occupation, String memo){
+    public Card(int image, String company, String depart, String name, String position, String phone, String email, String address, String occupation, String groupname, String memo){
         this.image = image;
         this.company = company;
         this.depart = depart;

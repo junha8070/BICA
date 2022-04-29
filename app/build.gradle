@@ -36,6 +36,11 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.1.0'
 
     implementation 'androidx.navigation:navigation-runtime:2.3.5'
+    // ML KIT
+    implementation 'com.google.mlkit:text-recognition-korean:16.0.0-beta3'
+    // ML Label
+    implementation 'com.google.mlkit:image-labeling:17.0.7'
+    implementation 'com.google.android.gms:play-services-mlkit-image-labeling:16.0.7'
 
     def camerax_version = "1.1.0-beta02"
     // The following line is optional, as the core library is included indirectly by camera-camera2
