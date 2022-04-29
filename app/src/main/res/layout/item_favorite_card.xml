@@ -49,14 +49,14 @@
                         android:id="@+id/tv_company"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="소프트웨어응용학부 EASY"
+                        android:text="회사"
                         android:textAlignment="textEnd" />
 
                     <TextView
                         android:id="@+id/tv_depart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="안드로이드 부서"
+                        android:text="부서"
                         android:textAlignment="textEnd" />
                 </LinearLayout>
 
@@ -71,7 +71,7 @@
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="황준하"
+                        android:text="이름"
                         android:textColor="@color/black"
                         android:textSize="20dp" />
 
@@ -80,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="개발자"
+                        android:text="직종"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
                 </LinearLayout>
@@ -101,7 +101,7 @@
                         android:id="@+id/tv_Phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="010 - 8070 - 1071" />
+                        android:text="전화번호" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -120,7 +120,7 @@
                         android:id="@+id/tv_Email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="junha5021301@kakao.com" />
+                        android:text="이메일" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -139,7 +139,7 @@
                         android:id="@+id/tv_Address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="서울시 송파구 가락2동" />
+                        android:text="주소" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
