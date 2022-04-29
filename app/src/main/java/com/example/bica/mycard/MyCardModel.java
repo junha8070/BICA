@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.bica.R;
@@ -24,12 +25,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
+
+import java.util.ArrayList;
 
 public class MyCardModel {
     private String TAG = "MyCardModel";
@@ -37,12 +42,15 @@ public class MyCardModel {
     private Application application;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
-    private MutableLiveData<Card> userInfo;
+    private MutableLiveData<ArrayList<Card>> userInfo;
+    private ArrayList<Card> arrCard = new ArrayList<>();
     private MutableLiveData<String> cardId;
     private MutableLiveData<Card> updateInfo;
     private String Pnum;
 
     private MyCardFragment mycardfragment;
+
+    private Card card;
 
     public MyCardModel(Application application) {
         this.application = application;
@@ -60,27 +68,52 @@ public class MyCardModel {
                 .document(auth.getCurrentUser()
                         .getUid())
                 .collection("myCard")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for(QueryDocumentSnapshot querySnapshot : task.getResult()){
-                    Card card = querySnapshot.toObject(Card.class);
-                    userInfo.postValue(card);
-                    cardId.postValue(querySnapshot.getId());
-                    Pnum=card.getPhone();
-                }
-            }
-        });
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    card = dc.getDocument().toObject(Card.class);
+                                    Log.d(TAG, "Add city: " + card.getEmail());
+                                    arrCard.add(card);
+                                    userInfo.postValue(arrCard);
+                                    break;
+                                case MODIFIED:
+                                    arrCard.remove(dc.getOldIndex());
+                                    card = dc.getDocument().toObject(Card.class);
+                                    arrCard.add(card);
+                                    Log.d(TAG, "Modified city: " + dc.getOldIndex());
+                                    break;
+                                case REMOVED:
+                                    Log.d(TAG, "Removed city: " + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+                    }
+                });
+//                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+////                for(QueryDocumentSnapshot querySnapshot : task.getResult()){
+////                    Card card = querySnapshot.toObject(Card.class);
+////                    arrCard.add(card);
+////                    userInfo.postValue(arrCard);
+////                    cardId.postValue(querySnapshot.getId());
+////                    Pnum=card.getPhone();
+////                }
+//            }
+//        });
     }
 
-    public void chageInfo(Card prevCard, Card newCard){
+    public void chageInfo(Card prevCard, Card newCard) {
         Log.d(TAG, cardId.getValue());
-        DocumentReference sfDocRef=db.collection("users")
+        DocumentReference sfDocRef = db.collection("users")
                 .document(auth.getCurrentUser().getUid())
                 .collection("myCard")
                 .document(cardId.getValue());
 
-        Log.d(TAG, prevCard.getName()+"||"+newCard.getName());
+        Log.d(TAG, prevCard.getName() + "||" + newCard.getName());
 
         db.runTransaction(new Transaction.Function<Void>() {
             @Override
@@ -112,7 +145,7 @@ public class MyCardModel {
                 }
 
 
-                    transaction.update(sfDocRef, "address", newCard.getAddress());
+                transaction.update(sfDocRef, "address", newCard.getAddress());
 
 
                 if (!prevCard.getMemo().equals(newCard.getMemo())) {
@@ -134,9 +167,7 @@ public class MyCardModel {
     }
 
 
-
-
-    public MutableLiveData<Card> getUserInfo() {
+    public MutableLiveData<ArrayList<Card>> getUserInfo() {
         return userInfo;
     }
 
@@ -147,7 +178,6 @@ public class MyCardModel {
     public MutableLiveData<Card> getUpdateInfo() {
         return updateInfo;
     }
-
 
 
 }
