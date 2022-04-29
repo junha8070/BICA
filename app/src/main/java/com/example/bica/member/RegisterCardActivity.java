@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bica.MainActivity;
 import com.example.bica.R;
-import com.example.bica.SearchAddressActivity;
 import com.example.bica.model.Card;
+import com.example.bica.mycard.SearchAddressActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

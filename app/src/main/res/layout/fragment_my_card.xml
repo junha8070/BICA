@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.bica.mycard.MyCardViewModel" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".MyCardFragment">
+    tools:context=".mycard.MyCardFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -214,12 +220,18 @@
                             android:orientation="horizontal"
                             android:layout_weight="1"
                             android:gravity="center">
+                            <com.example.bica.FontAwesomeTextLight
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textSize="70sp"
+                                android:textColor="@color/brown"/>
 
-                            <ImageView
-                                android:id="@+id/iv_myPicFace"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/bica_portrait" />
+<!--                            <ImageView-->
+<!--                                android:id="@+id/iv_myPicFace"-->
+<!--                                android:layout_width="50dp"-->
+<!--                                android:layout_height="50dp"-->
+<!--                                android:src="@drawable/bica_portrait" />-->
 
             </LinearLayout>
 
@@ -248,7 +260,7 @@
                             android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
                             android:textSize="17dp"/>
-                        <EditText
+                       <EditText
                             android:id="@+id/et_myPhoneNum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -382,3 +394,4 @@
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

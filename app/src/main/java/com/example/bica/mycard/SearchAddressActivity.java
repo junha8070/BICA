@@ -1,4 +1,4 @@
-package com.example.bica;
+package com.example.bica.mycard;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.bica.R;
+
 public class SearchAddressActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {

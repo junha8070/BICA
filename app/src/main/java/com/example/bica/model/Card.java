@@ -8,7 +8,7 @@ import com.google.firebase.firestore.DocumentReference;
 
 public class Card {
 
-    String image;
+    int image;
     String company;
     String depart;
     String name;
@@ -35,13 +35,13 @@ public class Card {
 
     }
 
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
+//    public int getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(int image) {
+//        this.image = image;
+//    }
 
     public String getCompany() {
         return company;

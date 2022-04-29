@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/myCardFragment"
-        android:name="com.example.bica.MyCardFragment"
+        android:name="com.example.bica.mycard.MyCardFragment"
         android:label="fragment_my_card"
         tools:layout="@layout/fragment_my_card" />
     <fragment

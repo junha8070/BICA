@@ -38,7 +38,7 @@
             android:name=".ShowCardActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchAddressActivity"
+            android:name=".mycard.SearchAddressActivity"
             android:exported="false" />
         <activity
             android:name=".member.FindIDActivity"
