@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,8 @@ public class SettingFragment extends Fragment {
     private Toolbar tb_setting;
     private ListView lv_setting;
     private FirebaseAuth firebaseAuth;
+
+    private CardDao mcardDao;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -56,6 +59,13 @@ public class SettingFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        CardRoomDB cardRoomDB = Room.databaseBuilder(getContext(), CardRoomDB.class,"CardRoomDB")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+
+        mcardDao = cardRoomDB.cardDao();
+
         tb_setting.setTitle(null);
         final String[] mid = {"비밀번호 변경", "로그아웃"};
 
@@ -82,6 +92,10 @@ public class SettingFragment extends Fragment {
                                         Intent startInitialActivity = new Intent(getContext(), InitialActivity.class);
                                         startActivity(startInitialActivity);
                                         getActivity().finish();
+
+                                        // TODO: room DB 전체 삭제 후 로그인하면 다시 데이터 돌아오기
+                                        mcardDao.deleteCardAll();
+
                                     }
                                 })
                                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {

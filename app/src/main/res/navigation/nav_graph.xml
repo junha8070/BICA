@@ -6,7 +6,7 @@
     app:startDestination="@id/cardFragment">
     <fragment
         android:id="@+id/cardFragment"
-        android:name="com.example.bica.CardFragment"
+        android:name="com.example.bica.EntireCard.CardFragment"
         android:label="fragment_card"
         tools:layout="@layout/fragment_card" />
     <fragment

@@ -42,6 +42,12 @@ dependencies {
     implementation 'com.google.mlkit:image-labeling:17.0.7'
     implementation 'com.google.android.gms:play-services-mlkit-image-labeling:16.0.7'
 
+    // Room
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+
     def camerax_version = "1.1.0-beta02"
     // The following line is optional, as the core library is included indirectly by camera-camera2
     implementation "androidx.camera:camera-core:${camerax_version}"

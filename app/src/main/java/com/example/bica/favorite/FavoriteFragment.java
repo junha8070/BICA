@@ -36,7 +36,7 @@ public class FavoriteFragment extends Fragment {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private FavoriteViewModel favoriteViewModel;
-    private Card card;
+    private ArrayList<Card> arrCards;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,8 @@ public class FavoriteFragment extends Fragment {
         final Observer<ArrayList<Card>> cardObserver = new Observer<ArrayList<Card>>() {
             @Override
             public void onChanged(ArrayList<Card> cards) {
-                adapter = new FavoriteAdapter(cards, viewPager2);
+                arrCards = cards;
+                adapter = new FavoriteAdapter(arrCards, viewPager2);
                 viewPager2.setAdapter(adapter);
             }
         };
@@ -72,5 +73,11 @@ public class FavoriteFragment extends Fragment {
         favoriteViewModel.cardInfo(firebaseAuth.getCurrentUser().getEmail());
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        arrCards.clear();
     }
 }
