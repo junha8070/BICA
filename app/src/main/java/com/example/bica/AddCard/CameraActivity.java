@@ -4,6 +4,7 @@ import static androidx.camera.core.AspectRatio.RATIO_16_9;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.AspectRatio;
 import androidx.camera.core.Camera;
@@ -32,6 +33,7 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Rational;
@@ -49,10 +51,15 @@ import com.example.bica.member.LoginActivity;
 import com.example.bica.member.MemberViewModel;
 import com.example.bica.member.RegisterCardActivity;
 import com.example.bica.model.Card;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.label.ImageLabel;
 import com.google.mlkit.vision.label.ImageLabeler;
@@ -88,9 +95,10 @@ public class CameraActivity extends AppCompatActivity {
     InputImage inputImage;
     ImageLabeler labeler;
     TextRecognizer recognizer;
-
+    private FirebaseStorage mStorage = FirebaseStorage.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
     private BusinessCardViewModel businessCardViewModel;
-
+    Uri imageUri;
 
 
     @Override
@@ -201,55 +209,71 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 businessCardViewModel = new ViewModelProvider(CameraActivity.this).get(BusinessCardViewModel.class);
-
-                String name = user_name.getText().toString().trim();
                 String email = user_email.getText().toString().trim();
-                String phone = user_num.getText().toString().trim();
-                String company = company_name.getText().toString().trim();
-                String address = company_address.getText().toString().trim();
-                String occupation = company_occupation.getText().toString().trim();
-                String depart = company_depart.getText().toString().trim();
-                String position = company_position.getText().toString().trim();
-                String memo = card_memo.getText().toString().trim();
+                StorageReference storageReference = mStorage.getReference()
+                        .child("Images").child(auth.getCurrentUser().getUid()).child(email);
+                System.out.println("이미지 주소1 " + imageUri);
 
-                ProgressDialog mDialog = null;
-                if (name.isEmpty() == false && email.isEmpty() == false && phone.isEmpty() == false && company.isEmpty() == false && address.isEmpty() == false && occupation.isEmpty() == false && depart.isEmpty() == false) {
-                    Log.d(TAG, "완료 버튼");
-                    mDialog = new ProgressDialog(CameraActivity.this);
-                    mDialog.setMessage("명함입력중입니다.");
-                    mDialog.show();
+                storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        final Task<Uri> imageUrl = task.getResult().getStorage().getDownloadUrl();
+                        System.out.println("이미지 주소4 " + imageUri);
 
-                    if (position.isEmpty()) {
-                        position = "";
+
+                        while (!imageUrl.isComplete()) ;
+                        System.out.println("이미지 주소" + imageUrl.getResult().toString());
+                        String name = user_name.getText().toString().trim();
+                        String phone = user_num.getText().toString().trim();
+                        String company = company_name.getText().toString().trim();
+                        String address = company_address.getText().toString().trim();
+                        String occupation = company_occupation.getText().toString().trim();
+                        String depart = company_depart.getText().toString().trim();
+                        String position = company_position.getText().toString().trim();
+                        String memo = card_memo.getText().toString().trim();
+                        ProgressDialog mDialog = null;
+                        if (name.isEmpty() == false && email.isEmpty() == false && phone.isEmpty() == false && company.isEmpty() == false && address.isEmpty() == false && occupation.isEmpty() == false && depart.isEmpty() == false) {
+                            Log.d(TAG, "완료 버튼");
+                            mDialog = new ProgressDialog(CameraActivity.this);
+                            mDialog.setMessage("명함입력중입니다.");
+                            mDialog.show();
+
+                            if (position.isEmpty()) {
+                                position = "";
+                            }
+                            if (memo.isEmpty()) {
+                                memo = "";
+                            }
+                            Card businessCard = new Card();
+                            businessCard.setName(name);
+                            businessCard.setEmail(email);
+                            businessCard.setPhone(phone);
+                            businessCard.setCompany(company);
+                            businessCard.setAddress(address);
+                            businessCard.setOccupation(occupation);
+                            businessCard.setDepart(depart);
+                            businessCard.setPosition(position);
+                            businessCard.setMemo(memo);
+                            businessCard.setImage(imageUrl.getResult().toString());
+
+
+                            businessCardViewModel.addBusinessCard(businessCard);
+                            mDialog.dismiss();
+
+                            Intent startMain = new Intent(CameraActivity.this, MainActivity.class);
+                            startActivity(startMain);
+                            finish();
+                        }
+                        //필수정보가 부족할 때
+                        else {
+                            mDialog.dismiss();
+                            Toast.makeText(CameraActivity.this, "필수 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                     }
-                    if (memo.isEmpty()) {
-                        memo = "";
-                    }
+                });
 
-                    Card cardAccount = new Card();
-                    cardAccount.setName(name);
-                    cardAccount.setEmail(email);
-                    cardAccount.setPhone(phone);
-                    cardAccount.setCompany(company);
-                    cardAccount.setAddress(address);
-                    cardAccount.setOccupation(occupation);
-                    cardAccount.setDepart(depart);
-                    cardAccount.setPosition(position);
-                    cardAccount.setMemo(memo);
-
-                    businessCardViewModel.addBusinessCard(cardAccount);
-                    mDialog.dismiss();
-
-                    Intent startMain = new Intent(CameraActivity.this, MainActivity.class);
-                    startActivity(startMain);
-                    finish();
-                }
-                //필수정보가 부족할 때
-                else {
-                    mDialog.dismiss();
-                    Toast.makeText(CameraActivity.this, "필수 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
             }
         });
     }
