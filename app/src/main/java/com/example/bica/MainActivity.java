@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 초기화
         init();
 
+        System.out.println("test for commit");
 
 
 //        powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
