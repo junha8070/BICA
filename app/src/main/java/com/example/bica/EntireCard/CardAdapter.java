@@ -1,5 +1,8 @@
 package com.example.bica.EntireCard;
 
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,16 +18,23 @@ import java.util.ArrayList;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
 
+    private String TAG = "CardAdapterTAG";
     ArrayList<Card> cards;
 
     public CardAdapter(ArrayList<Card> cards) {
         this.cards = cards;
+        Log.d(TAG, cards.get(0).getCompany());
     }
 
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        Context context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View view = inflater.inflate(R.layout.item_card, parent, false);
+        CardAdapter.CardViewHolder vh = new CardAdapter.CardViewHolder(view);
+        return vh;
     }
 
     @Override
@@ -35,6 +45,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.tv_name.setText(cards.get(position).getName());
         holder.tv_jobTitle.setText(cards.get(position).getDepart());
         holder.tv_position.setText(cards.get(position).getPosition());
+
+//        holder.tv_company.setText("cards.get(position).getCompany()");
+//        holder.tv_email.setText("cards.get(position).getEmail()");
+//        holder.tv_phone.setText("cards.get(position).getPhone()");
+//        holder.tv_name.setText("cards.get(position).getName()");
+//        holder.tv_jobTitle.setText("cards.get(position).getDepart()");
+//        holder.tv_position.setText("cards.get(position).getPosition()");
     }
 
     @Override

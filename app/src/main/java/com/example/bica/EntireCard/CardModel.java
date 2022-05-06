@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 public class CardModel {
 
+    private String TAG = "CardModelTAG";
+
     private Application application;
 
     // Firebase
@@ -40,7 +42,7 @@ public class CardModel {
 
     public void entireCard() {
         firestore.collection("users").document(auth.getCurrentUser().getUid())
-                .collection("myCard").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                .collection("BusinessCard").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentChange dc : value.getDocumentChanges()) {
@@ -48,6 +50,7 @@ public class CardModel {
                         case ADDED:
                             Card card = dc.getDocument().toObject(Card.class);
                             arrCard.add(card);
+                            Log.d(TAG, card.getCompany());
                             cardMutableLiveData.postValue(arrCard);
                             break;
 
