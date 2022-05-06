@@ -24,7 +24,7 @@
         <entry key="app/src/main/res/drawable/ic_view_list_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/menu_selector_color.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_card.xml" value="0.15162455240885409" />
-        <entry key="app/src/main/res/layout/activity_camera.xml" value="0.23959808349609374" />
+        <entry key="app/src/main/res/layout/activity_camera.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_edit_info.xml" value="0.1359375" />
         <entry key="app/src/main/res/layout/activity_find_id.xml" value="0.25953521728515627" />
         <entry key="app/src/main/res/layout/activity_find_pw.xml" value="0.1359375" />
