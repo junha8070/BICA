@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -31,6 +32,7 @@ public class CardFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CardAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
 
     // UI
     MaterialToolbar toolbar;
@@ -64,10 +66,12 @@ public class CardFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Card> cards) {
                 arrCards = cards;
-                Log.d("CardFragment", "arrCards.get(0).getEmail()");
+//                Log.d("CardFragment", arrCards.get(0).getEmail());
                 Log.d("CardFragment", arrCards.get(0).getEmail());
                 mAdapter = new CardAdapter(arrCards);
                 mRecyclerView.setAdapter(mAdapter);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+
             }
         });
 
@@ -162,5 +166,10 @@ public class CardFragment extends Fragment {
         searchView = view.findViewById(R.id.searchView);
         chipGroup = view.findViewById(R.id.filter_group);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cardFragment_recyclerview);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        arrCards.clear();
     }
 }
