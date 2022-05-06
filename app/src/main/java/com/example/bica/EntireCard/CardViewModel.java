@@ -11,7 +11,7 @@ import com.example.bica.model.Card;
 
 import java.util.ArrayList;
 
-public class CardViewModel extends AndroidViewModel {
+public class  CardViewModel extends AndroidViewModel {
     private CardModel cardModel;
 
     private LiveData<ArrayList<Card>> cardLiveData;

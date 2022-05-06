@@ -34,15 +34,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:orientation="vertical">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/previewView"
+                android:layout_width="315dp"
+                android:layout_height="175dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp" />
 
             <ImageView
-                android:id="@+id/img_face"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:id="@+id/card_imgv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/user" />
+                android:adjustViewBounds="true"
+                android:background="@color/brown"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
 
         </LinearLayout>
 

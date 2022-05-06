@@ -51,9 +51,7 @@ public class RegisterCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_card);
-
         init();
-
         CardRoomDB cardRoomDB = Room.databaseBuilder(getApplicationContext(), CardRoomDB.class,"CardRoomDB")
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
@@ -75,11 +73,8 @@ public class RegisterCardActivity extends AppCompatActivity {
         btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 memberViewModel = new ViewModelProvider(RegisterCardActivity.this).get(MemberViewModel.class);
-
                 //ToDo: 이미지 추가
-
                 String name = edt_username.getText().toString().trim();
                 String email = edt_useremail.getText().toString().trim();
                 String phone = edt_phonenum.getText().toString().trim();
@@ -218,7 +213,8 @@ public class RegisterCardActivity extends AppCompatActivity {
     public void init() {
         btn_complete = findViewById(R.id.btn_complete);
         btn_later = findViewById(R.id.btn_later);
-        img_face = findViewById(R.id.img_face);
+        img_face = findViewById(R.id.previewView);
+
         tv_title = findViewById(R.id.register_card_title);
         edt_username = findViewById(R.id.user_name);
         edt_useremail = findViewById(R.id.user_email);

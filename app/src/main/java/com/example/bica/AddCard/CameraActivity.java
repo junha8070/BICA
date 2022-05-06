@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -35,6 +36,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Rational;
 import android.view.View;
@@ -57,6 +59,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -99,6 +106,7 @@ public class CameraActivity extends AppCompatActivity {
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private BusinessCardViewModel businessCardViewModel;
     Uri imageUri;
+    String str_image;
 
 
     @Override
@@ -183,6 +191,9 @@ public class CameraActivity extends AppCompatActivity {
 
                                 // Proxy image -> bitmap
                                 byte[] byteImage = ImageUtil.jpegImageToJpegByteArray(image);
+
+
+
                                 BitmapFactory bitmapFactory = new BitmapFactory();
                                 BitmapFactory.Options options = new BitmapFactory.Options();
                                 Bitmap bitmap = bitmapFactory.decodeByteArray(byteImage, /* offset= */ 0, byteImage.length);
@@ -190,9 +201,11 @@ public class CameraActivity extends AppCompatActivity {
                                 System.out.println("test bitmap " + bitmap.getHeight());
                                 bitmap = Bitmap.createBitmap(bitmap, bitmap.getWidth() / 3, 0, 1500, bitmap.getHeight());
 
+
                                 // bitmap이미지 회전
                                 bitmap = rotateImage(bitmap, 90);
                                 inputImage = InputImage.fromBitmap(bitmap, 0);
+                                imageUri = getImageUri(getApplicationContext(), bitmap);
 
                                 // imageView에 bitmap이미지 띄우기
                                 imageView.setVisibility(View.VISIBLE);
@@ -210,72 +223,128 @@ public class CameraActivity extends AppCompatActivity {
             public void onClick(View view) {
                 businessCardViewModel = new ViewModelProvider(CameraActivity.this).get(BusinessCardViewModel.class);
                 String email = user_email.getText().toString().trim();
-                StorageReference storageReference = mStorage.getReference()
-                        .child("Images").child(auth.getCurrentUser().getUid()).child(email);
-                System.out.println("이미지 주소1 " + imageUri);
+                String name = user_name.getText().toString().trim();
+                String phone = user_num.getText().toString().trim();
+                String company = company_name.getText().toString().trim();
+                String address = company_address.getText().toString().trim();
+                String occupation = company_occupation.getText().toString().trim();
+                String depart = company_depart.getText().toString().trim();
+                String position = company_position.getText().toString().trim();
+                String memo = card_memo.getText().toString().trim();
 
-                storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        final Task<Uri> imageUrl = task.getResult().getStorage().getDownloadUrl();
-                        System.out.println("이미지 주소4 " + imageUri);
+                System.out.println("test image "+ imageUri);
+                ProgressDialog mDialog = null;
+                if (name.isEmpty() == false && email.isEmpty() == false && phone.isEmpty() == false && company.isEmpty() == false && address.isEmpty() == false && occupation.isEmpty() == false && depart.isEmpty() == false) {
+                    Log.d(TAG, "완료 버튼");
+                    mDialog = new ProgressDialog(CameraActivity.this);
+                    mDialog.setMessage("명함입력중입니다.");
+                    mDialog.show();
 
-
-                        while (!imageUrl.isComplete()) ;
-                        System.out.println("이미지 주소" + imageUrl.getResult().toString());
-                        String name = user_name.getText().toString().trim();
-                        String phone = user_num.getText().toString().trim();
-                        String company = company_name.getText().toString().trim();
-                        String address = company_address.getText().toString().trim();
-                        String occupation = company_occupation.getText().toString().trim();
-                        String depart = company_depart.getText().toString().trim();
-                        String position = company_position.getText().toString().trim();
-                        String memo = card_memo.getText().toString().trim();
-                        ProgressDialog mDialog = null;
-                        if (name.isEmpty() == false && email.isEmpty() == false && phone.isEmpty() == false && company.isEmpty() == false && address.isEmpty() == false && occupation.isEmpty() == false && depart.isEmpty() == false) {
-                            Log.d(TAG, "완료 버튼");
-                            mDialog = new ProgressDialog(CameraActivity.this);
-                            mDialog.setMessage("명함입력중입니다.");
-                            mDialog.show();
-
-                            if (position.isEmpty()) {
-                                position = "";
-                            }
-                            if (memo.isEmpty()) {
-                                memo = "";
-                            }
-                            Card businessCard = new Card();
-                            businessCard.setName(name);
-                            businessCard.setEmail(email);
-                            businessCard.setPhone(phone);
-                            businessCard.setCompany(company);
-                            businessCard.setAddress(address);
-                            businessCard.setOccupation(occupation);
-                            businessCard.setDepart(depart);
-                            businessCard.setPosition(position);
-                            businessCard.setMemo(memo);
-                            businessCard.setImage(imageUrl.getResult().toString());
-
-
-                            businessCardViewModel.addBusinessCard(businessCard);
-                            mDialog.dismiss();
-
-                            Intent startMain = new Intent(CameraActivity.this, MainActivity.class);
-                            startActivity(startMain);
-                            finish();
-                        }
-                        //필수정보가 부족할 때
-                        else {
-                            mDialog.dismiss();
-                            Toast.makeText(CameraActivity.this, "필수 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
+                    if (position.isEmpty()) {
+                        position = "";
                     }
-                });
+                    if (memo.isEmpty()) {
+                        memo = "";
+                    }
+                    Card businessCard = new Card();
+                    businessCard.setName(name);
+                    businessCard.setEmail(email);
+                    businessCard.setPhone(phone);
+                    businessCard.setCompany(company);
+                    businessCard.setAddress(address);
+                    businessCard.setOccupation(occupation);
+                    businessCard.setDepart(depart);
+                    businessCard.setPosition(position);
+                    businessCard.setMemo(memo);
+
+                    mDialog.dismiss();
+
+                    FirebaseFirestore.getInstance().collection("users")
+                            .document(auth.getCurrentUser()
+                                    .getUid())
+                            .collection("BusinessCard")
+                            .whereEqualTo("name", name)
+                            .whereEqualTo("phone", phone)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        System.out.println("find card uid");
+                                        System.out.println("find card uid1 " + task.getResult().toString());
+
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            Log.d(TAG, document.getId() + " => " + document.getData());
+                                            System.out.println("find card uid1 " + document.getId());
+                                            String BC_uid = document.getId();
+
+                                            StorageReference storageReference = mStorage.getReference()
+                                                    .child("Images").child(auth.getCurrentUser().getUid()).child("BusinessCard").child(BC_uid);
+                                            System.out.println("이미지 주소1 " + imageUri.toString());
+
+                                            storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                                @RequiresApi(api = Build.VERSION_CODES.O)
+                                                @Override
+                                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                                    final Task<Uri> imageUrl = task.getResult().getStorage().getDownloadUrl();
+                                                    System.out.println("이미지 주소4 " + imageUri.toString());
+
+                                                    while (!imageUrl.isComplete()) ;
+                                                    System.out.println("이미지 주소" + imageUrl.getResult().toString());
+                                                    businessCard.setImage(imageUrl.getResult().toString());
+
+                                                }
+                                            });
+                                        }
+
+                                    }
+                                }
+                            });
+
+                    businessCardViewModel.addBusinessCard(businessCard);
+                    Intent startMain = new Intent(CameraActivity.this, MainActivity.class);
+                    Toast.makeText(CameraActivity.this, "명함 추가 완료.", Toast.LENGTH_SHORT).show();
+
+                    startActivity(startMain);
+                    finish();
+                }
+                //필수정보가 부족할 때
+                else {
+                    mDialog.dismiss();
+                    Toast.makeText(CameraActivity.this, "필수 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
             }
         });
+    }
+
+    private Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    // 바이너리 바이트 배열을 스트링으로
+    public static String byteArrayToBinaryString(byte[] b) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < b.length; ++i) {
+            sb.append(byteToBinaryString(b[i]));
+        }
+        return sb.toString();
+    }
+
+    // 바이너리 바이트를 스트링으로
+    public static String byteToBinaryString(byte n) {
+        StringBuilder sb = new StringBuilder("00000000");
+        for (int bit = 0; bit < 8; bit++) {
+            if (((n >> bit) & 1) > 0) {
+                sb.setCharAt(7 - bit, '1');
+            }
+        }
+        return sb.toString();
     }
 
     // 이미지 회전 함수
