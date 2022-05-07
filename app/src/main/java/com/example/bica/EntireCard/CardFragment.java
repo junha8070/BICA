@@ -46,7 +46,6 @@ public class CardFragment extends Fragment {
     // ViewModel
     private CardViewModel cardViewModel;
     private ArrayList<Card> arrCards;
-    private ArrayList<Card> searchCards;
 
     public ImageView logo_img;
     public EditText find_edt;
@@ -71,12 +70,9 @@ public class CardFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Card> cards) {
                 arrCards = cards;
-//                Log.d("CardFragment", arrCards.get(0).getEmail());
-                Log.d("CardFragment", arrCards.get(0).getEmail());
                 mAdapter = new CardAdapter(arrCards);
                 mRecyclerView.setAdapter(mAdapter);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-
             }
         });
 
@@ -85,8 +81,6 @@ public class CardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        // cardFragment_recyclerview
         View view = inflater.inflate(R.layout.fragment_card, container, false);
 
         init(view);
@@ -101,6 +95,7 @@ public class CardFragment extends Fragment {
                         if(searchView.getVisibility()==View.GONE){
                             searchView.setVisibility(View.VISIBLE);
                         }else{
+                            searchView.setQuery("",true);
                             searchView.setVisibility(View.GONE);
                         }
                         break;
@@ -127,12 +122,6 @@ public class CardFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                if(!newText.isEmpty()){
-//                    mAdapter.filter();
-//                    mAdapter = new CardAdapter(search(newText));
-//                    mRecyclerView.setAdapter(mAdapter);
-//                }
-                Log.d(TAG, "입력된 텍스티"+newText);
                 mAdapter.getFilter().filter(newText);
                 return false;
             }
@@ -140,17 +129,6 @@ public class CardFragment extends Fragment {
 
         return view;
     }
-
-//    private ArrayList<Card> search(String query){
-//        arrCards = new ArrayList<>();
-//        for(int i = 0; i<arrCards.size();i++){
-//            String item = arrCards.get(i).getEmail();
-//            if(item.toLowerCase().contains(query.toLowerCase())){
-//                searchCards.add(arrCards.get(i));
-//            }
-//        }
-//        return searchCards;
-//    }
 
     private void init(View view){
         toolbar = view.findViewById(R.id.topAppBar);

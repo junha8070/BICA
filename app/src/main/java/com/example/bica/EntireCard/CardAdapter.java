@@ -26,14 +26,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     private String TAG = "CardAdapterTAG";
     ArrayList<Card> cards;
-    ArrayList<Card> filterList;
     ArrayList<Card> initList;
+    ArrayList<Card> filteredList = new ArrayList<>();
 
     public CardAdapter(ArrayList<Card> cards) {
         this.cards = cards;
         initList = new ArrayList<>();
         initList.addAll(cards);
-        filterList = new ArrayList<>();
         filteredList.addAll(cards);
 
     }
@@ -48,11 +47,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         CardAdapter.CardViewHolder vh = new CardAdapter.CardViewHolder(view);
         return vh;
     }
-    //data set changed
-//    public void dataSetChanged(List<Card> exampleList) {
-//        initList = cards;
-//        notifyDataSetChanged();
-//    }
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
@@ -62,13 +56,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.tv_name.setText(initList.get(position).getName());
         holder.tv_jobTitle.setText(initList.get(position).getDepart());
         holder.tv_position.setText(initList.get(position).getPosition());
-
-//        holder.tv_company.setText("cards.get(position).getCompany()");
-//        holder.tv_email.setText("cards.get(position).getEmail()");
-//        holder.tv_phone.setText("cards.get(position).getPhone()");
-//        holder.tv_name.setText("cards.get(position).getName()");
-//        holder.tv_jobTitle.setText("cards.get(position).getDepart()");
-//        holder.tv_position.setText("cards.get(position).getPosition()");
     }
 
     @Override
@@ -76,38 +63,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         return initList.size();
     }
 
+    // 검색기능 구현
     @Override
     public Filter getFilter() {
         return exampleFilter;
     }
-    ArrayList<Card> filteredList = new ArrayList<>();
+
+    // 검색기능중 필터링 작업
     private Filter exampleFilter = new Filter() {
-        //Automatic on background thread
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             filteredList.clear();
 
             String filterPattern = constraint.toString().toLowerCase().trim();
 
-//            if (filterPattern == null || filterPattern.isEmpty()) {
-//                for(Card item : cards){
-//                    filteredList.add(item);
-//                }
-//            } else {
-//                for (Card item : cards) {
-//                    //TODO filter 대상 setting
-//                    if (item.getEmail().toLowerCase().contains(filterPattern)) {
-//                        Log.d(TAG, "수신"+item.getEmail());
-//                        filteredList.add(item);
-//                    }
-//                }
-//            }
             for (Card item : cards) {
                 //TODO filter 대상 setting
                 if (item.getEmail().toLowerCase().contains(filterPattern)) {
-                    Log.d(TAG, "사이즈"+cards.size());
-                    Log.d(TAG, "사이즈"+filterList.size());
-                    Log.d(TAG, "사이즈"+initList.size());
                     filteredList.add(item);
                 }
             }
@@ -116,11 +88,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             return results;
         }
 
-        //Automatic on UI thread
-//        @SuppressLint("NotifyDataSetChanged")
+        // 검색 결과 화면에 보여주기 위한 코드
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-//            Log.d(TAG, "빈칸이다다다다다");
             initList.clear();
             initList.addAll((ArrayList)results.values);
             notifyDataSetChanged();
