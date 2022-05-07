@@ -93,7 +93,6 @@ public class SettingFragment extends Fragment {
                                         startActivity(startInitialActivity);
                                         getActivity().finish();
 
-                                        // TODO: room DB 전체 삭제 후 로그인하면 다시 데이터 돌아오기
                                         mcardDao.deleteCardAll();
 
                                     }

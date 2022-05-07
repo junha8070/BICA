@@ -15,18 +15,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/register_card_title"
-                android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:padding="30dp"
                 android:text="@string/RegisterCard_Activity_title"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20dp" />
 
         </LinearLayout>
 
@@ -44,7 +44,7 @@
                 android:layout_marginBottom="8dp" />
 
             <ImageView
-                android:id="@+id/card_imgv"
+                android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -53,6 +53,30 @@
                 android:scaleType="fitXY"
                 android:visibility="gone" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/startBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:text="카메라 ON" />
+
+            <Button
+                android:id="@+id/captureBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:text="명함 촬영하기" />
         </LinearLayout>
 
         <LinearLayout
@@ -140,8 +164,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_complete"
@@ -149,15 +173,16 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:backgroundTint="@color/brown"
-                android:text="@string/Complete"/>
+                android:text="@string/Complete" />
+
             <Button
                 android:id="@+id/btn_later"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:background="#00ff0000"
-                android:textColor="@color/black"
-                android:text="@string/Choose_Later"/>
+                android:text="@string/Choose_Later"
+                android:textColor="@color/black" />
         </LinearLayout>
 
     </LinearLayout>

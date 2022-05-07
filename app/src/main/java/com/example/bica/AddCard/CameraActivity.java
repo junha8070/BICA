@@ -191,9 +191,6 @@ public class CameraActivity extends AppCompatActivity {
 
                                 // Proxy image -> bitmap
                                 byte[] byteImage = ImageUtil.jpegImageToJpegByteArray(image);
-
-
-
                                 BitmapFactory bitmapFactory = new BitmapFactory();
                                 BitmapFactory.Options options = new BitmapFactory.Options();
                                 Bitmap bitmap = bitmapFactory.decodeByteArray(byteImage, /* offset= */ 0, byteImage.length);
@@ -257,7 +254,6 @@ public class CameraActivity extends AppCompatActivity {
                     businessCard.setPosition(position);
                     businessCard.setMemo(memo);
 
-                    mDialog.dismiss();
 
                     FirebaseFirestore.getInstance().collection("users")
                             .document(auth.getCurrentUser()
@@ -302,6 +298,8 @@ public class CameraActivity extends AppCompatActivity {
                             });
 
                     businessCardViewModel.addBusinessCard(businessCard);
+                    mDialog.dismiss();
+
                     Intent startMain = new Intent(CameraActivity.this, MainActivity.class);
                     Toast.makeText(CameraActivity.this, "명함 추가 완료.", Toast.LENGTH_SHORT).show();
 

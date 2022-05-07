@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MemberModel {
 
@@ -111,6 +113,32 @@ public class MemberModel {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             userMutableLiveData.postValue(firebaseAuth.getCurrentUser());
+                            firestore.collection("users")
+                                    .document(firebaseAuth.getCurrentUser().getUid())
+                                    .collection("myCard")
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if(task.isSuccessful()){
+                                                Card saveCard = new Card();
+                                                for(QueryDocumentSnapshot document : task.getResult()){
+                                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                                    saveCard.setName(document.get("name").toString());
+                                                    saveCard.setEmail(document.get("email").toString());
+                                                    saveCard.setPhone(document.get("phone").toString());
+                                                    saveCard.setCompany(document.get("company").toString());
+                                                    saveCard.setAddress(document.get("address").toString());
+                                                    saveCard.setOccupation(document.get("occupation").toString());
+                                                    saveCard.setDepart(document.get("depart").toString());
+                                                    saveCard.setPosition(document.get("position").toString());
+                                                    saveCard.setMemo(document.get("memo").toString());
+                                                    //saveCard.setImage(document.get("image").toString());
+                                                    mcardDao.setInsertCard(saveCard);
+                                                }
+                                            }
+                                        }
+                                    });
                         } else {
                             Toast.makeText(application, "로그인 오류" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }

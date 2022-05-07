@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Boolean isFabOpen = false;
     private FloatingActionButton fab_main, fab_camera, fab_nfc, fab_qrcode, fab_direct;
 //    final int PERMISSIONS_REQUEST_CODE = 1;
-
 //    PowerManager powerManager;
 //    PowerManager.WakeLock wakeLock;
 
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 초기화
         init();
 
-        System.out.println("test for commit 3");
+        System.out.println("test for commit 4");
 
 
 //        powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
