@@ -1,12 +1,16 @@
 package com.example.bica.EntireCard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,15 +19,23 @@ import com.example.bica.R;
 import com.example.bica.model.Card;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
+public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> implements Filterable {
 
     private String TAG = "CardAdapterTAG";
     ArrayList<Card> cards;
+    ArrayList<Card> filterList;
+    ArrayList<Card> initList;
 
     public CardAdapter(ArrayList<Card> cards) {
         this.cards = cards;
-        Log.d(TAG, cards.get(0).getCompany());
+        initList = new ArrayList<>();
+        initList.addAll(cards);
+        filterList = new ArrayList<>();
+        filteredList.addAll(cards);
+
     }
 
     @NonNull
@@ -36,15 +48,20 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         CardAdapter.CardViewHolder vh = new CardAdapter.CardViewHolder(view);
         return vh;
     }
+    //data set changed
+//    public void dataSetChanged(List<Card> exampleList) {
+//        initList = cards;
+//        notifyDataSetChanged();
+//    }
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
-        holder.tv_company.setText(cards.get(position).getCompany());
-        holder.tv_email.setText(cards.get(position).getEmail());
-        holder.tv_phone.setText(cards.get(position).getPhone());
-        holder.tv_name.setText(cards.get(position).getName());
-        holder.tv_jobTitle.setText(cards.get(position).getDepart());
-        holder.tv_position.setText(cards.get(position).getPosition());
+        holder.tv_company.setText(initList.get(position).getCompany());
+        holder.tv_email.setText(initList.get(position).getEmail());
+        holder.tv_phone.setText(initList.get(position).getPhone());
+        holder.tv_name.setText(initList.get(position).getName());
+        holder.tv_jobTitle.setText(initList.get(position).getDepart());
+        holder.tv_position.setText(initList.get(position).getPosition());
 
 //        holder.tv_company.setText("cards.get(position).getCompany()");
 //        holder.tv_email.setText("cards.get(position).getEmail()");
@@ -56,8 +73,59 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     @Override
     public int getItemCount() {
-        return cards.size();
+        return initList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    ArrayList<Card> filteredList = new ArrayList<>();
+    private Filter exampleFilter = new Filter() {
+        //Automatic on background thread
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            filteredList.clear();
+
+            String filterPattern = constraint.toString().toLowerCase().trim();
+
+//            if (filterPattern == null || filterPattern.isEmpty()) {
+//                for(Card item : cards){
+//                    filteredList.add(item);
+//                }
+//            } else {
+//                for (Card item : cards) {
+//                    //TODO filter 대상 setting
+//                    if (item.getEmail().toLowerCase().contains(filterPattern)) {
+//                        Log.d(TAG, "수신"+item.getEmail());
+//                        filteredList.add(item);
+//                    }
+//                }
+//            }
+            for (Card item : cards) {
+                //TODO filter 대상 setting
+                if (item.getEmail().toLowerCase().contains(filterPattern)) {
+                    Log.d(TAG, "사이즈"+cards.size());
+                    Log.d(TAG, "사이즈"+filterList.size());
+                    Log.d(TAG, "사이즈"+initList.size());
+                    filteredList.add(item);
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        //Automatic on UI thread
+//        @SuppressLint("NotifyDataSetChanged")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+//            Log.d(TAG, "빈칸이다다다다다");
+            initList.clear();
+            initList.addAll((ArrayList)results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     class CardViewHolder extends RecyclerView.ViewHolder{
 

@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bica.R;
 import com.example.bica.model.Card;
@@ -26,8 +27,11 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CardFragment extends Fragment {
+
+    private String TAG = "CardFragmentTAG";
 
     private RecyclerView mRecyclerView;
     private CardAdapter mAdapter;
@@ -42,6 +46,7 @@ public class CardFragment extends Fragment {
     // ViewModel
     private CardViewModel cardViewModel;
     private ArrayList<Card> arrCards;
+    private ArrayList<Card> searchCards;
 
     public ImageView logo_img;
     public EditText find_edt;
@@ -114,52 +119,38 @@ public class CardFragment extends Fragment {
             }
         });
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-
-
-
-//        mRecyclerView = (RecyclerView) view.findViewById(R.id.cardFragment_recyclerview);
-//        mLayoutManager = new LinearLayoutManager(getActivity());
-//        mRecyclerView.setLayoutManager(mLayoutManager);
-//        mAdapter = new CardAdapter(dataList);
-//        mRecyclerView.setAdapter(mAdapter);
-//
-//        ItemTouchHelper helper;
-//
-////        edt_tv = (TextView) view.findViewById(R.id.edt_tv);
-////        logo_img = (ImageView) view.findViewById(R.id.logo_img);
-////        find_edt = (EditText) view.findViewById(R.id.find_edt);
-////        spinner_group = (Spinner) view.findViewById(R.id.spinner_group);
-//        arrayList = new ArrayList<>();
-//
-//        // 내 uid밑의 arrayList를 가져와 arrayList에 담고 spinner에 보이도록
-//        arrayList.add("미분류");
-//        arrayList.add("test1");
-//        arrayList.add("test2");
-//        arrayList.add("test3");
-//        arrayList.add("test4");
-//        arrayList.add("test5");
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, arrayList);
-//        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner_group.setAdapter(arrayAdapter);
-//
-//        // Create ItemTouchHelperListener Interface
-//        helper = new ItemTouchHelper(new ItemTouchHelperCallback(mAdapter));
-//        helper.attachToRecyclerView(mRecyclerView);
-
-        // editText에 글자 채워질 때 반응
-
-
-//        // 편집 글자 눌렀을 때 반응
-//        edt_tv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                if(!newText.isEmpty()){
+//                    mAdapter.filter();
+//                    mAdapter = new CardAdapter(search(newText));
+//                    mRecyclerView.setAdapter(mAdapter);
+//                }
+                Log.d(TAG, "입력된 텍스티"+newText);
+                mAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         return view;
     }
+
+//    private ArrayList<Card> search(String query){
+//        arrCards = new ArrayList<>();
+//        for(int i = 0; i<arrCards.size();i++){
+//            String item = arrCards.get(i).getEmail();
+//            if(item.toLowerCase().contains(query.toLowerCase())){
+//                searchCards.add(arrCards.get(i));
+//            }
+//        }
+//        return searchCards;
+//    }
 
     private void init(View view){
         toolbar = view.findViewById(R.id.topAppBar);
