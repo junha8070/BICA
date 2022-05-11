@@ -1,36 +1,24 @@
 package com.example.bica.mycard;
 
-import static android.content.ContentValues.TAG;
-
-
-import android.app.AlertDialog;
 import android.app.Application;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
-import com.example.bica.R;
+import com.example.bica.CardDao;
+import com.example.bica.CardRoomDB;
 import com.example.bica.model.Card;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 
@@ -51,6 +39,7 @@ public class MyCardModel {
     private MyCardFragment mycardfragment;
 
     private Card card;
+    private CardDao mcardDao;
 
     public MyCardModel(Application application) {
         this.application = application;
@@ -60,6 +49,13 @@ public class MyCardModel {
         userInfo = new MutableLiveData<>();
         cardId = new MutableLiveData<>();
         updateInfo = new MutableLiveData<>();
+
+        CardRoomDB cardRoomDB = Room.databaseBuilder(application.getApplicationContext(), CardRoomDB.class,"CardRoomDB")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+
+        mcardDao = cardRoomDB.cardDao();
 
     }
 
@@ -157,7 +153,10 @@ public class MyCardModel {
         }).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+
                 Log.d(TAG, "Transaction success!");
+                mcardDao.setUpdateCard(newCard);    // TODO: Room DB 업데이트 결과 확인
+                Log.d(TAG, "Room DB Update");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
