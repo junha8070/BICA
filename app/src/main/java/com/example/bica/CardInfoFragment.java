@@ -23,7 +23,7 @@ public class CardInfoFragment extends Fragment {
     public CardInfoFragment() {
         // Required empty public constructor
     }
-    //TODO: Git test 223
+    //TODO: Git test 223456
     public static CardInfoFragment newInstance() {
         CardInfoFragment fragment = new CardInfoFragment();
         Bundle args = new Bundle();
