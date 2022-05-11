@@ -1,7 +1,10 @@
 package com.example.bica.mycard;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.MycardView
     private ViewPager2 viewPager2;
     private AlertDialog.Builder builder;
 
+
     public MyCardAdapter(ArrayList<Card> cardModel, ViewPager2 viewPager2) {
         this.cardModel = cardModel;
         this.viewPager2 = viewPager2;
@@ -46,6 +50,12 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.MycardView
         holder.tv_Email.setText(cardModel.get(i).getEmail());
         holder.tv_Address.setText(cardModel.get(i).getAddress());
 
+
+//        Intent intent = new Intent(holder.itemView.getContext(), MyCardFragment.class);
+//        intent.putExtra("page",cardModel.get(i).getName());
+//        context.startActivity(intent);
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +64,6 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.MycardView
         });
 
     }
-
     public int getItemCount() {
         return cardModel.size();
     }
@@ -73,7 +82,10 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.MycardView
             tv_Phone = view.findViewById(R.id.tv_Phone);
             tv_Email = view.findViewById(R.id.tv_Email);
             tv_Address = view.findViewById(R.id.tv_Address);
+
         }
     }
+
+
 
 }
