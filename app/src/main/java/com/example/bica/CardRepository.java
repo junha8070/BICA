@@ -23,6 +23,10 @@ public class CardRepository {
 
     }
 
+    public LiveData<List<Card>> getAllCards() {
+        return allCards;
+    }
+
     public void setInsertCard(Card card){
         new InsertCardAsyncTask(cardDao).execute(card);
     }

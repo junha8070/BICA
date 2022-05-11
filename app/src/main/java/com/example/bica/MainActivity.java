@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -17,15 +20,20 @@ import com.example.bica.AddCard.CameraActivity;
 import com.example.bica.AddCard.ScanQR;
 import com.example.bica.member.LoginActivity;
 import com.example.bica.member.RegisterCardActivity;
+import com.example.bica.model.Card;
+import com.example.bica.mycard.MyCardViewModel;
 import com.example.bica.nfc.Nfc_Read_Activity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab_main, fab_camera, fab_nfc, fab_qrcode, fab_direct;
+    private MyCardViewModel myCardViewModel;
 //    final int PERMISSIONS_REQUEST_CODE = 1;
 //    PowerManager powerManager;
 //    PowerManager.WakeLock wakeLock;
@@ -40,6 +48,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         init();
 
         System.out.println("test for commit 4");
+
+        myCardViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(MyCardViewModel.class);
+
+        myCardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
+            @Override
+            public void onChanged(List<Card> cards) {
+                if(cards != null){
+                    Log.d("MainActivityTAG", String.valueOf(cards.size()));
+                }
+                else{
+                    Log.d("MainActivityTAG", "Fail");
+                }
+            }
+        });
 
 
 //        powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);

@@ -50,6 +50,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyCardFragment extends Fragment {
     private TextView tv_mycardname,tv_myPosition,tv_myOccupation,tv_myTeamName,tv_myCompany_Name,tv_myGroupName,tv_myPhoneNum,tv_my_Email,tv_myCompany_Address,tv_myMemo,tv_Pnum;
@@ -83,6 +84,20 @@ public class MyCardFragment extends Fragment {
                         viewPager2.setAdapter(adapter);
                     }
                 });
+
+//        myCardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
+//            @Override
+//            public void onChanged(List<Card> cards) {
+////                Toast.makeText(getContext(), cards.get(0).getName(), Toast.LENGTH_SHORT).show();
+//                if(cards != null){
+//                    Log.d("CardFragmentTag", cards.get(0).getName());
+//                }
+//                else{
+//                    Log.d("CardFragmentTag", "Fail");
+//
+//                }
+//            }
+//        });
 //                new Observer<Card>() {
 //            @Override
 //            public void onChanged(Card card) {

@@ -22,14 +22,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bica.CardRepository;
 import com.example.bica.Chip;
 import com.example.bica.R;
 import com.example.bica.model.Card;
+import com.example.bica.mycard.MyCardViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.chip.ChipGroup;
 import com.google.api.Distribution;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class CardFragment extends Fragment {
@@ -39,6 +42,8 @@ public class CardFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CardAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private CardRepository cardRepository;
 
 
     // UI
@@ -50,6 +55,7 @@ public class CardFragment extends Fragment {
 
     // ViewModel
     private CardViewModel cardViewModel;
+    private MyCardViewModel myCardViewModel;
     private ArrayList<Card> arrCards;
 
     public ImageView logo_img;
@@ -70,6 +76,7 @@ public class CardFragment extends Fragment {
         arrCards = new ArrayList<>();
 
         cardViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(CardViewModel.class);
+        myCardViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(MyCardViewModel.class);
 
         cardViewModel.getCardLiveData().observe(this, new Observer<ArrayList<Card>>() {
             @Override
@@ -80,6 +87,16 @@ public class CardFragment extends Fragment {
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
             }
         });
+
+//        myCardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
+//            @Override
+//            public void onChanged(List<Card> cards) {
+////                Toast.makeText(getContext(), cards.get(0).getName(), Toast.LENGTH_SHORT).show();
+//                if(cards != null){
+//                    Log.d("CardFragmentTag", cards.get(0).getName());
+//                }
+//            }
+//        });
 
     }
 

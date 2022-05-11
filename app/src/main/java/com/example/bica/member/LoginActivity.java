@@ -82,12 +82,14 @@ public class LoginActivity extends AppCompatActivity {
                                         saveCard.setDepart(document.get("depart").toString());
                                         saveCard.setPosition(document.get("position").toString());
                                         saveCard.setMemo(document.get("memo").toString());
-                                        //saveCard.setImage(document.get("image").toString());
+                                        saveCard.setImage(document.get("image").toString());
                                         mcardDao.setUpdateCard(saveCard);
                                     }
                                 }
                             }
                         });
+
+                //mcardDao.getCardAll();
 
                 Intent startMain = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(startMain);
