@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,6 +52,35 @@ public class RegisterActivity extends AppCompatActivity {
         init();
         edt_phonenum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         //Todo: 한 전화번호당 한 아이디 제한걸기
+
+        //Todo: 이메일 인증 해보기
+//        btn_check.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ActionCodeSettings actionCodeSettings =
+//                    ActionCodeSettings.newBuilder()
+//                            .setUrl("https://bica-68326.firebaseapp.com/__/auth/action?mode=action&oobCode=code")
+//                            .setHandleCodeInApp(true)
+//                            .setAndroidPackageName(
+//                                    "com.example.bica",
+//                                    true,
+//                                    "21")
+//                            .build();
+//
+//                firebaseAuth.sendSignInLinkToEmail(edt_useremail.getText().toString().trim(), actionCodeSettings)
+//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                if(task.isSuccessful()){
+//                                    Log.d(TAG, "Email sent");
+//                                }
+//                                else{
+//                                    Log.e(TAG,"Fail to send email");
+//                                }
+//                            }
+//                        });
+//            }
+//        });
 
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
