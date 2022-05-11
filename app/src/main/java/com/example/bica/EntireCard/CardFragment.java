@@ -17,14 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bica.Chip;
 import com.example.bica.R;
 import com.example.bica.model.Card;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.chip.ChipGroup;
+import com.google.api.Distribution;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -41,7 +44,9 @@ public class CardFragment extends Fragment {
     // UI
     MaterialToolbar toolbar;
     SearchView searchView;
+    LinearLayout linearLayout;
     ChipGroup chipGroup;
+    Chip chip;
 
     // ViewModel
     private CardViewModel cardViewModel;
@@ -102,8 +107,10 @@ public class CardFragment extends Fragment {
                     case R.id.filter:
                         if(chipGroup.getVisibility()==View.GONE){
                             chipGroup.setVisibility(View.VISIBLE);
+                            linearLayout.setVisibility(View.VISIBLE);
                         }else{
                             chipGroup.setVisibility(View.GONE);
+                            linearLayout.setVisibility(View.GONE);
                         }
                         break;
                     default:
@@ -135,6 +142,7 @@ public class CardFragment extends Fragment {
         searchView = view.findViewById(R.id.searchView);
         chipGroup = view.findViewById(R.id.filter_group);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cardFragment_recyclerview);
+        linearLayout = (LinearLayout) view.findViewById(R.id.linear);
     }
     @Override
     public void onPause() {

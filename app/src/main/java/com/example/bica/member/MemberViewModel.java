@@ -19,6 +19,8 @@ public class MemberViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> saveUserInfoMutableLiveData;
     private MutableLiveData<Boolean> isSuccessful;
     private MutableLiveData<FirebaseFirestore> cardMutableLiveData;
+    private MutableLiveData<String> cardId;
+    private MutableLiveData<Card> updateCard;
 
     public MemberViewModel(@NonNull Application application){
         super(application);
@@ -29,6 +31,8 @@ public class MemberViewModel extends AndroidViewModel {
         saveUserInfoMutableLiveData = memberModel.getSaveUserInfoMutableLiveData();
         isSuccessful = memberModel.getIsSuccessful();
         cardMutableLiveData = memberModel.getCardMutableLiveData();
+        cardId = memberModel.getCardId();
+        updateCard = memberModel.getUpdateCard();
     }
 
     public void register(String email, String password, User userAccount){
@@ -47,6 +51,10 @@ public class MemberViewModel extends AndroidViewModel {
 //        memberModel
     }
 
+    public void changeInfo(Card prevCard, Card newCard){
+        memberModel.chageInfo(prevCard, newCard);
+    }
+
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return userMutableLiveData;
     }
@@ -62,4 +70,12 @@ public class MemberViewModel extends AndroidViewModel {
     public MutableLiveData<FirebaseFirestore> getCardMutableLiveData() {
         return cardMutableLiveData;
     }
+    public MutableLiveData<Card> getUpdateInfo() {
+        return updateCard;
+    }
+
+    public MutableLiveData<String> getCardId() {
+        return cardId;
+    }
+
 }

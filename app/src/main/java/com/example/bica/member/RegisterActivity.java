@@ -184,10 +184,8 @@ public class RegisterActivity extends AppCompatActivity {
 //                    Toast.makeText(RegisterActivity.this, "빈칸이 존재합니다. 입력해주세요.", Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
-//
             }
         });
-
     }
 
     public void init() {
