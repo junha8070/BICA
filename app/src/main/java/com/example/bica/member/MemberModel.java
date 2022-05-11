@@ -201,7 +201,7 @@ public class MemberModel {
                                                     saveCard.setDepart(document.get("depart").toString());
                                                     saveCard.setPosition(document.get("position").toString());
                                                     saveCard.setMemo(document.get("memo").toString());
-//                                                    saveCard.setImage(document.get("image").toString());
+                                                    saveCard.setImage(document.get("image").toString());
                                                     mcardDao.setInsertCard(saveCard);
                                                 }
                                             }
