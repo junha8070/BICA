@@ -29,6 +29,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     ArrayList<Card> initList;
     ArrayList<Card> filteredList = new ArrayList<>();
 
+
     public CardAdapter(ArrayList<Card> cards) {
         this.cards = cards;
         initList = new ArrayList<>();
@@ -50,12 +51,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
+        int pos = position;
         holder.tv_company.setText(initList.get(position).getCompany());
         holder.tv_email.setText(initList.get(position).getEmail());
         holder.tv_phone.setText(initList.get(position).getPhone());
         holder.tv_name.setText(initList.get(position).getName());
         holder.tv_jobTitle.setText(initList.get(position).getDepart());
         holder.tv_position.setText(initList.get(position).getPosition());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardDialog cardDialog = new CardDialog(view.getContext());
+                cardDialog.callFunction(cards.get(pos));
+            }
+        });
     }
 
     @Override

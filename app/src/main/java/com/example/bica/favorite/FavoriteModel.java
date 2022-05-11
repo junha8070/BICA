@@ -67,8 +67,8 @@ public class FavoriteModel {
                                     break;
                             }
                         }
-                        Log.d(TAG, String.valueOf(arrCard.get(0).getAddress()));
-                        Log.d(TAG, String.valueOf(arrCard.get(1).getAddress()));
+//                        Log.d(TAG, String.valueOf(arrCard.get(0).getAddress()));
+//                        Log.d(TAG, String.valueOf(arrCard.get(1).getAddress()));
                         cardMutableLiveData.postValue(arrCard);
                     }
                 });

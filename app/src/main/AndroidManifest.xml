@@ -26,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BICA">
         <activity
+            android:name=".EntireCard.CardDialog"
+            android:exported="false" />
+        <activity
             android:name=".AddCard.CameraActivity"
             android:exported="false" />
         <activity
