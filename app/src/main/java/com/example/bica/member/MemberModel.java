@@ -112,65 +112,65 @@ public class MemberModel {
                 });
     }
 
-    public void chageInfo(Card prevCard, Card newCard) {
-        DocumentReference sfDocRef = firestore.collection("users")
-                .document(firebaseAuth.getCurrentUser().getUid())
-                .collection("myCard")
-                .document(cardId.getValue());
-
-        Log.d(TAG, prevCard.getName() + "||" + newCard.getName());
-
-        firestore.runTransaction(new Transaction.Function<Void>() {
-            @Override
-            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
-                if (!prevCard.getName().equals(newCard.getName())) {
-                    transaction.update(sfDocRef, "name", newCard.getName());
-                }
-
-                if (!prevCard.getPosition().equals(newCard.getPosition())) {
-                    transaction.update(sfDocRef, "position", newCard.getPosition());
-                }
-                if (!prevCard.getOccupation().equals(newCard.getOccupation())) {
-                    transaction.update(sfDocRef, "occupation", newCard.getOccupation());
-                }
-                if (!prevCard.getDepart().equals(newCard.getDepart())) {
-                    transaction.update(sfDocRef, "depart", newCard.getDepart());
-                }
-                if (!prevCard.getCompany().equals(newCard.getCompany())) {
-                    transaction.update(sfDocRef, "company", newCard.getCompany());
-                }
-//                if (!prevCard.getGroupname().equals(newCard.getGroupname())) {
-//                    transaction.update(sfDocRef, "groupname", newCard.getGroupname());
+//    public void chageInfo(Card prevCard, Card newCard) {
+//        DocumentReference sfDocRef = firestore.collection("users")
+//                .document(firebaseAuth.getCurrentUser().getUid())
+//                .collection("myCard")
+//                .document(cardId.getValue());
+//
+//        Log.d(TAG, prevCard.getName() + "||" + newCard.getName());
+//
+//        firestore.runTransaction(new Transaction.Function<Void>() {
+//            @Override
+//            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+//                if (!prevCard.getName().equals(newCard.getName())) {
+//                    transaction.update(sfDocRef, "name", newCard.getName());
 //                }
-                if (!prevCard.getPhone().equals(newCard.getPhone())) {
-                    transaction.update(sfDocRef, "phone", newCard.getPhone());
-                }
-                if (!prevCard.getEmail().equals(newCard.getEmail())) {
-                    transaction.update(sfDocRef, "email", newCard.getEmail());
-                }
-
-
-                transaction.update(sfDocRef, "address", newCard.getAddress());
-
-
-                if (!prevCard.getMemo().equals(newCard.getMemo())) {
-                    transaction.update(sfDocRef, "memo", newCard.getMemo());
-                }
-
-                return null;
-            }
-        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Transaction success!");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Transaction failure.", e);
-            }
-        });
-    }
+//
+//                if (!prevCard.getPosition().equals(newCard.getPosition())) {
+//                    transaction.update(sfDocRef, "position", newCard.getPosition());
+//                }
+//                if (!prevCard.getOccupation().equals(newCard.getOccupation())) {
+//                    transaction.update(sfDocRef, "occupation", newCard.getOccupation());
+//                }
+//                if (!prevCard.getDepart().equals(newCard.getDepart())) {
+//                    transaction.update(sfDocRef, "depart", newCard.getDepart());
+//                }
+//                if (!prevCard.getCompany().equals(newCard.getCompany())) {
+//                    transaction.update(sfDocRef, "company", newCard.getCompany());
+//                }
+////                if (!prevCard.getGroupname().equals(newCard.getGroupname())) {
+////                    transaction.update(sfDocRef, "groupname", newCard.getGroupname());
+////                }
+//                if (!prevCard.getPhone().equals(newCard.getPhone())) {
+//                    transaction.update(sfDocRef, "phone", newCard.getPhone());
+//                }
+//                if (!prevCard.getEmail().equals(newCard.getEmail())) {
+//                    transaction.update(sfDocRef, "email", newCard.getEmail());
+//                }
+//
+//
+//                transaction.update(sfDocRef, "address", newCard.getAddress());
+//
+//
+//                if (!prevCard.getMemo().equals(newCard.getMemo())) {
+//                    transaction.update(sfDocRef, "memo", newCard.getMemo());
+//                }
+//
+//                return null;
+//            }
+//        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Log.d(TAG, "Transaction success!");
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.w(TAG, "Transaction failure.", e);
+//            }
+//        });
+//    }
 
 
 

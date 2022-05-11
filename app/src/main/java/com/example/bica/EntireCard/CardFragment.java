@@ -108,6 +108,18 @@ public class CardFragment extends Fragment {
                         if(chipGroup.getVisibility()==View.GONE){
                             chipGroup.setVisibility(View.VISIBLE);
                             linearLayout.setVisibility(View.VISIBLE);
+                            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                @Override
+                                public boolean onQueryTextSubmit(String query) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onQueryTextChange(String newText) {
+                                    mAdapter.getFilter().filter(newText);
+                                    return false;
+                                }
+                            });
                         }else{
                             chipGroup.setVisibility(View.GONE);
                             linearLayout.setVisibility(View.GONE);
@@ -121,18 +133,7 @@ public class CardFragment extends Fragment {
             }
         });
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
 
         return view;
     }

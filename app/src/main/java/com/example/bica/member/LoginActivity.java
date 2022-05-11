@@ -1,49 +1,102 @@
 package com.example.bica.member;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bica.CardDao;
+import com.example.bica.CardRoomDB;
 import com.example.bica.MainActivity;
 import com.example.bica.R;
+import com.example.bica.model.Card;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.nio.file.FileStore;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private String TAG = "LoginActivity";
 
     private Button btn_login;
     private EditText edt_ID, edt_PW;
     private TextView tv_Find_ID, tv_Find_PW;
     private FirebaseAuth firebaseAuth;
-
+    private FirebaseFirestore firestore;
     private MemberViewModel memberViewModel;
+
+    private CardDao mcardDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // 요소 초기화
+        init();
+
+        CardRoomDB cardRoomDB = Room.databaseBuilder(getApplicationContext(), CardRoomDB.class,"CardRoomDB")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+
+        mcardDao = cardRoomDB.cardDao();
+
         memberViewModel = new ViewModelProvider(this).get(MemberViewModel.class);
         memberViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
+                firestore.collection("users")
+                        .document(firebaseAuth.getCurrentUser().getUid())
+                        .collection("myCard")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    Card saveCard = new Card();
+                                    for(QueryDocumentSnapshot document : task.getResult()){
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        saveCard.setName(document.get("name").toString());
+                                        saveCard.setEmail(document.get("email").toString());
+                                        saveCard.setPhone(document.get("phone").toString());
+                                        saveCard.setCompany(document.get("company").toString());
+                                        saveCard.setAddress(document.get("address").toString());
+                                        saveCard.setOccupation(document.get("occupation").toString());
+                                        saveCard.setDepart(document.get("depart").toString());
+                                        saveCard.setPosition(document.get("position").toString());
+                                        saveCard.setMemo(document.get("memo").toString());
+                                        //saveCard.setImage(document.get("image").toString());
+                                        mcardDao.setUpdateCard(saveCard);
+                                    }
+                                }
+                            }
+                        });
+
                 Intent startMain = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(startMain);
+
                 finish();
             }
         });
 
-        // 요소 초기화
-        init();
-        firebaseAuth = FirebaseAuth.getInstance();  // 파이어베이스 auth 인스턴스 생성
+
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,5 +152,9 @@ public class LoginActivity extends AppCompatActivity {
         tv_Find_ID = findViewById(R.id.tv_Find_ID);
         tv_Find_PW = findViewById(R.id.tv_Find_PW);
         btn_login = findViewById(R.id.btn_login);
+
+        firebaseAuth = FirebaseAuth.getInstance();  // 파이어베이스 auth 인스턴스 생성
+        firestore = FirebaseFirestore.getInstance();
+
     }
 }

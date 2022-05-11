@@ -2,6 +2,7 @@ package com.example.bica.EntireCard;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -45,6 +46,9 @@ public class CardModel {
                 .collection("BusinessCard").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(value.isEmpty()){
+                    Toast.makeText(application, "값이 없습니다.", Toast.LENGTH_SHORT).show();
+                }
                 for (DocumentChange dc : value.getDocumentChanges()) {
                     switch (dc.getType()) {
                         case ADDED:

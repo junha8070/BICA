@@ -51,9 +51,9 @@ public class MemberViewModel extends AndroidViewModel {
 //        memberModel
     }
 
-    public void changeInfo(Card prevCard, Card newCard){
-        memberModel.chageInfo(prevCard, newCard);
-    }
+//    public void changeInfo(Card prevCard, Card newCard){
+//        memberModel.chageInfo(prevCard, newCard);
+//    }
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return userMutableLiveData;
