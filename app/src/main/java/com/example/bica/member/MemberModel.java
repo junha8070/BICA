@@ -13,6 +13,7 @@ import com.example.bica.CardRoomDB;
 import com.example.bica.model.Card;
 import com.example.bica.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,8 +21,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Transaction;
 
 public class MemberModel {
 
@@ -37,6 +40,8 @@ public class MemberModel {
     private MutableLiveData<Boolean> saveUserInfoMutableLiveData;
     private MutableLiveData<FirebaseFirestore> userInfoMutableLiveData;
     private MutableLiveData<FirebaseFirestore> cardMutableLiveData;
+    private MutableLiveData<Card> updateCard;
+    private MutableLiveData<String> cardId;
 
     public MemberModel(Application application) {
         this.application = application;
@@ -48,6 +53,7 @@ public class MemberModel {
         saveUserInfoMutableLiveData = new MutableLiveData<>();
         isSuccessful = new MutableLiveData<>();
         cardMutableLiveData = new MutableLiveData<>();
+        updateCard = new MutableLiveData<>();
 
         CardRoomDB cardRoomDB = Room.databaseBuilder(application.getApplicationContext(), CardRoomDB.class,"CardRoomDB")
                 .fallbackToDestructiveMigration()
@@ -106,6 +112,68 @@ public class MemberModel {
                 });
     }
 
+    public void chageInfo(Card prevCard, Card newCard) {
+        DocumentReference sfDocRef = firestore.collection("users")
+                .document(firebaseAuth.getCurrentUser().getUid())
+                .collection("myCard")
+                .document(cardId.getValue());
+
+        Log.d(TAG, prevCard.getName() + "||" + newCard.getName());
+
+        firestore.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                if (!prevCard.getName().equals(newCard.getName())) {
+                    transaction.update(sfDocRef, "name", newCard.getName());
+                }
+
+                if (!prevCard.getPosition().equals(newCard.getPosition())) {
+                    transaction.update(sfDocRef, "position", newCard.getPosition());
+                }
+                if (!prevCard.getOccupation().equals(newCard.getOccupation())) {
+                    transaction.update(sfDocRef, "occupation", newCard.getOccupation());
+                }
+                if (!prevCard.getDepart().equals(newCard.getDepart())) {
+                    transaction.update(sfDocRef, "depart", newCard.getDepart());
+                }
+                if (!prevCard.getCompany().equals(newCard.getCompany())) {
+                    transaction.update(sfDocRef, "company", newCard.getCompany());
+                }
+//                if (!prevCard.getGroupname().equals(newCard.getGroupname())) {
+//                    transaction.update(sfDocRef, "groupname", newCard.getGroupname());
+//                }
+                if (!prevCard.getPhone().equals(newCard.getPhone())) {
+                    transaction.update(sfDocRef, "phone", newCard.getPhone());
+                }
+                if (!prevCard.getEmail().equals(newCard.getEmail())) {
+                    transaction.update(sfDocRef, "email", newCard.getEmail());
+                }
+
+
+                transaction.update(sfDocRef, "address", newCard.getAddress());
+
+
+                if (!prevCard.getMemo().equals(newCard.getMemo())) {
+                    transaction.update(sfDocRef, "memo", newCard.getMemo());
+                }
+
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Transaction success!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Transaction failure.", e);
+            }
+        });
+    }
+
+
+
     public void login(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -133,7 +201,7 @@ public class MemberModel {
                                                     saveCard.setDepart(document.get("depart").toString());
                                                     saveCard.setPosition(document.get("position").toString());
                                                     saveCard.setMemo(document.get("memo").toString());
-                                                    //saveCard.setImage(document.get("image").toString());
+//                                                    saveCard.setImage(document.get("image").toString());
                                                     mcardDao.setInsertCard(saveCard);
                                                 }
                                             }
@@ -177,5 +245,12 @@ public class MemberModel {
 
     public MutableLiveData<FirebaseFirestore> getCardMutableLiveData() {
         return cardMutableLiveData;
+    }
+
+    public MutableLiveData<Card> getUpdateCard() {
+        return updateCard;
+    }
+    public MutableLiveData<String> getCardId() {
+        return cardId;
     }
 }

@@ -15,9 +15,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bica.R;
 import com.example.bica.model.Card;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -56,6 +58,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.tv_name.setText(initList.get(position).getName());
         holder.tv_jobTitle.setText(initList.get(position).getDepart());
         holder.tv_position.setText(initList.get(position).getPosition());
+
+        Glide.with(holder.itemView.getContext()).load(initList.get(position).getImage()).into(holder.iv_img);
     }
 
     @Override

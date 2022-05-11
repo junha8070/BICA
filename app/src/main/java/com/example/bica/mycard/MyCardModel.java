@@ -151,6 +151,7 @@ public class MyCardModel {
                 if (!prevCard.getMemo().equals(newCard.getMemo())) {
                     transaction.update(sfDocRef, "memo", newCard.getMemo());
                 }
+
                 return null;
             }
         }).addOnSuccessListener(new OnSuccessListener<Void>() {

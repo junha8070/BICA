@@ -93,7 +93,8 @@ public class RegisterCardActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
 
-        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 1);
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
         try {
             processCameraProvider = ProcessCameraProvider.getInstance(this).get();
@@ -149,6 +150,7 @@ public class RegisterCardActivity extends AppCompatActivity {
                                 inputImage = InputImage.fromBitmap(bitmap, 0);
                                 imageUri = getImageUri(getApplicationContext(), bitmap);
 
+                                System.out.println("imageUri test 1" + imageUri.toString());
                                 // imageView에 bitmap이미지 띄우기
                                 imageView.setVisibility(View.VISIBLE);
                                 previewView.setVisibility(View.GONE);
@@ -176,97 +178,76 @@ public class RegisterCardActivity extends AppCompatActivity {
         btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                memberViewModel = new ViewModelProvider(RegisterCardActivity.this).get(MemberViewModel.class);
-                //ToDo: 이미지 추가
-                String name = edt_username.getText().toString().trim();
-                String email = edt_useremail.getText().toString().trim();
-                String phone = edt_phonenum.getText().toString().trim();
-                String company = edt_companyname.getText().toString().trim();
-                String address = edt_companyadr.getText().toString().trim();
-                String occupation = edt_occupation.getText().toString().trim();
-                String depart = edt_teamname.getText().toString().trim();
-                String position = edt_position.getText().toString().trim();
-                String memo = edt_memo.getText().toString().trim();
+                System.out.println("complete test image" + imageUri.toString());
+                String[] arr = imageUri.toString().split("/");
+                System.out.println("complete test image " + arr[6]);
 
-                ProgressDialog mDialog = null;
-                if (name.isEmpty() == false && email.isEmpty() == false && phone.isEmpty() == false && company.isEmpty() == false && address.isEmpty() == false && occupation.isEmpty() == false && depart.isEmpty() == false && position.isEmpty() == false) {
-                    Log.d(TAG, "완료 버튼");
-                    mDialog = new ProgressDialog(RegisterCardActivity.this);
-                    mDialog.setMessage("명함입력중입니다.");
-                    mDialog.show();
+                StorageReference storageReference = mStorage.getReference()
+                        .child("Images").child(auth.getCurrentUser().getUid()).child("myCard").child(arr[6]);
 
-                    if (position.isEmpty()) {
-                        position = "";
+                storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if(task.isSuccessful()){
+                            final Task<Uri> imageUrl = task.getResult().getStorage().getDownloadUrl();
+                            System.out.println("imageUri test 2" + imageUri.toString());
+//                                                    System.out.println("imageUri test 3" + imageUrl.getResult().toString());
+
+                            while (!imageUrl.isComplete()){
+                                System.out.println("imageUri fail");
+                            }
+
+                            memberViewModel = new ViewModelProvider(RegisterCardActivity.this).get(MemberViewModel.class);
+
+                            //ToDo: 이미지 추가
+                            String name = edt_username.getText().toString().trim();
+                            String email = edt_useremail.getText().toString().trim();
+                            String phone = edt_phonenum.getText().toString().trim();
+                            String company = edt_companyname.getText().toString().trim();
+                            String address = edt_companyadr.getText().toString().trim();
+                            String occupation = edt_occupation.getText().toString().trim();
+                            String depart = edt_teamname.getText().toString().trim();
+                            String position = edt_position.getText().toString().trim();
+                            String memo = edt_memo.getText().toString().trim();
+                            String image = imageUrl.getResult().toString();
+
+                            ProgressDialog mDialog = null;
+
+                            if (name.isEmpty() == false && email.isEmpty() == false && phone.isEmpty() == false && company.isEmpty() == false && address.isEmpty() == false && occupation.isEmpty() == false && depart.isEmpty() == false && position.isEmpty() == false) {
+                                Log.d(TAG, "완료 버튼");
+                                mDialog = new ProgressDialog(RegisterCardActivity.this);
+                                mDialog.setMessage("명함입력중입니다.");
+                                mDialog.show();
+
+                                Card cardAccount = new Card();
+
+                                cardAccount.setName(name);
+                                cardAccount.setPhone(phone);
+                                cardAccount.setEmail(email);
+                                cardAccount.setCompany(company);
+                                cardAccount.setAddress(address);
+                                cardAccount.setOccupation(occupation);
+                                cardAccount.setDepart(depart);
+                                cardAccount.setPosition(position);
+                                cardAccount.setMemo(memo);
+                                cardAccount.setImage(image);
+                                memberViewModel.registerCard(cardAccount);
+
+                                mDialog.dismiss();
+                                Intent startMain = new Intent(RegisterCardActivity.this, MainActivity.class);
+                                startActivity(startMain);
+                                finish();
+                            }
+                            //필수정보가 부족할 때
+                            else {
+                                mDialog.dismiss();
+                                Toast.makeText(RegisterCardActivity.this, "필수 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
                     }
-                    if (memo.isEmpty()) {
-                        memo = "";
-                    }
-
-                    Card cardAccount = new Card();
-                    cardAccount.setName(name);
-                    cardAccount.setEmail(email);
-                    cardAccount.setPhone(phone);
-                    cardAccount.setCompany(company);
-                    cardAccount.setAddress(address);
-                    cardAccount.setOccupation(occupation);
-                    cardAccount.setDepart(depart);
-                    cardAccount.setPosition(position);
-                    cardAccount.setMemo(memo);
-
-                    db.collection("users")
-                            .document(auth.getCurrentUser()
-                                    .getUid())
-                            .collection("myCard")
-                            .whereEqualTo("name", name)
-                            .whereEqualTo("phone", phone)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        System.out.println("find card uid");
-                                        System.out.println("find card uid1 " + task.getResult().toString());
-
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            Log.d(TAG, document.getId() + " => " + document.getData());
-                                            System.out.println("find card uid1 " + document.getId());
-                                            String BC_uid = document.getId();
-
-                                            StorageReference storageReference = mStorage.getReference()
-                                                    .child("Images").child(auth.getCurrentUser().getUid()).child("myCard").child(BC_uid);
-                                            System.out.println("이미지 주소1 " + imageUri.toString());
-
-                                            storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                                @RequiresApi(api = Build.VERSION_CODES.O)
-                                                @Override
-                                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                                    final Task<Uri> imageUrl = task.getResult().getStorage().getDownloadUrl();
-                                                    System.out.println("이미지 주소4 " + imageUri.toString());
-
-                                                    while (!imageUrl.isComplete()) ;
-                                                    System.out.println("이미지 주소" + imageUrl.getResult().toString());
-                                                    cardAccount.setImage(imageUrl.getResult().toString());
-
-                                                }
-                                            });
-                                        }
-
-                                    }
-                                }
-                            });
-                    memberViewModel.registerCard(cardAccount);
-                    mDialog.dismiss();
-
-                    Intent startMain = new Intent(RegisterCardActivity.this, MainActivity.class);
-                    startActivity(startMain);
-                    finish();
-                }
-                //필수정보가 부족할 때
-                else {
-                    mDialog.dismiss();
-                    Toast.makeText(RegisterCardActivity.this, "필수 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                });
              }
         });
 
@@ -292,31 +273,12 @@ public class RegisterCardActivity extends AppCompatActivity {
             }
     );
 
-    private Uri getImageUri(Context context, Bitmap inImage) {
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        String path = MediaStore.Images.Media.insertImage(
+                inContext.getContentResolver(), inImage, "IMG_" + System.currentTimeMillis(), null);
         return Uri.parse(path);
-    }
-
-    // 바이너리 바이트 배열을 스트링으로
-    public static String byteArrayToBinaryString(byte[] b) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < b.length; ++i) {
-            sb.append(byteToBinaryString(b[i]));
-        }
-        return sb.toString();
-    }
-
-    // 바이너리 바이트를 스트링으로
-    public static String byteToBinaryString(byte n) {
-        StringBuilder sb = new StringBuilder("00000000");
-        for (int bit = 0; bit < 8; bit++) {
-            if (((n >> bit) & 1) > 0) {
-                sb.setCharAt(7 - bit, '1');
-            }
-        }
-        return sb.toString();
     }
 
     // 이미지 회전 함수
