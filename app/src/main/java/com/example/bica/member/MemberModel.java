@@ -96,8 +96,6 @@ public class MemberModel {
     }
 
     public void registerCard(Card cardAccount) {
-
-        //TODO : roomID 저장
         firestore.collection("users")
                 .document(firebaseAuth.getCurrentUser().getUid())
                 .collection("myCard")
@@ -194,7 +192,6 @@ public class MemberModel {
                                                 Card saveCard = new Card();
                                                 for(QueryDocumentSnapshot document : task.getResult()){
                                                     Log.d(TAG, document.getId() + " => " + document.getData());
-                                                    saveCard.setRoomId((Integer) document.get("roomId"));
                                                     saveCard.setName(document.get("name").toString());
                                                     saveCard.setEmail(document.get("email").toString());
                                                     saveCard.setPhone(document.get("phone").toString());

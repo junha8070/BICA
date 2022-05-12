@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -26,7 +27,6 @@ import android.widget.Toast;
 
 import com.example.bica.ChipData;
 import com.example.bica.CardRepository;
-import com.example.bica.Chip;
 import com.example.bica.R;
 import com.example.bica.model.Card;
 import com.example.bica.model.User;
@@ -296,6 +296,12 @@ public class CardFragment extends Fragment {
 
         });
 
+        chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ChipGroup group, int checkedId) {
+
+            }
+        });
 
         System.out.println("chip group tempArr 3 " + tempArr);
         System.out.println("chip group chipArr 3 " + chipArr);
