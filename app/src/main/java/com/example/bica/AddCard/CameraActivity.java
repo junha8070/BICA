@@ -270,6 +270,7 @@ public class CameraActivity extends AppCompatActivity {
                                 businessCard.setMemo(memo);
                                 businessCard.setImage(image);
                                 businessCardViewModel.addBusinessCard(businessCard);
+
                                 mDialog.dismiss();
                                 Intent startMain = new Intent(CameraActivity.this, MainActivity.class);
                                 startActivity(startMain);

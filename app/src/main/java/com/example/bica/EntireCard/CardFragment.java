@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -45,6 +46,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -171,12 +173,9 @@ public class CardFragment extends Fragment {
                     default:
                         break;
                 }
-
                 return false;
             }
         });
-
-
 
         ArrayList<String> chipArr = new ArrayList<>();
         ArrayList<String> tempArr = new ArrayList<>();
@@ -206,7 +205,6 @@ public class CardFragment extends Fragment {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
 
-
                         System.out.println("chip group tempArr 0 " + tempArr);
                         System.out.println("chip group chipArr 0 " + chipArr);
 
@@ -215,11 +213,22 @@ public class CardFragment extends Fragment {
                             System.out.println("chip data test ");
                             Chip chip = new Chip(getContext());
                             chip.setText(item);
+                            chip.setCheckable(true);
                             chipGroup.addView(chip);
                             System.out.println("chip data item " + item);
-
-
                         }
+
+//                        System.out.println("chip data test " + chipGroup.getChildCount());
+//                        chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+//                            @Override
+//                            public void onCheckedChanged(ChipGroup group, int checkedId) {
+//                                Chip chip = chipGroup.findViewById(checkedId);
+//                                System.out.println("chip data test 1 "+ chip.getText().toString());
+//                                System.out.println("chip data test 2 "+ chip.getId());
+//                                System.out.println("chip data test 3 "+ chip.isChecked());
+//
+//                            }
+//                        });
                     }
                 });
 
@@ -300,7 +309,27 @@ public class CardFragment extends Fragment {
         chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(ChipGroup group, int checkedId) {
+                Chip chip = chipGroup.findViewById(checkedId);
+                System.out.println("chip data test 1 "+ chip.getText().toString());
+                System.out.println("chip data test 2 "+ chip.getId());
+                System.out.println("chip data test 3 "+ chip.isChecked());
 
+                db.collection("users").document(auth.getCurrentUser().getUid()).collection("BusinessCard")
+                        .whereEqualTo("group", chip.getText().toString())
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            System.out.println("test group " + task.getResult().toString());
+
+                            for(QueryDocumentSnapshot querySnapshot : task.getResult()){
+                                System.out.println("test group 2 " + querySnapshot.getId());
+                                mAdapter.filteredList.add(querySnapshot.toObject(Card.class));
+                            }
+
+                        }
+                    }
+                });
             }
         });
 
@@ -313,7 +342,7 @@ public class CardFragment extends Fragment {
     private void init(View view){
         toolbar = view.findViewById(R.id.topAppBar);
         searchView = view.findViewById(R.id.searchView);
-        chipGroup = view.findViewById(R.id.filter_group);
+        chipGroup = view.findViewById(R.id.chip_group);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cardFragment_recyclerview);
         linear = (LinearLayout) view.findViewById(R.id.linear);
         edt_group = (EditText) view.findViewById(R.id.edt_group);

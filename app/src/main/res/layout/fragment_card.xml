@@ -45,10 +45,11 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView">
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/filter_group"
+            android:id="@+id/chip_group"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:singleLine="true">
+            app:singleLine="true"
+            app:singleSelection="true">
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 

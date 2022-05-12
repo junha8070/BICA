@@ -51,17 +51,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         myCardViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(MyCardViewModel.class);
 
-        myCardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
-            @Override
-            public void onChanged(List<Card> cards) {
-                if(cards != null){
-                    Log.d("MainActivityTAG", String.valueOf(cards.size()));
-                }
-                else{
-                    Log.d("MainActivityTAG", "Fail");
-                }
-            }
-        });
+//        myCardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
+//            @Override
+//            public void onChanged(List<Card> cards) {
+//                if(cards != null){
+//                    Log.d("MainActivityTAG", String.valueOf(cards.size()));
+//                }
+//                else{
+//                    Log.d("MainActivityTAG", "Fail");
+//                }
+//            }
+//        });
 
 
 //        powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
