@@ -96,6 +96,24 @@ public class MemberModel {
     }
 
     public void registerCard(Card cardAccount) {
+
+        //TODO : roomID 저장
+
+//        Card cardRoom = new Card();
+//        cardRoom.setName(cardAccount.getName());
+//        cardRoom.setEmail(cardAccount.getEmail());
+//        cardRoom.setAddress(cardAccount.getAddress());
+//        cardRoom.setPhone(cardAccount.getPhone());
+//        cardRoom.setCompany(cardAccount.getCompany());
+//        cardRoom.setOccupation(cardAccount.getOccupation());
+//        cardRoom.setDepart(cardAccount.getDepart());
+//        cardRoom.setPosition(cardAccount.getPosition());
+//        cardRoom.setMemo(cardAccount.getMemo());
+//        cardRoom.setImage(cardAccount.getImage());
+//        mcardDao.setInsertCard(cardAccount);
+//        cardRoom = mcardDao.getCardAll().getValue();
+
+
         firestore.collection("users")
                 .document(firebaseAuth.getCurrentUser().getUid())
                 .collection("myCard")
@@ -103,11 +121,11 @@ public class MemberModel {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+
                         Card cardRoom = new Card();
                         cardRoom.setEmail(firebaseAuth.getCurrentUser().getEmail());
                         mcardDao.setInsertCard(cardAccount);
                         System.out.println("카드 등록 완료");
-
                     }
                 });
     }
@@ -192,6 +210,7 @@ public class MemberModel {
                                                 Card saveCard = new Card();
                                                 for(QueryDocumentSnapshot document : task.getResult()){
                                                     Log.d(TAG, document.getId() + " => " + document.getData());
+                                                    //saveCard.setRoomId((Integer) document.get("roomId"));
                                                     saveCard.setName(document.get("name").toString());
                                                     saveCard.setEmail(document.get("email").toString());
                                                     saveCard.setPhone(document.get("phone").toString());

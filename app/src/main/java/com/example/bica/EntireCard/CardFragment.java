@@ -108,15 +108,15 @@ public class CardFragment extends Fragment {
             }
         });
 
-//        myCardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
-//            @Override
-//            public void onChanged(List<Card> cards) {
-////                Toast.makeText(getContext(), cards.get(0).getName(), Toast.LENGTH_SHORT).show();
-//                if(cards != null){
-//                    Log.d("CardFragmentTag", cards.get(0).getName());
-//                }
-//            }
-//        });
+        myCardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
+            @Override
+            public void onChanged(List<Card> cards) {
+//                Toast.makeText(getContext(), cards.get(0).getName(), Toast.LENGTH_SHORT).show();
+                if(cards.size() != 0){
+                    Log.d("CardFragmentTag", cards.get(0).getName());
+                }
+            }
+        });
 
     }
 
