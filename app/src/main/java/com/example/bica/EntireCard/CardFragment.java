@@ -138,6 +138,18 @@ public class CardFragment extends Fragment {
                             searchView.setVisibility(View.VISIBLE);
                             filter_group_view.setVisibility(View.GONE);
                             linear.setVisibility(View.GONE);
+                            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                @Override
+                                public boolean onQueryTextSubmit(String query) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onQueryTextChange(String newText) {
+                                    mAdapter.getFilter().filter(newText);
+                                    return false;
+                                }
+                            });
                         } else {
                             searchView.setQuery("", true);
                             searchView.setVisibility(View.GONE);
@@ -163,18 +175,7 @@ public class CardFragment extends Fragment {
                 return false;
             }
         });
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
 
 
         ArrayList<String> chipArr = new ArrayList<>();

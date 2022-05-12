@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,7 @@ public class MyCardFragment extends Fragment {
     private TextView tv_mycardname,tv_myPosition,tv_myOccupation,tv_myTeamName,tv_myCompany_Name,tv_myGroupName,tv_myPhoneNum,tv_my_Email,tv_myCompany_Address,tv_myMemo,tv_Pnum;
     private EditText et_mycardname,et_myPosition,et_myOccupation,et_myTeamName,et_myCompany_Name,et_myGroupName,et_myPhoneNum,et_my_Email,et_myMemo,et_myCompany_Address;
     private TextView tv_company, tv_depart, tv_name, tv_position, tv_Phone, tv_Email, tv_Address;
+    private ImageView iv_mycard;
     private View view;
     private String Pnum, str_card_info, cardUid;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -154,6 +156,9 @@ public class MyCardFragment extends Fragment {
                 tv_my_Email.setText(arrCard.get(position).getEmail());
                 tv_myCompany_Address.setText(arrCard.get(position).getAddress());
                 tv_myMemo.setText(arrCard.get(position).getMemo());
+
+
+
 
                 // Fragment에서 Toolbar 셋업
                 toolbar.setOnMenuItemClickListener(item -> { // 메뉴 눌렀을때 뭐할지 정해주는 코드
@@ -774,6 +779,8 @@ public class MyCardFragment extends Fragment {
         tv_Phone= view.findViewById(R.id.tv_Phone);
         tv_Email= view.findViewById(R.id.tv_Email);
         tv_Address= view.findViewById(R.id.tv_Address);
+
+//        iv_mycard=view.findViewById(R.id.iv_mycard);
     }
 
     private int arrSize(ArrayList<Card> arrCard){

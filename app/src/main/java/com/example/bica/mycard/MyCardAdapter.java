@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.example.bica.R;
 import com.example.bica.favorite.FavoriteAdapter;
 import com.example.bica.model.Card;
@@ -41,15 +42,22 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.MycardView
 
     public void onBindViewHolder(@NonNull MyCardAdapter.MycardViewHolder holder, int position) {
         int i = position;
-//        holder.iv_profile.setImageResource(cardModel.get(position).getImage());
-        holder.tv_company.setText(cardModel.get(i).getCompany());
-        holder.tv_depart.setText(cardModel.get(i).getDepart());
-        holder.tv_name.setText(cardModel.get(i).getName());
-        holder.tv_position.setText(cardModel.get(i).getPosition());
-        holder.tv_Phone.setText(cardModel.get(i).getPhone());
-        holder.tv_Email.setText(cardModel.get(i).getEmail());
-        holder.tv_Address.setText(cardModel.get(i).getAddress());
 
+
+        if (cardModel.get(i).getImage().equals("")){
+            holder.iv_mycard.setVisibility(View.GONE);
+            holder.tv_company.setText(cardModel.get(i).getCompany());
+            holder.tv_depart.setText(cardModel.get(i).getDepart());
+            holder.tv_name.setText(cardModel.get(i).getName());
+            holder.tv_position.setText(cardModel.get(i).getPosition());
+            holder.tv_Phone.setText(cardModel.get(i).getPhone());
+            holder.tv_Email.setText(cardModel.get(i).getEmail());
+            holder.tv_Address.setText(cardModel.get(i).getAddress());
+        }
+        else{
+            holder.iv_mycard.setVisibility(View.VISIBLE);
+            Glide.with(holder.itemView.getContext()).load(cardModel.get(position).getImage()).into(holder.iv_mycard);
+        }
 
 //        Intent intent = new Intent(holder.itemView.getContext(), MyCardFragment.class);
 //        intent.putExtra("page",cardModel.get(i).getName());
@@ -62,6 +70,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.MycardView
 
             }
         });
+//        Glide.with(holder.itemView.getContext()).load(cardModel.get(position).getImage()).into(holder.iv_mycard);
 
     }
     public int getItemCount() {
@@ -70,6 +79,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.MycardView
 
     class MycardViewHolder extends RecyclerView.ViewHolder{
         ImageView iv_profile;
+        ImageView iv_mycard;
         TextView tv_company, tv_depart, tv_name, tv_position, tv_Phone,tv_Email, tv_Address;
         MycardViewHolder(@NonNull View view){
             super(view);
@@ -82,6 +92,7 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.MycardView
             tv_Phone = view.findViewById(R.id.tv_Phone);
             tv_Email = view.findViewById(R.id.tv_Email);
             tv_Address = view.findViewById(R.id.tv_Address);
+            iv_mycard=view.findViewById(R.id.iv_mycard);
 
         }
     }
