@@ -12,12 +12,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.bica.CardRepository;
 import com.example.bica.member.MemberModel;
 import com.example.bica.model.Card;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyCardViewModel extends AndroidViewModel {
 
@@ -26,16 +29,19 @@ public class MyCardViewModel extends AndroidViewModel {
     private MutableLiveData<String> cardId;
     private MutableLiveData<Card> updateInfo;
     private MutableLiveData<ArrayList<Card>> delInfo;
+    private CardRepository cardRepository;
+    private LiveData<List<Card>> allCards;
 
 
     public MyCardViewModel(@NonNull Application application){
         super(application);
-
+        cardRepository = new CardRepository(application);
         myCardModel = new MyCardModel(application);
         userInfo = myCardModel.getUserInfo();
         cardId = myCardModel.getCardId();
         updateInfo= myCardModel.getUpdateInfo();
         delInfo=myCardModel.getDelInfo();
+        allCards = cardRepository.getAllCards();
     }
 
     public void userInfo(){
@@ -65,5 +71,9 @@ public class MyCardViewModel extends AndroidViewModel {
 
     public MutableLiveData<ArrayList<Card>> getDelInfo() {
         return delInfo;
+    }
+
+    public LiveData<List<Card>>getAllCards(){
+        return allCards;
     }
 }

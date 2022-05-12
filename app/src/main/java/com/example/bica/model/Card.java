@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class Card {
 
     @PrimaryKey(autoGenerate = true)    // ID 자동생성
-    private int roomId = 0;   // 하나의 사용자에 대한 고유 ID 값
+    private int roomId;   // 하나의 사용자에 대한 고유 ID 값
     String image;
     String email;
     String company;

@@ -93,6 +93,8 @@ public class RegisterCardActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
 
+        mcardDao = cardRoomDB.cardDao();
+
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
@@ -161,8 +163,6 @@ public class RegisterCardActivity extends AppCompatActivity {
                 );
             }
         });
-
-        mcardDao = cardRoomDB.cardDao();
 
         edt_companyadr.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -47,7 +47,7 @@ public class MyCardModel {
     private MyCardFragment mycardfragment;
 
     private Card card;
-//    private CardDao mcardDao;
+    private CardDao mcardDao;
 
     public MyCardModel(Application application) {
         this.application = application;
@@ -59,12 +59,12 @@ public class MyCardModel {
         updateInfo = new MutableLiveData<>();
         delInfo = new MutableLiveData<>();
 
-//        CardRoomDB cardRoomDB = Room.databaseBuilder(application.getApplicationContext(), CardRoomDB.class,"CardRoomDB")
-//                .fallbackToDestructiveMigration()
-//                .allowMainThreadQueries()
-//                .build();
-//
-//        mcardDao = cardRoomDB.cardDao();
+        CardRoomDB cardRoomDB = Room.databaseBuilder(application.getApplicationContext(), CardRoomDB.class,"CardRoomDB")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+
+        mcardDao = cardRoomDB.cardDao();
 
     }
     public void delInfo(Card prevCard){
@@ -98,13 +98,16 @@ public class MyCardModel {
                                                                     @Override
                                                                     public void onSuccess(Void unused) {
                                                                         Log.d(TAG, "삭제성공");
+                                                                        //prevCard.setRoomId();
+                                                                        mcardDao.setDeleteCard(prevCard);
+                                                                        Log.d(TAG, "prevCard del in RoomDB");
                                                                     }
                                                                 })
                                                                 .addOnFailureListener(new OnFailureListener() {
                                                                     @Override
                                                                     public void onFailure(@NonNull Exception e) {
-
-                                                                    }
+                                                                        Log.d(TAG, "삭제실패");
+                                                                   }
                                                                 });
                                                     }
                                                 }
@@ -239,7 +242,8 @@ public class MyCardModel {
                                                                 public void onSuccess(Void aVoid) {
 
                                                                     Log.d(TAG, "Transaction success!");
-//                mcardDao.setUpdateCard(newCard);    // TODO: Room DB 업데이트 결과 확인
+                                                                    //newCard.setRoomId(0);
+                                                                    mcardDao.setUpdateCard(newCard);    // TODO: Room DB 업데이트 결과 확인
                                                                     Log.d(TAG, "Room DB Update");
                                                                 }
                                                             }).addOnFailureListener(new OnFailureListener() {
