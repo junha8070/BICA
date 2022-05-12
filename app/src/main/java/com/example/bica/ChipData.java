@@ -2,9 +2,9 @@ package com.example.bica;
 
 import java.util.ArrayList;
 
-public class Chip {
+public class ChipData {
 
-    private ArrayList<String> chip;
+    private ArrayList<String> chip = new ArrayList<>();
     private String userEmail;
 
     public ArrayList<String> getChip() {

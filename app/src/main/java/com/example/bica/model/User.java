@@ -1,20 +1,24 @@
 package com.example.bica.model;
 
+import com.example.bica.ChipData;
+
+import java.util.ArrayList;
+
 public class User {
 
     String email;
     String username;
     String phonenum;
+    ArrayList<String> group = new ArrayList<>();
 
-    public String getCardUid() {
-        return cardUid;
+    public ArrayList<String> getGroup() {
+        return group;
     }
 
-    public void setCardUid(String cardUid) {
-        this.cardUid = cardUid;
+    public void setGroup(ArrayList<String> group) {
+        this.group = group;
     }
 
-    String cardUid;
 
     public String getEmail() {
         return email;

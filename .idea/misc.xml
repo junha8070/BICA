@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.13958333333333334" />
+        <entry key="../../Library/Android/sdk/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.15885416666666666" />
         <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/activity_notice.xml" value="0.1953125" />
         <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/activity_register_card.xml" value="0.2046875" />
         <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/fragment_setting.xml" value="0.1953125" />
@@ -25,6 +26,7 @@
         <entry key="app/src/main/res/drawable/menu_selector_color.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_card.xml" value="0.15162455240885409" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_card_dialog.xml" value="0.2875829060872397" />
         <entry key="app/src/main/res/layout/activity_edit_info.xml" value="0.1359375" />
         <entry key="app/src/main/res/layout/activity_find_id.xml" value="0.25953521728515627" />
         <entry key="app/src/main/res/layout/activity_find_pw.xml" value="0.1359375" />
@@ -43,7 +45,7 @@
         <entry key="app/src/main/res/layout/activity_take_photo.xml" value="0.2793594306049822" />
         <entry key="app/src/main/res/layout/chip_view.xml" value="0.6719899495442708" />
         <entry key="app/src/main/res/layout/fragment_add_card.xml" value="0.23358449946178686" />
-        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.3440658569335937" />
+        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.13682556152343753" />
         <entry key="app/src/main/res/layout/fragment_card_call.xml" value="0.17898832684824903" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_my_card.xml" value="0.2330352783203125" />

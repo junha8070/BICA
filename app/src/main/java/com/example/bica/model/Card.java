@@ -18,8 +18,9 @@ public class Card {
     String address;
     String occupation;
     String memo;
+    String group;
 
-    public Card(int roomId, String image, String company, String depart, String name, String position, String phone, String email, String address, String occupation, String memo){
+    public Card(int roomId, String image, String company, String depart, String name, String position, String phone, String email, String address, String occupation, String memo, String group){
         this.roomId = roomId;
         this.image = image;
         this.company = company;
@@ -31,6 +32,7 @@ public class Card {
         this.address = address;
         this.occupation = occupation;
         this.memo = memo;
+        this.group = group;
     }
 
     public Card(){
@@ -123,6 +125,14 @@ public class Card {
 
     public void setMemo(String memo) {
         this.memo = memo;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
 }

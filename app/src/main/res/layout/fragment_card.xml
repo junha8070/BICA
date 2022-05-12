@@ -34,46 +34,69 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/filter_group"
-        android:layout_width="0dp"
+    <HorizontalScrollView
+        android:id="@+id/filter_group_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:foregroundGravity="left"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        app:singleLine="true">
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip"
-            android:layout_width="wrap_content"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/filter_group"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="chip" />
+            app:singleLine="true">
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
 
-
-    </com.google.android.material.chip.ChipGroup>
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filter_group">
-        <EditText
-            android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/filter_group_view">
+
+        <TextView
+            android:id="@+id/tv_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="그룹 추가"
-            android:layout_marginRight="10dp"/>
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edt_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1" />
+
+            <Button
+                android:id="@+id/btn_add_group"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:text="그룹추가" />
+
+            <Button
+                android:id="@+id/btn_ok_group"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:text="완료" />
+
+        </LinearLayout>
+
     </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cardFragment_recyclerview"
