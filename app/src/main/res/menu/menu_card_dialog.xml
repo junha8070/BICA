@@ -7,20 +7,27 @@
         android:icon="@drawable/ic_delete_24"
         android:title="삭제"
         android:contentDescription="삭제"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/edit"
         android:icon="@drawable/ic_edit_24"
         android:title="수정"
         android:contentDescription="수정"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/call"
+        android:icon="@drawable/baseline_call_24"
+        android:title="전화"
+        android:contentDescription="전화"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/favorite"
         android:icon="@drawable/ic_star_empty_24"
         android:title="즐겨찾기"
         android:contentDescription="즐겨찾기"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>
