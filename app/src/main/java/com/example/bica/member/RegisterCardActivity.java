@@ -321,7 +321,6 @@ public class RegisterCardActivity extends AppCompatActivity {
         previewView = findViewById(R.id.previewView);
         startBtn = findViewById(R.id.startBtn);
         captureBtn = findViewById(R.id.captureBtn);
-        tv_title = findViewById(R.id.register_card_title);
         edt_username = findViewById(R.id.user_name);
         edt_useremail = findViewById(R.id.user_email);
         edt_phonenum = findViewById(R.id.user_phonenum);
