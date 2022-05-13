@@ -223,7 +223,7 @@
                             <com.example.bica.FontAwesomeTextLight
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=""
+                                android:text=""
                                 android:textSize="70sp"
                                 android:textColor="@color/brown"/>
 
