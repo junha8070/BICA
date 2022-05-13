@@ -1,8 +1,11 @@
 package com.example.bica.EntireCard;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -26,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.bica.ChipData;
 import com.example.bica.CardRepository;
 import com.example.bica.R;
@@ -43,8 +47,10 @@ import com.google.api.Distribution;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -81,7 +87,7 @@ public class CardFragment extends Fragment {
 
     public ImageView logo_img;
     public EditText find_edt, edt_group;
-    public Button btn_add_group, btn_ok_group;
+    public Button btn_add_group;
     public Spinner spinner_group;
     public TextView edt_tv, tv_group;
     ArrayList<String> arrayList;
@@ -114,7 +120,7 @@ public class CardFragment extends Fragment {
             @Override
             public void onChanged(List<Card> cards) {
 //                Toast.makeText(getContext(), cards.get(0).getName(), Toast.LENGTH_SHORT).show();
-                if(cards.size() != 0){
+                if (cards.size() != 0) {
                     Log.d("CardFragmentTag", cards.get(0).getName());
                 }
             }
@@ -136,22 +142,11 @@ public class CardFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.search:
-                        if(searchView.getVisibility() == View.GONE){
+                        if (searchView.getVisibility() == View.GONE) {
                             searchView.setVisibility(View.VISIBLE);
                             filter_group_view.setVisibility(View.GONE);
                             linear.setVisibility(View.GONE);
-                            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                @Override
-                                public boolean onQueryTextSubmit(String query) {
-                                    return false;
-                                }
 
-                                @Override
-                                public boolean onQueryTextChange(String newText) {
-                                    mAdapter.getFilter().filter(newText);
-                                    return false;
-                                }
-                            });
                         } else {
                             searchView.setQuery("", true);
                             searchView.setVisibility(View.GONE);
@@ -159,20 +154,41 @@ public class CardFragment extends Fragment {
                         break;
 
                     case R.id.filter:
-                        if(filter_group_view.getVisibility() == View.GONE){
+                        if (filter_group_view.getVisibility() == View.GONE) {
                             filter_group_view.setVisibility(View.VISIBLE);
                             linear.setVisibility(View.VISIBLE);
                             searchView.setVisibility(View.GONE);
                             searchView.setQuery("", true);
-                        }
-                        else{
+                        } else {
                             filter_group_view.setVisibility(View.GONE);
                             linear.setVisibility(View.GONE);
+                            cardViewModel.getCardLiveData().observe(getActivity(), new Observer<ArrayList<Card>>() {
+                                @Override
+                                public void onChanged(ArrayList<Card> cards) {
+                                    arrCards = cards;
+                                    mAdapter = new CardAdapter(arrCards);
+                                    mRecyclerView.setAdapter(mAdapter);
+                                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+                                }
+                            });
                         }
                         break;
                     default:
                         break;
                 }
+                return false;
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
                 return false;
             }
         });
@@ -195,7 +211,7 @@ public class CardFragment extends Fragment {
                                 List<Object> list = (List<Object>) document.get("group");
 
                                 //Iterate through the list to get the desired values
-                                for(Object item : list){
+                                for (Object item : list) {
                                     System.out.println("chip group object item " + item);
                                     System.out.println("chip group object item to String " + item.toString());
                                     chipArr.add(item.toString());
@@ -214,6 +230,8 @@ public class CardFragment extends Fragment {
                             Chip chip = new Chip(getContext());
                             chip.setText(item);
                             chip.setCheckable(true);
+                            chip.setCloseIcon(Drawable.createFromPath("@drawable/ic_baseline_clise_24"));
+
                             chipGroup.addView(chip);
                             System.out.println("chip data item " + item);
                         }
@@ -232,7 +250,6 @@ public class CardFragment extends Fragment {
                     }
                 });
 
-        System.out.println("chip group tempArr 1 " + tempArr);
         System.out.println("chip group chipArr 1 " + chipArr);
 
         btn_add_group.setOnClickListener(new View.OnClickListener() {
@@ -246,13 +263,37 @@ public class CardFragment extends Fragment {
                 } else {
                     // editText 빈칸이 아닐 경우
                     // Firestore의 group(arraylist) 에 포함되지 않거나, tempArr에 포함되지 않은 경우
-                    if (!tempArr.contains(str_group_name) && !chipArr.contains(str_group_name)) {
-                        tempArr.add(str_group_name);
-                    }
-                    System.out.println("chip group tempArr 2 " + tempArr);
-                    System.out.println("chip group chipArr 2 " + chipArr);
+                    if (!chipArr.contains(str_group_name)) {
+                        chipArr.add(str_group_name);
+                        edt_group.setText("");
+                        chipData.setChip(chipArr);
 
-                    edt_group.setText("");
+
+                        db.collection("users").document(auth.getCurrentUser().getUid()).update("group", chipData.getChip());
+
+                        db.collection("users").document(auth.getCurrentUser().getUid()).get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            System.out.println("chip data in fs 2 " + task.getResult().get("group"));
+//                                            for (String item : chipArr) {
+//                                                System.out.println("chip data item " + item);
+//                                                System.out.println("chip data test ");
+//                                                Chip chip = new Chip(getContext());
+//                                                chip.setText(item);
+//                                                chipGroup.addView(chip);
+//                                                System.out.println("chip data item " + item);
+//                                            }
+                                            Chip chip = new Chip(getContext());
+                                            chip.setText(str_group_name);
+                                            chipGroup.addView(chip);
+                                        }
+                                    }
+                                });
+                    } else {
+                        Toast.makeText(getContext(), "이미 존재하는 그룹명 입니다", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }
@@ -261,75 +302,20 @@ public class CardFragment extends Fragment {
         System.out.println("chip group tempArr 3 " + tempArr);
         System.out.println("chip group chipArr 3 " + chipArr);
 
-        btn_ok_group.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chipGroup.removeAllViews();
-                if (tempArr.isEmpty()) {
-                    System.out.println("chip group tempArr 2 " + tempArr);
-                    System.out.println("chip group chipArr 2 " + chipArr);
-                    System.out.println("chip group tempArray empty ");
-                } else {
-                    for (String item : tempArr) {
-                        // tempArr의 값 chipArr에 넣기
-                        chipArr.add(item);
-                    }
-                    chipData.setChip(chipArr);
-
-                    db.collection("users").document(auth.getCurrentUser().getUid()).update("group", chipData.getChip());
-
-                    db.collection("users").document(auth.getCurrentUser().getUid()).get()
-                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        System.out.println("chip data in fs 2 " + task.getResult().get("group"));
-                                        for (String item : chipArr) {
-                                            System.out.println("chip data item " + item);
-                                            System.out.println("chip data test ");
-                                            Chip chip = new Chip(getContext());
-                                            chip.setText(item);
-                                            chipGroup.addView(chip);
-                                            System.out.println("chip data item " + item);
-
-
-                                        }
-
-
-                                    }
-                                }
-                            });
-
-                }
-                tempArr.clear();
-            }
-
-        });
-
         chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(ChipGroup group, int checkedId) {
                 Chip chip = chipGroup.findViewById(checkedId);
-                System.out.println("chip data test 1 "+ chip.getText().toString());
-                System.out.println("chip data test 2 "+ chip.getId());
-                System.out.println("chip data test 3 "+ chip.isChecked());
-
-                db.collection("users").document(auth.getCurrentUser().getUid()).collection("BusinessCard")
-                        .whereEqualTo("group", chip.getText().toString())
-                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            System.out.println("test group " + task.getResult().toString());
-
-                            for(QueryDocumentSnapshot querySnapshot : task.getResult()){
-                                System.out.println("test group 2 " + querySnapshot.getId());
-                                mAdapter.filteredList.add(querySnapshot.toObject(Card.class));
-                            }
-
-                        }
-                    }
-                });
+                if (chip.isChecked() == true) {
+                    System.out.println("chip changed check 1 " + chip.isChecked());
+                    System.out.println("chip changed check 2 " + chip.isCheckable());
+                } else {
+                    chip.setChecked(false);
+                }
+                mAdapter.getCardGroup().filter(chip.getText().toString());
+                System.out.println("chip data test 1 " + chip.getText().toString());
+                System.out.println("chip data test 2 " + chip.getId());
+                System.out.println("chip data test 3 " + chip.isChecked());
             }
         });
 
@@ -339,7 +325,7 @@ public class CardFragment extends Fragment {
         return view;
     }
 
-    private void init(View view){
+    private void init(View view) {
         toolbar = view.findViewById(R.id.topAppBar);
         searchView = view.findViewById(R.id.searchView);
         chipGroup = view.findViewById(R.id.chip_group);
@@ -347,10 +333,10 @@ public class CardFragment extends Fragment {
         linear = (LinearLayout) view.findViewById(R.id.linear);
         edt_group = (EditText) view.findViewById(R.id.edt_group);
         btn_add_group = (Button) view.findViewById(R.id.btn_add_group);
-        btn_ok_group = (Button) view.findViewById(R.id.btn_ok_group);
         tv_group = (TextView) view.findViewById(R.id.tv_group);
         filter_group_view = (HorizontalScrollView) view.findViewById(R.id.filter_group_view);
     }
+
     @Override
     public void onPause() {
         super.onPause();

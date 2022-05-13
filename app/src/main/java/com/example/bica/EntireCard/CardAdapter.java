@@ -30,12 +30,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     ArrayList<Card> cards;
     ArrayList<Card> initList;
     ArrayList<Card> filteredList = new ArrayList<>();
+    ArrayList<Card> groupList = new ArrayList<>();
+
 
     public CardAdapter(ArrayList<Card> cards) {
         this.cards = cards;
         initList = new ArrayList<>();
         initList.addAll(cards);
-        filteredList.addAll(cards);
+        groupList.addAll(cards);
 
     }
 
@@ -102,6 +104,35 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         }
 
         // 검색 결과 화면에 보여주기 위한 코드
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            initList.clear();
+            initList.addAll((ArrayList)results.values);
+            notifyDataSetChanged();
+        }
+    };
+    public Filter getCardGroup(){
+        return cardGroup;
+    }
+
+    public Filter cardGroup = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            groupList.clear();
+            for (Card item : cards) {
+                //TODO filter 대상 setting
+
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                if (item.getGroup().toLowerCase().contains(filterPattern)) {
+                    groupList.add(item);
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = groupList;
+            return results;
+        }
+
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             initList.clear();

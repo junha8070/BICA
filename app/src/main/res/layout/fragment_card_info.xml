@@ -41,8 +41,7 @@
                     android:id="@+id/iv_PicCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:src="@drawable/cardpic"/>
+                    android:gravity="center_vertical"/>
 
             </LinearLayout>
 

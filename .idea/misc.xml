@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.13958333333333334" />
+        <entry key="../../Library/Android/sdk/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.15885416666666666" />
         <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/activity_notice.xml" value="0.1953125" />
         <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/activity_register_card.xml" value="0.2046875" />
         <entry key="..\:/Users/82102/StudioProjects/BICA/app/src/main/res/layout/fragment_setting.xml" value="0.1953125" />
@@ -12,8 +13,14 @@
         <entry key="app/src/main/res/drawable-hdpi/ic_qrcode.xml" value="0.124" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/baseline_call_24.xml" value="0.1085" />
+        <entry key="app/src/main/res/drawable/baseline_email_24.xml" value="0.152" />
+        <entry key="app/src/main/res/drawable/baseline_note_alt_24.xml" value="0.152" />
+        <entry key="app/src/main/res/drawable/baseline_place_24.xml" value="0.152" />
         <entry key="app/src/main/res/drawable/ic_bica_background.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_delete_24.xml" value="0.206" />
+        <entry key="app/src/main/res/drawable/ic_camera_24.xml" value="0.152" />
+        <entry key="app/src/main/res/drawable/ic_create_24.xml" value="0.152" />
+        <entry key="app/src/main/res/drawable/ic_delete_24.xml" value="0.152" />
+        <entry key="app/src/main/res/drawable/ic_edit_24.xml" value="0.152" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_menu_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_person_24.xml" value="0.207" />
@@ -21,13 +28,13 @@
         <entry key="app/src/main/res/drawable/ic_settings_24.xml" value="0.207" />
         <entry key="app/src/main/res/drawable/ic_share_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_star_24.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_star_filled_24.xml" value="0.206" />
+        <entry key="app/src/main/res/drawable/ic_star_filled_24.xml" value="0.152" />
         <entry key="app/src/main/res/drawable/ic_swap_vert_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_view_list_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/menu_selector_color.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_card.xml" value="0.15162455240885409" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_card_dialog.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/activity_card_dialog.xml" value="0.2875829060872397" />
         <entry key="app/src/main/res/layout/activity_edit_info.xml" value="0.1359375" />
         <entry key="app/src/main/res/layout/activity_find_id.xml" value="0.25953521728515627" />
         <entry key="app/src/main/res/layout/activity_find_pw.xml" value="0.1359375" />
@@ -46,18 +53,19 @@
         <entry key="app/src/main/res/layout/activity_take_photo.xml" value="0.2793594306049822" />
         <entry key="app/src/main/res/layout/chip_view.xml" value="0.6719899495442708" />
         <entry key="app/src/main/res/layout/fragment_add_card.xml" value="0.23358449946178686" />
-        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.3440658569335937" />
+        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.13682556152343753" />
         <entry key="app/src/main/res/layout/fragment_card_call.xml" value="0.17898832684824903" />
+        <entry key="app/src/main/res/layout/fragment_card_info.xml" value="0.1375" />
+        <entry key="app/src/main/res/layout/fragment_edit_mycard.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_my_card.xml" value="0.2330352783203125" />
         <entry key="app/src/main/res/layout/fragment_my_card_slide.xml" value="0.23777173913043478" />
         <entry key="app/src/main/res/layout/fragment_scan_q_r.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.17760416666666667" />
         <entry key="app/src/main/res/layout/item_card.xml" value="0.20764728892933246" />
-        <entry key="app/src/main/res/layout/item_favorite_card.xml" value="0.21925506591796878" />
+        <entry key="app/src/main/res/layout/item_favorite_card.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.27766571044921884" />
         <entry key="app/src/main/res/menu/menu_card.xml" value="0.3333333333333333" />
-        <entry key="app/src/main/res/menu/menu_card_dialog.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/menu/menu_cardfragment.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/menu/menu_edit_mycard.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/menu/menu_mycard.xml" value="0.3333333333333333" />
