@@ -75,18 +75,18 @@
         <activity
             android:name=".member.RegisterActivity"
             android:exported="false" />
+
         <activity
-            android:name=".InitialActivity"
+            android:name=".member.LoginActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".member.LoginActivity"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="false" />

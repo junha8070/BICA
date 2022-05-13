@@ -9,81 +9,188 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal|top"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginVertical="25dp">
 
+        <ImageView
+            android:layout_width="180dp"
+            android:layout_height="80dp"
+            android:src="@drawable/logo"/>
         <TextView
-            android:textSize="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:padding="30dp"
-            android:text="@string/Register_Activity_Welcome_text"
-            android:textColor="@color/black" />
+            android:layout_height="wrap_content"
+            android:text="@string/Initial_signup"
+            android:textColor="@color/subcolor"
+            android:textSize="30dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create your new account"
+            android:textSize="20dp"
+            android:textColor="#C4C4C4"
+            android:gravity="center_horizontal"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:hint="@string/User_Name"
-            android:inputType="textPersonName" />
+        android:orientation="vertical"
+        android:layout_marginVertical="15dp"
+        android:layout_marginHorizontal="25dp"
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="30dp">
+            android:gravity="center_vertical"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/edge_txtbox">
+
+            <com.example.bica.FontAwesomeTextLight
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20sp"
+                android:layout_marginHorizontal="20dp"
+                android:textColor="@color/brown"/>
+
+            <EditText
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:hint="@string/User_Name"
+                android:inputType="textPersonName"
+                android:background="@android:color/transparent">
+
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/edge_txtbox">
+
+            <com.example.bica.FontAwesomeTextLight
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20sp"
+                android:layout_marginHorizontal="20dp"
+                android:textColor="@color/brown"/>
 
             <EditText
                 android:id="@+id/user_email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
+                android:layout_height="42dp"
                 android:hint="@string/User_Email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:background="@android:color/transparent">
 
-            <Button
-                android:id="@+id/email_check"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/brown"
-                android:text="@string/Certified">
+            </EditText>
 
-            </Button>
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/user_pw"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:hint="@string/User_PW"
-            android:inputType="textPassword" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/edge_txtbox">
 
-        <EditText
-            android:id="@+id/user_pw_check"
+            <com.example.bica.FontAwesomeTextLight
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20sp"
+                android:layout_marginHorizontal="20dp"
+                android:textColor="@color/brown"/>
+
+            <EditText
+                android:id="@+id/user_pw"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:hint="@string/User_PW"
+                android:inputType="textPassword"
+                android:background="@android:color/transparent">
+
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:hint="@string/User_PW_Check"
-            android:inputType="textPassword" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/edge_txtbox">
 
-        <EditText
-            android:id="@+id/user_phonenum"
+            <com.example.bica.FontAwesomeTextLight
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20sp"
+                android:layout_marginHorizontal="20dp"
+                android:textColor="@color/brown"/>
+
+            <EditText
+                android:id="@+id/user_pw_check"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:hint="@string/User_PW_Check"
+                android:inputType="textPassword"
+                android:background="@android:color/transparent">
+
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:hint="@string/PhoneNum"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/edge_txtbox">
 
-            android:maxLength="13"/>
+            <com.example.bica.FontAwesomeTextLight
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20sp"
+                android:layout_marginHorizontal="20dp"
+                android:textColor="@color/brown"/>
+
+            <EditText
+                android:id="@+id/user_phonenum"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:hint="@string/PhoneNum"
+                android:inputType="phone"
+                android:maxLength="13"
+                android:background="@android:color/transparent">
+
+            </EditText>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="by registering, you are agreeing to our terms of use and privacy ploicy"
+            android:textSize="10dp"
+            android:textColor="#C4C4C4"
+            android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
 
@@ -91,15 +198,21 @@
         android:gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginVertical="30dp">
 
         <Button
             android:id="@+id/next_regist2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/brown"
-            android:text="@string/Next_Btn">
-        </Button>
+            android:background="@drawable/edge_btn"
+            android:layout_marginVertical="5dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:backgroundTint="#4D5A7A"
+            android:text="@string/Next_Btn" />
+
 
     </LinearLayout>
 

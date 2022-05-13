@@ -5,115 +5,195 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".member.LoginActivity">
+    tools:context=".member.LoginActivity"
+    android:background="@drawable/background_bica">
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="110dp"
+        android:layout_marginHorizontal="35dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:padding="30dp"
-            android:text="@string/Login_Activity_Welcome_text"
-            android:textColor="@color/black"
-            android:textSize="20dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/edt_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:hint="EMAIL ID"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/edt_pw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:hint="비밀번호"
-            android:inputType="textPassword" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        android:background="@drawable/edge">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:gravity="center_horizontal|top"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="25dp">
 
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="80dp"
+                android:src="@drawable/logo"/>
             <TextView
-                android:id="@+id/tv_Find_ID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:text="@string/Find_ID" />
-
+                android:text="@string/Initial_login"
+                android:textColor="@color/subcolor"
+                android:textSize="27dp"
+                android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="|" />
+                android:layout_marginVertical="10dp"
+                android:textSize="10dp"
+                android:text="Enter your registered email and password\nto login to your account"
+                android:textColor="#C4C4C4"
+                android:gravity="center_horizontal"/>
 
-            <TextView
-                android:id="@+id/tv_Find_PW"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="@string/Find_PW" />
         </LinearLayout>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/btn_login"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:backgroundTint="@color/brown"
-            android:text="로그인" />
+            android:orientation="vertical"
+            android:layout_marginVertical="15dp"
+            android:layout_marginHorizontal="25dp"
+            android:gravity="center_vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/edge_txtbox">
+
+                <com.example.bica.FontAwesomeTextLight
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/brown"/>
+
+                <EditText
+                    android:id="@+id/edt_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:hint="@string/User_Email"
+                    android:inputType="textEmailAddress"
+                    android:background="@android:color/transparent">
+
+                </EditText>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/edge_txtbox">
+
+                <com.example.bica.FontAwesomeTextLight
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/brown"/>
+
+                <EditText
+                    android:id="@+id/edt_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:hint="@string/User_PW"
+                    android:inputType="textPassword"
+                    android:background="@android:color/transparent">
+
+                </EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_Find_ID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:text="@string/Find_ID" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="|" />
+
+                    <TextView
+                        android:id="@+id/tv_Find_PW"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:text="@string/Find_PW" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|bottom"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/btn_login"
+                android:background="@drawable/edge_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:backgroundTint="#4D5A7A"
+                android:text="@string/Initial_login"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don’t have an Account?"
+                android:textSize="10dp"
+                android:textColor="#C4C4C4"/>
+
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edge_btn"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="#4D5A7A"
+                android:text="@string/Initial_signup"
+                app:layout_constraintBottom_toTopOf="@+id/btn_login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </LinearLayout>
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
