@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.bica.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,7 +45,7 @@ public class FindIDActivity extends AppCompatActivity {
 
         init();
 
-        edt_phonenum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+//        edt_phonenum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,37 +55,50 @@ public class FindIDActivity extends AppCompatActivity {
                 String name = edt_username.getText().toString().trim();
                 String phonenum = edt_phonenum.getText().toString().trim();
 
-                firestore.collection("users")
-                        .whereEqualTo("username", name)
-                        .whereEqualTo("phonenum", phonenum)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    System.out.println("test FindIDActivity");
-                                    for(QueryDocumentSnapshot document : task.getResult()){
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
-                                        foundId = document.get("email").toString();
-                                        Log.d(TAG,"아이디"+document.get("email"));
-                                        System.out.println("test FindIDActivity ID "+ document.get("email").toString());
-                                        System.out.println("test FindIDActivity foundID "+ foundId);
+                if(name.isEmpty()||phonenum.isEmpty()){
+                    Toast.makeText(FindIDActivity.this, "빈 칸을 채워주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else{
 
+                    firestore.collection("users")
+                            .whereEqualTo("username", name)
+                            .whereEqualTo("phonenum", phonenum)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        System.out.println("test FindIDActivity");
+                                        for(QueryDocumentSnapshot document : task.getResult()){
+                                            Log.d(TAG, document.getId() + " => " + document.getData());
+                                            foundId = document.get("email").toString();
+                                            Log.d(TAG,"아이디"+document.get("email"));
+                                            System.out.println("test FindIDActivity ID "+ document.get("email").toString());
+                                            System.out.println("test FindIDActivity foundID "+ foundId);
+
+                                        }
+                                        Intent startMain = new Intent(FindIDActivity.this, FoundIDActivity.class);
+                                        startMain.putExtra("email", foundId);
+                                        startActivity(startMain);
+                                        finish();
+                                        Toast.makeText(FindIDActivity.this, "아이디 찾기 성공", Toast.LENGTH_SHORT).show();
                                     }
-                                    Intent startMain = new Intent(FindIDActivity.this, FoundIDActivity.class);
-                                    startMain.putExtra("email", foundId);
-                                    startActivity(startMain);
-                                    finish();
-                                    Toast.makeText(FindIDActivity.this, "아이디 찾기 성공", Toast.LENGTH_SHORT).show();
+                                    else{
+                                        Log.d(TAG, "일치하는 회원정보가 없습니다.");
+                                        Toast.makeText(FindIDActivity.this, "일치하는 회원정보가 없습니다.", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
                                 }
-                                else{
-                                    Log.d(TAG, "일치하는 회원정보가 없습니다.");
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e(TAG, "일치하는 회원정보가 없습니다.");
                                     Toast.makeText(FindIDActivity.this, "일치하는 회원정보가 없습니다.", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                            }
-                        });
-
+                            });
+                }
             }
         });
 

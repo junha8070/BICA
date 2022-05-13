@@ -51,36 +51,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         init();
 //        edt_phonenum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-        //Todo: 한 전화번호당 한 아이디 제한걸기
-
-        //Todo: 이메일 인증 해보기
-//        btn_check.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ActionCodeSettings actionCodeSettings =
-//                    ActionCodeSettings.newBuilder()
-//                            .setUrl("https://bica-68326.firebaseapp.com/__/auth/action?mode=action&oobCode=code")
-//                            .setHandleCodeInApp(true)
-//                            .setAndroidPackageName(
-//                                    "com.example.bica",
-//                                    true,
-//                                    "21")
-//                            .build();
-//
-//                firebaseAuth.sendSignInLinkToEmail(edt_useremail.getText().toString().trim(), actionCodeSettings)
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                if(task.isSuccessful()){
-//                                    Log.d(TAG, "Email sent");
-//                                }
-//                                else{
-//                                    Log.e(TAG,"Fail to send email");
-//                                }
-//                            }
-//                        });
-//            }
-//        });
 
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,29 +67,40 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "빈 칸을 채워주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                else {
+                    if(pwd.equals(pwdcheck)){
 
-                User userAccount = new User();
-                userAccount.setEmail(email);
-                userAccount.setUsername(username);
-                userAccount.setPhonenum(phonenum);
+                        User userAccount = new User();
+                        userAccount.setEmail(email);
+                        userAccount.setUsername(username);
+                        userAccount.setPhonenum(phonenum);
 
-                final ProgressDialog mDialog = new ProgressDialog(RegisterActivity.this);
+                        final ProgressDialog mDialog = new ProgressDialog(RegisterActivity.this);
 
-                memberViewModel.register(email, pwd, userAccount);
-                mDialog.setMessage("가입중입니다");
-                mDialog.show();
-                memberViewModel.getSaveUserInfoMutableLiveData().observe(RegisterActivity.this, new Observer<Boolean>() {
-                    @Override
-                    public void onChanged(Boolean aBoolean) {
-                        if (aBoolean) {
-                            mDialog.dismiss();
-                            Intent intent = new Intent(RegisterActivity.this, RegisterCardActivity.class);
-                            startActivity(intent);
-                        }else{
-                            mDialog.dismiss();
-                        }
+                        memberViewModel.register(email, pwd, userAccount);
+                        mDialog.setMessage("가입중입니다");
+                        mDialog.show();
+                        memberViewModel.getSaveUserInfoMutableLiveData().observe(RegisterActivity.this, new Observer<Boolean>() {
+                            @Override
+                            public void onChanged(Boolean aBoolean) {
+                                if (aBoolean) {
+                                    mDialog.dismiss();
+                                    Intent intent = new Intent(RegisterActivity.this, RegisterCardActivity.class);
+                                    startActivity(intent);
+                                }else{
+                                    mDialog.dismiss();
+                                    Toast.makeText(RegisterActivity.this, "이미 존재하는 아이디입니다.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+                        });
                     }
-                });
+                    else{
+                        Toast.makeText(RegisterActivity.this, "비밀번호가 틀렸습니다. 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
 
 
 //                //가입 정보 가져오기

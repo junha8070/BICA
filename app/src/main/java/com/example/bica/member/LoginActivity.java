@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private String TAG = "LoginActivity";
 
-    private Button btn_login;
+    private Button btn_login, btn_register;
     private EditText edt_ID, edt_PW;
     private TextView tv_Find_ID, tv_Find_PW;
     private FirebaseAuth firebaseAuth;
@@ -129,6 +129,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startRegisterActivity = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(startRegisterActivity);
+            }
+        });
+
         // 아이디 찾기
         tv_Find_ID.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
         tv_Find_ID = findViewById(R.id.tv_Find_ID);
         tv_Find_PW = findViewById(R.id.tv_Find_PW);
         btn_login = findViewById(R.id.btn_login);
+        btn_register = findViewById(R.id.btn_register);
 
         firebaseAuth = FirebaseAuth.getInstance();  // 파이어베이스 auth 인스턴스 생성
         firestore = FirebaseFirestore.getInstance();

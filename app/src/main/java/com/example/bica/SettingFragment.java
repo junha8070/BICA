@@ -89,7 +89,7 @@ public class SettingFragment extends Fragment {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         firebaseAuth.signOut();
                                        // requireActivity().finish();
-                                        Intent startInitialActivity = new Intent(getContext(), InitialActivity.class);
+                                        Intent startInitialActivity = new Intent(getContext(), LoginActivity.class);
                                         startActivity(startInitialActivity);
                                         getActivity().finish();
 
