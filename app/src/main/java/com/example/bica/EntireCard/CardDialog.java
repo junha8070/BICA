@@ -1,7 +1,11 @@
 package com.example.bica.EntireCard;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import com.example.bica.R;
 import com.example.bica.model.Card;
@@ -124,6 +129,12 @@ public class CardDialog {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
+                    case R.id.call:
+//                        String number=tv_Phone.getText().toString();
+//                        String tel = "tel:" + number;
+//                        Intent intent =new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
+//                        startActivity(intent);
+                        break;
                     case R.id.delete:
                         Toast.makeText(dlg.getContext(), "삭제 버튼", Toast.LENGTH_SHORT).show();
                         break;
@@ -196,6 +207,8 @@ public class CardDialog {
 
         });
     }
+
+
 
     private void editGroup(Card cardInfo, String groupName) {
         firestore.collection("users").document(auth.getCurrentUser().getUid())
