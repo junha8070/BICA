@@ -46,7 +46,7 @@ public class FavoriteModel {
         Log.d(TAG,"확인");
         firestore.collection("users")
                 .document(auth.getCurrentUser().getUid())
-                .collection("myCard")
+                .collection("FavoriteCard")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

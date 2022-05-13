@@ -21,6 +21,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.example.bica.AddCard.QR_Make_Activity;
 import com.example.bica.R;
 import com.example.bica.model.Card;
@@ -53,7 +54,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
         int i = position;
-//        holder.iv_profile.setImageResource(cardModel.get(position).getImage());
+        Glide.with(holder.itemView.getContext()).load(cardModel.get(i).getImage()).fitCenter().into(holder.iv_profile);
         holder.tv_company.setText(cardModel.get(i).getCompany());
         holder.tv_depart.setText(cardModel.get(i).getDepart());
         holder.tv_name.setText(cardModel.get(i).getName());
@@ -75,10 +76,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         return cardModel.size();
     }
 
-    class FavoriteViewHolder extends RecyclerView.ViewHolder{
+    class FavoriteViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_profile;
-        TextView tv_company, tv_depart, tv_name, tv_position, tv_Phone,tv_Email, tv_Address;
-        FavoriteViewHolder(@NonNull View view){
+        TextView tv_company, tv_depart, tv_name, tv_position, tv_Phone, tv_Email, tv_Address;
+
+        FavoriteViewHolder(@NonNull View view) {
             super(view);
 
             iv_profile = view.findViewById(R.id.iv_profile);
@@ -108,7 +110,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                     case 0:
                         String tel = "tel:" + cardModel.get(position).getPhone();
                         //startActivity(new Intent("android.intent.action.CALL", Uri.parse(tel)));
-                        Intent intent =new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
                         builder.getContext().startActivity(intent);
                         break;
                     case 1:

@@ -2,6 +2,7 @@ package com.example.bica.EntireCard;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -29,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldPath;
@@ -42,9 +44,19 @@ import java.util.List;
 
 public class CardDialog {
 
+    private String TAG = "CardDialogTAG";
+
     private Context context;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    // 커스텀 다이얼로그의 각 위젯들을 정의한다.
+    private MaterialToolbar cardView_toolbar;
+    private ImageView iv_profile;
+    private TextView tv_company, tv_depart, tv_name, tv_position, tv_Phone, tv_Email, tv_Address, tv_group;
+    private Spinner spinner_group;
+    private Button btn_group;
+
     public CardDialog(Context context) {
         this.context = context;
     }
@@ -73,12 +85,7 @@ public class CardDialog {
         // 커스텀 다이얼로그를 노출한다.
         dlg.show();
 
-        // 커스텀 다이얼로그의 각 위젯들을 정의한다.
-        final MaterialToolbar cardView_toolbar;
-        final ImageView iv_profile;
-        final TextView tv_company, tv_depart, tv_name, tv_position, tv_Phone, tv_Email, tv_Address, tv_group;
-        Spinner spinner_group;
-        final Button btn_group;
+        isFavorite(cardInfo);
 
         cardView_toolbar = dlg.findViewById(R.id.cardView_toolbar);
 
@@ -174,7 +181,13 @@ public class CardDialog {
 
                         break;
                     case R.id.favorite:
+                        if(cardView_toolbar.getMenu().findItem(R.id.favorite).getIcon().equals(R.drawable.ic_star_filled_24)){
+                            cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_empty_24);
+                        }else {
+                            cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_filled_24);
+                        }
                         Toast.makeText(dlg.getContext(), "즐겨찾기 버튼", Toast.LENGTH_SHORT).show();
+                        addFavorite(cardInfo);
                         break;
                 }
                 return false;
@@ -213,5 +226,41 @@ public class CardDialog {
 
     }
 
+    private void addFavorite(Card cardInfo){
+        firestore.collection("users")
+                .document(auth.getCurrentUser().getUid())
+                .collection("FavoriteCard")
+                .add(cardInfo)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if(task.isSuccessful()){
+                    cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_filled_24);
+                }else{
+                    Log.e(TAG, task.getException().getMessage());
+                }
+            }
+        });
+    }
+
+    public void isFavorite(Card cardInfo){
+        firestore.collection("users")
+                .document(auth.getCurrentUser().getUid())
+                .collection("FavoriteCard")
+                .whereEqualTo("image",cardInfo.getImage()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (!task.getResult().isEmpty()) {
+                        cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_filled_24);
+                    } else if (task.getResult().isEmpty()) {
+                        cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_empty_24);
+                    } else {
+                        Log.e(TAG, task.getException().getMessage());
+                    }
+                }
+            }
+        });
+    }
 
 }
