@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:hint="@string/PhoneNum"
-            android:inputType="phone"
+
             android:maxLength="13"/>
 
     </LinearLayout>

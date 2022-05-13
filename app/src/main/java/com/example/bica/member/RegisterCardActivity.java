@@ -173,7 +173,7 @@ public class RegisterCardActivity extends AppCompatActivity {
             }
         });
 
-        edt_phonenum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+//        edt_phonenum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override

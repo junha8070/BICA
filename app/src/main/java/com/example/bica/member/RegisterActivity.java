@@ -50,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         memberViewModel = new ViewModelProvider(this).get(MemberViewModel.class);
 
         init();
-        edt_phonenum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+//        edt_phonenum.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         //Todo: 한 전화번호당 한 아이디 제한걸기
 
         //Todo: 이메일 인증 해보기

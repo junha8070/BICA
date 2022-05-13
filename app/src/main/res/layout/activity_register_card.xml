@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:hint="@string/Card_Phonenum"
-                android:inputType="phone"
+
                 android:maxLength="13" />
 
             <EditText

@@ -636,11 +636,13 @@ public class MyCardFragment extends Fragment {
 
                 TextView tv_Pnum = alertDialog.findViewById(R.id.tv_Pnum);
                 tv_Pnum.setText(tv_myPhoneNum.getText());
+                String number=tv_myPhoneNum.getText().toString();
 
                 Button pnum_call = popupView.findViewById(R.id.pnum_call);
+
                 pnum_call.setOnClickListener(new Button.OnClickListener(){
                     public void onClick(View v){
-                        String tel = "tel:" + Pnum;
+                        String tel = "tel:" + number;
                         Intent intent =new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
                         startActivity(intent);
                     }
@@ -651,7 +653,7 @@ public class MyCardFragment extends Fragment {
                     public void onClick(View v){
                         Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
                         intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-                        intent.putExtra(ContactsContract.Intents.Insert.PHONE, Pnum);
+                        intent.putExtra(ContactsContract.Intents.Insert.PHONE, number);
                         startActivity(intent);
                     }
                 });
