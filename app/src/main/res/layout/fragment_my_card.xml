@@ -15,6 +15,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
+        android:background="@drawable/background_mycard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -22,7 +23,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="vertical">
         <androidx.appcompat.widget.Toolbar
-            android:background="@color/brown"
             android:backgroundTint="@color/brown"
             android:id="@+id/tb_mycard1"
             android:layout_width="match_parent"
@@ -227,11 +227,6 @@
                                 android:textSize="70sp"
                                 android:textColor="@color/brown"/>
 
-<!--                            <ImageView-->
-<!--                                android:id="@+id/iv_myPicFace"-->
-<!--                                android:layout_width="50dp"-->
-<!--                                android:layout_height="50dp"-->
-<!--                                android:src="@drawable/bica_portrait" />-->
 
             </LinearLayout>
 
