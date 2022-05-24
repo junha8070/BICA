@@ -1,5 +1,6 @@
 package com.example.bica.AddCard;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -16,11 +17,15 @@ public class ScanQR extends AppCompatActivity {
 
     private IntentIntegrator qrScan;
     private QRViewmodel qrViewmodel;
+    ProgressDialog mDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanqr);
+
+        mDialog = new ProgressDialog(ScanQR.this);
 
         qrScan = new IntentIntegrator(this);
         qrScan.setOrientationLocked(false); // default가 세로모드인데 휴대폰 방향에 따라 가로, 세로로 자동 변경됩니다.
@@ -33,23 +38,28 @@ public class ScanQR extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null) {
-            if(result.getContents() == null) {
+        if (result != null) {
+            if (result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
                 finish();
             } else {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 qrViewmodel.AddCard(result.getContents());
 
+                mDialog.setMessage("추가중입니다.");
+                mDialog.show();
                 qrViewmodel.getSuccessMutableLiveData().observe(this, new Observer<Boolean>() {
                     @Override
                     public void onChanged(Boolean aBoolean) {
-                        if(aBoolean){
+                        if (aBoolean) {
                             Toast.makeText(ScanQR.this, "Success", Toast.LENGTH_SHORT).show();
-                        }else{
+                            finish();
+                            mDialog.dismiss();
+                        } else {
                             Toast.makeText(ScanQR.this, "Failed", Toast.LENGTH_SHORT).show();
+                            finish();
+                            mDialog.dismiss();
                         }
-                        finish();
                     }
                 });
                 // todo

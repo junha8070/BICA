@@ -5,9 +5,14 @@
 
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -25,6 +30,24 @@
         android:roundIcon="@mipmap/ic_bica_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BICA">
+
+        <receiver
+            android:name=".CallCheckReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:label="CallCheckReceiver"
+            android:process=".cCallCheckReceiver">
+            <intent-filter android:priority="999">
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.intent.action.CALL_LOG" />
+                <action android:name="android.intent.action.DIAL" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".CallDialogActivity"
+            android:exported="false" />
         <activity
             android:name=".EntireCard.CardDialog"
             android:exported="false" />
@@ -75,22 +98,19 @@
         <activity
             android:name=".member.RegisterActivity"
             android:exported="false" />
-
         <activity
             android:name=".member.LoginActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:windowSoftInputMode="adjustNothing"
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

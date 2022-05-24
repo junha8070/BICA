@@ -36,7 +36,7 @@ public class QR_Make_Activity extends AppCompatActivity {
         init();
 
         Intent receiveCardId = getIntent();
-        str_card = receiveCardId.getStringExtra("cardId");
+        str_card = receiveCardId.getStringExtra("cardInfo");
         Log.d(TAG, "아이디"+str_card);
 
 //        str_card = "https://www.naver.com";

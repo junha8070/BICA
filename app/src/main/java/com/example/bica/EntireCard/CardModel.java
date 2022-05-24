@@ -94,7 +94,7 @@ public class CardModel {
                 .collection("BusinessCard").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (value.isEmpty()) {
+                if(value.isEmpty()){
                     Toast.makeText(application, "값이 없습니다.", Toast.LENGTH_SHORT).show();
                 }
                 for (DocumentChange dc : value.getDocumentChanges()) {
@@ -102,7 +102,7 @@ public class CardModel {
                         case ADDED:
                             Card card = dc.getDocument().toObject(Card.class);
                             arrCard.add(card);
-                            Log.d(TAG, "현재 arrCard 사이즈 : " + arrCard.size());
+                            Log.d(TAG, "현재 arrCard 사이즈 : "+arrCard.size());
                             cardMutableLiveData.postValue(arrCard);
                             break;
 
@@ -114,8 +114,8 @@ public class CardModel {
 
                         case REMOVED:
 //                            arrCard.remove(dc.getOldIndex());
-                            Log.d(TAG, "현재 arrCard 사이즈 : " + arrCard.size());
-                            Log.d(TAG, "현재 arrCard 사이즈 : " + dc.getOldIndex());
+                            Log.d(TAG, "현재 arrCard 사이즈 : "+arrCard.size());
+                            Log.d(TAG, "현재 arrCard 사이즈 : "+dc.getOldIndex());
                             cardMutableLiveData.postValue(arrCard);
                             break;
 

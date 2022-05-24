@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
 
-                //mcardDao.getCardAll();
+//                mcardDao.getCardAll();
 
                 Intent startMain = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(startMain);

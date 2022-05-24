@@ -56,14 +56,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyCardFragment extends Fragment {
-    private TextView tv_mycardname,tv_myPosition,tv_myOccupation,tv_myTeamName,tv_myCompany_Name,tv_myGroupName,tv_myPhoneNum,tv_my_Email,tv_myCompany_Address,tv_myMemo,tv_Pnum;
-    private EditText et_mycardname,et_myPosition,et_myOccupation,et_myTeamName,et_myCompany_Name,et_myGroupName,et_myPhoneNum,et_my_Email,et_myMemo,et_myCompany_Address;
+    private TextView tv_mycardname, tv_myPosition, tv_myOccupation, tv_myTeamName, tv_myCompany_Name, tv_myGroupName, tv_myPhoneNum, tv_my_Email, tv_myCompany_Address, tv_myMemo, tv_Pnum;
+    private EditText et_mycardname, et_myPosition, et_myOccupation, et_myTeamName, et_myCompany_Name, et_myGroupName, et_myPhoneNum, et_my_Email, et_myMemo, et_myCompany_Address;
     private TextView tv_company, tv_depart, tv_name, tv_position, tv_Phone, tv_Email, tv_Address;
     private ImageView iv_mycard;
     private View view;
     private String Pnum, str_card_info, cardUid;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
-    Toolbar toolbar,tb_mycard_commit;        // 툴바
+    Toolbar toolbar, tb_mycard_commit;        // 툴바
     AlertDialog.Builder builder;        //다이얼로그 창
     private MyCardViewModel myCardViewModel;
     private Card newCard = new Card();
@@ -83,13 +83,13 @@ public class MyCardFragment extends Fragment {
 
         myCardViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(MyCardViewModel.class);
         myCardViewModel.getUserInfo().observe(this, new Observer<ArrayList<Card>>() {
-                    @Override
-                    public void onChanged(ArrayList<Card> cards) {
-                        arrCard = cards;
-                        adapter = new MyCardAdapter(cards, viewPager2);
-                        viewPager2.setAdapter(adapter);
-                    }
-                });
+            @Override
+            public void onChanged(ArrayList<Card> cards) {
+                arrCard = cards;
+                adapter = new MyCardAdapter(cards, viewPager2);
+                viewPager2.setAdapter(adapter);
+            }
+        });
 
 //        myCardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
 //            @Override
@@ -156,12 +156,10 @@ public class MyCardFragment extends Fragment {
                 tv_myMemo.setText(arrCard.get(position).getMemo());
 
 
-
-
                 // Fragment에서 Toolbar 셋업
                 toolbar.setOnMenuItemClickListener(item -> { // 메뉴 눌렀을때 뭐할지 정해주는 코드
                     switch (item.getItemId()) {
-                        case R.id.mycard_del:{
+                        case R.id.mycard_del: {
                             prevCard.setName(tv_mycardname.getText().toString());
                             prevCard.setPosition(tv_myPosition.getText().toString());
                             prevCard.setOccupation(tv_myOccupation.getText().toString());
@@ -179,7 +177,29 @@ public class MyCardFragment extends Fragment {
                         }
                         case R.id.mycard_share: {
                             // 공유 뭘로 할지 다이얼로그 창 띄움
-                            showDialog(str_card_info);
+//                            str_card_info = "{\"name\":\"" + tv_mycardname.getText().toString() + "\"," +
+//                                    "\"email\":\"" + tv_my_Email.getText().toString() + "\"," +
+//                                    "\"company\":\"" + tv_myCompany_Name.getText().toString() + "\"," +
+//                                    "\"address\":\"" + tv_myCompany_Address.getText().toString() + "\"," +
+//                                    "\"phone\":\"" + tv_myPhoneNum.getText().toString() + "\"," +
+//                                    "\"occupation\":\"" + tv_myOccupation.getText().toString() + "\"," +
+//                                    "\"depart\":\"" + tv_myTeamName.getText().toString() + "\"," +
+//                                    "\"position\":\"" + tv_myPosition.getText().toString() + "\"," +
+//                                    "\"memo\":\"" + tv_myMemo.getText().toString() + "\"}";
+                            str_card_info = tv_mycardname.getText().toString()
+                                    +"///"+tv_my_Email.getText().toString()
+                                    +"///"+tv_myCompany_Name.getText().toString()
+                                    +"///"+tv_myCompany_Address.getText().toString()
+                                    +"///"+tv_myPhoneNum.getText().toString()
+                                    +"///"+tv_myOccupation.getText().toString()
+                                    +"///"+tv_myTeamName.getText().toString()
+                                    +"///"+tv_myPosition.getText().toString()
+                                    +"///"+tv_myMemo.getText().toString()
+                                    +"///"+arrCard.get(position).getImage();
+
+                            Intent startQR = new Intent(getContext(), QR_Make_Activity.class);
+                            startQR.putExtra("cardInfo", str_card_info);
+                            startActivity(startQR);
                             // navigate to settings screen
 //                    StartRecord();
 //
@@ -193,8 +213,8 @@ public class MyCardFragment extends Fragment {
                             toolbar.setVisibility(View.GONE);
                             tb_mycard_commit.setVisibility(View.VISIBLE);
                             tb_mycard_commit.setOnMenuItemClickListener(item1 -> {
-                                switch (item1.getItemId()){
-                                    case R.id.commit:{
+                                switch (item1.getItemId()) {
+                                    case R.id.commit: {
                                         toolbar.setVisibility(View.VISIBLE);
                                         tb_mycard_commit.setVisibility(View.GONE);
 
@@ -287,7 +307,6 @@ public class MyCardFragment extends Fragment {
                                         newCard.setMemo(myMemo);
 
 
-
 //                                tv_name.setText(myname);
 //                                tv_position.setText(myPosition);
 //                                tv_depart.setText(myOccupation);
@@ -297,12 +316,9 @@ public class MyCardFragment extends Fragment {
 //                                tv_Address.setText(myCompany_Address);
 
 
-
-
                                         //편집데이터업데이트
                                         myCardViewModel.changeInfo(prevCard, newCard);
                                         reset();
-
 
 
                                         myCardViewModel.getUpdateInfo().observe(getActivity(), new Observer<Card>() {
@@ -338,33 +354,32 @@ public class MyCardFragment extends Fragment {
                                 }
 
 
-
                             });
 
                             //수정
                             tv_mycardname.setVisibility(view.GONE);
                             et_mycardname.setVisibility(view.VISIBLE);
-                            String myname = (String)tv_mycardname.getText();
+                            String myname = (String) tv_mycardname.getText();
                             et_mycardname.setText(myname);
 
                             tv_myPosition.setVisibility(view.GONE);
                             et_myPosition.setVisibility(view.VISIBLE);
-                            String myposition = (String)tv_myPosition.getText();
+                            String myposition = (String) tv_myPosition.getText();
                             et_myPosition.setText(myposition);
 
                             tv_myOccupation.setVisibility(view.GONE);
                             et_myOccupation.setVisibility(view.VISIBLE);
-                            String myOccupation = (String)tv_myOccupation.getText();
+                            String myOccupation = (String) tv_myOccupation.getText();
                             et_myOccupation.setText(myOccupation);
 
                             tv_myTeamName.setVisibility(view.GONE);
                             et_myTeamName.setVisibility(view.VISIBLE);
-                            String myTeamName = (String)tv_myTeamName.getText();
+                            String myTeamName = (String) tv_myTeamName.getText();
                             et_myTeamName.setText(myTeamName);
 
                             tv_myCompany_Name.setVisibility(view.GONE);
                             et_myCompany_Name.setVisibility(view.VISIBLE);
-                            String myCompany_Name = (String)tv_myCompany_Name.getText();
+                            String myCompany_Name = (String) tv_myCompany_Name.getText();
                             et_myCompany_Name.setText(myCompany_Name);
 
 //                    tv_myGroupName.setVisibility(view.GONE);
@@ -374,19 +389,19 @@ public class MyCardFragment extends Fragment {
 
                             tv_myPhoneNum.setVisibility(view.GONE);
                             et_myPhoneNum.setVisibility(view.VISIBLE);
-                            String myPhoneNum = (String)tv_myPhoneNum.getText();
+                            String myPhoneNum = (String) tv_myPhoneNum.getText();
                             et_myPhoneNum.setText(myPhoneNum);
 
                             tv_my_Email.setVisibility(view.GONE);
                             et_my_Email.setVisibility(view.VISIBLE);
-                            String my_Email = (String)tv_my_Email.getText();
+                            String my_Email = (String) tv_my_Email.getText();
                             et_my_Email.setText(my_Email);
 
                             tv_myCompany_Address.setEnabled(true);
 
                             tv_myMemo.setVisibility(view.GONE);
                             et_myMemo.setVisibility(view.VISIBLE);
-                            String myMemo = (String)tv_myMemo.getText();
+                            String myMemo = (String) tv_myMemo.getText();
                             et_myMemo.setText(myMemo);
 
                         }
@@ -398,7 +413,6 @@ public class MyCardFragment extends Fragment {
 
             }
         });
-
 
 
 //
@@ -634,21 +648,21 @@ public class MyCardFragment extends Fragment {
 
                 TextView tv_Pnum = alertDialog.findViewById(R.id.tv_Pnum);
                 tv_Pnum.setText(tv_myPhoneNum.getText());
-                String number=tv_myPhoneNum.getText().toString();
+                String number = tv_myPhoneNum.getText().toString();
 
                 Button pnum_call = popupView.findViewById(R.id.pnum_call);
 
-                pnum_call.setOnClickListener(new Button.OnClickListener(){
-                    public void onClick(View v){
+                pnum_call.setOnClickListener(new Button.OnClickListener() {
+                    public void onClick(View v) {
                         String tel = "tel:" + number;
-                        Intent intent =new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
                         startActivity(intent);
                     }
                 });
 
                 Button pnum_save = popupView.findViewById(R.id.pnum_save);
-                pnum_save.setOnClickListener(new Button.OnClickListener(){
-                    public void onClick(View v){
+                pnum_save.setOnClickListener(new Button.OnClickListener() {
+                    public void onClick(View v) {
                         Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
                         intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
                         intent.putExtra(ContactsContract.Intents.Insert.PHONE, number);
@@ -664,7 +678,7 @@ public class MyCardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //주소 검색 웹뷰 화면으로 이동
-                Intent intent=new Intent(getContext(), SearchAddressActivity.class);
+                Intent intent = new Intent(getContext(), SearchAddressActivity.class);
                 getSearchResult.launch(intent);
 
             }
@@ -676,9 +690,9 @@ public class MyCardFragment extends Fragment {
     private final ActivityResultLauncher<Intent> getSearchResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if(result.getResultCode()==RESULT_OK){
-                    if(result.getData()!=null){
-                        String data=result.getData().getStringExtra("data");
+                if (result.getResultCode() == RESULT_OK) {
+                    if (result.getData() != null) {
+                        String data = result.getData().getStringExtra("data");
                         tv_myCompany_Address.setText(data);
                         myCardViewModel.changeInfo(prevCard, newCard);
                         myCardViewModel.getUpdateInfo().observe(getActivity(), new Observer<Card>() {
@@ -693,16 +707,13 @@ public class MyCardFragment extends Fragment {
             }
     );
 
-    public void reset(){
-        Intent intent = ((Activity)getContext()).getIntent();
-        ((Activity)getContext()).finish(); //현재 액티비티 종료 실시
-        ((Activity)getContext()).overridePendingTransition(0, 0); //효과 없애기
-        ((Activity)getContext()).startActivity(intent); //현재 액티비티 재실행 실시
-        ((Activity)getContext()).overridePendingTransition(0, 0); //효과 없애기
+    public void reset() {
+        Intent intent = ((Activity) getContext()).getIntent();
+        ((Activity) getContext()).finish(); //현재 액티비티 종료 실시
+        ((Activity) getContext()).overridePendingTransition(0, 0); //효과 없애기
+        ((Activity) getContext()).startActivity(intent); //현재 액티비티 재실행 실시
+        ((Activity) getContext()).overridePendingTransition(0, 0); //효과 없애기
     }
-
-
-
 
 
     //다이얼로그 실행(공유방법 선택창)
@@ -740,7 +751,7 @@ public class MyCardFragment extends Fragment {
         alertDialog.show();
     }
 
-    private void init(View view){
+    private void init(View view) {
         viewPager2 = view.findViewById(R.id.my_card_viewpager);
 
         tv_mycardname = view.findViewById(R.id.tv_mycardname);
@@ -756,34 +767,34 @@ public class MyCardFragment extends Fragment {
 
         tv_Pnum = view.findViewById(R.id.tv_Pnum);
 
-        et_mycardname=view.findViewById(R.id.et_mycardname);
-        et_myPosition=view.findViewById(R.id.et_myPosition);
-        et_myOccupation=view.findViewById(R.id.et_myOccupation);
-        et_myTeamName=view.findViewById(R.id.et_myTeamName);
-        et_myCompany_Name=view.findViewById(R.id.et_myCompany_Name);
-        et_myGroupName=view.findViewById(R.id.et_myGroupName);
-        et_myPhoneNum=view.findViewById(R.id.et_myPhoneNum);
-        et_my_Email=view.findViewById(R.id.et_my_Email);
-        et_myCompany_Address=view.findViewById(R.id.et_myCompany_Address);
-        et_myMemo=view.findViewById(R.id.et_myMemo);
+        et_mycardname = view.findViewById(R.id.et_mycardname);
+        et_myPosition = view.findViewById(R.id.et_myPosition);
+        et_myOccupation = view.findViewById(R.id.et_myOccupation);
+        et_myTeamName = view.findViewById(R.id.et_myTeamName);
+        et_myCompany_Name = view.findViewById(R.id.et_myCompany_Name);
+        et_myGroupName = view.findViewById(R.id.et_myGroupName);
+        et_myPhoneNum = view.findViewById(R.id.et_myPhoneNum);
+        et_my_Email = view.findViewById(R.id.et_my_Email);
+        et_myCompany_Address = view.findViewById(R.id.et_myCompany_Address);
+        et_myMemo = view.findViewById(R.id.et_myMemo);
 
-        tb_mycard_commit= view.findViewById(R.id.tb_mycard_commit);
+        tb_mycard_commit = view.findViewById(R.id.tb_mycard_commit);
         tb_mycard_commit.inflateMenu(R.menu.menu_edit_mycard);
         toolbar = view.findViewById(R.id.tb_mycard1);
         toolbar.inflateMenu(R.menu.menu_mycard); // 메뉴 어떤거 뜰건지 정하는 코드
 
-        tv_company= view.findViewById(R.id.tv_company);
-        tv_depart= view.findViewById(R.id.tv_depart);
-        tv_name= view.findViewById(R.id.tv_name);
-        tv_position= view.findViewById(R.id.tv_position);
-        tv_Phone= view.findViewById(R.id.tv_Phone);
-        tv_Email= view.findViewById(R.id.tv_Email);
-        tv_Address= view.findViewById(R.id.tv_Address);
+        tv_company = view.findViewById(R.id.tv_company);
+        tv_depart = view.findViewById(R.id.tv_depart);
+        tv_name = view.findViewById(R.id.tv_name);
+        tv_position = view.findViewById(R.id.tv_position);
+        tv_Phone = view.findViewById(R.id.tv_Phone);
+        tv_Email = view.findViewById(R.id.tv_Email);
+        tv_Address = view.findViewById(R.id.tv_Address);
 
 //        iv_mycard=view.findViewById(R.id.iv_mycard);
     }
 
-    private int arrSize(ArrayList<Card> arrCard){
+    private int arrSize(ArrayList<Card> arrCard) {
         return arrCard.size();
     }
 

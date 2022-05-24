@@ -35,22 +35,22 @@ public class QRRepository {
         Card card = new Card();
 
         card.setName(info[0]);
-        card.setPosition(info[1]);
-        card.setOccupation(info[2]);
-        card.setDepart(info[3]);
-        card.setCompany(info[4]);
+        card.setEmail(info[1]);
+        card.setCompany(info[2]);
+        card.setAddress(info[3]);
+        card.setPhone(info[4]);
+        card.setOccupation(info[5]);
+        card.setDepart(info[6]);
+        card.setPosition(info[7]);
+        card.setMemo(info[8]);
+        card.setImage(info[9]);
         //card.setGroupname(info[5]);
-        card.setPhone(info[6]);
-        card.setEmail(info[7]);
-        card.setAddress(info[8]);
-        card.setMemo(info[9]);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            firestore.collection("business")
+            firestore.collection("users")
                     .document(auth.getCurrentUser().getUid())
-                    .collection("cards")
-                    .document(info[10])
-                    .set(card)
+                    .collection("BusinessCard")
+                    .add(card)
                     .addOnCompleteListener(application.getMainExecutor(), task -> {
                         if(task.isSuccessful()){
                             Toast.makeText(application, "Upload Success", Toast.LENGTH_SHORT).show();
@@ -60,11 +60,10 @@ public class QRRepository {
                         }
                     });
         }else{
-            firestore.collection("business")
+            firestore.collection("users")
                     .document(auth.getCurrentUser().getUid())
-                    .collection("cards")
-                    .document(info[10])
-                    .set(card)
+                    .collection("BusinessCard")
+                    .add(card)
                     .addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
                             Toast.makeText(application, "Upload Success", Toast.LENGTH_SHORT).show();

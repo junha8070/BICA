@@ -32,4 +32,8 @@ public interface CardDao {
     @Query("SELECT * FROM Card ORDER BY roomID ASC")  // 쿼리 : 데이터베이스에 요청하는 명령문 , * : 전체 조회
     LiveData<List<Card>> getCardAll();
 
+    // 번호 조회 쿼리
+//    @Query("SELECT phone, name, company  FROM Card")
+//    void getInfo();
+
 }

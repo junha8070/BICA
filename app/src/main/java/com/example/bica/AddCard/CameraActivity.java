@@ -1,19 +1,13 @@
 package com.example.bica.AddCard;
 
-import static androidx.camera.core.AspectRatio.RATIO_16_9;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.AspectRatio;
-import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.core.internal.utils.ImageUtil;
@@ -30,19 +24,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.ImageFormat;
 import android.graphics.Matrix;
-import android.graphics.Rect;
-import android.graphics.YuvImage;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.util.Rational;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,22 +39,13 @@ import android.widget.Toast;
 
 import com.example.bica.MainActivity;
 import com.example.bica.R;
-import com.example.bica.member.LoginActivity;
-import com.example.bica.member.MemberViewModel;
-import com.example.bica.member.RegisterCardActivity;
 import com.example.bica.model.Card;
 import com.example.bica.mycard.SearchAddressActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -91,6 +70,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 
 public class CameraActivity extends AppCompatActivity {
+
+    PreferenceManager pref;
 
     PreviewView previewView;
     private Button startButton, btn_detection_image, captureButton, btn_add_card;
@@ -294,6 +275,40 @@ public class CameraActivity extends AppCompatActivity {
                                 mDialog.dismiss();
                                 Intent startMain = new Intent(CameraActivity.this, MainActivity.class);
                                 startActivity(startMain);
+
+                                String edit_title = phone;
+                                String edit_content = name+"("+company+")";
+                                // String 값을 JSONObject로 변환하여 사용할 수 있도록 메모의 제목과 타이틀을 JSON 형식로 저장
+                                String save_form = "{\"title\":\""+phone+"\"," +
+                                        "\"name\":\""+name+"\"," +
+                                        "\"email\":\""+email+"\"," +
+                                        "\"company\":\""+company+"\"," +
+                                        "\"address\":\""+address+"\"," +
+                                        "\"phone\":\""+phone+"\"," +
+                                        "\"occupation\":\""+occupation+"\"," +
+                                        "\"depart\":\""+depart+"\"," +
+                                        "\"position\":\""+position+"\"," +
+                                        "\"memo\":\""+memo+"\"}";
+
+
+                                // key값이 겹치지 않도록 현재 시간으로 부여
+                                long now = System.currentTimeMillis();
+                                Date mDate = new Date(now);
+                                SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                String getTime = simpleDate.format(mDate).toString();
+
+                                Log.d("WriteActivity","제목 : "+edit_title+", 내용 : "+edit_content+", 현재시간 : "+getTime);
+                                //PreferenceManager 클래스에서 저장에 관한 메소드를 관리
+                                pref.setString(getApplication(),getTime,save_form);
+
+
+                                // Intent로 값을 MainActivity에 전달
+                                Intent intent = new Intent();
+                                intent.putExtra("date",getTime);
+                                intent.putExtra("title",edit_title);
+                                intent.putExtra("content",edit_content);
+                                setResult(RESULT_OK, intent);
+
                                 finish();
                             }
                             //필수정보가 부족할 때

@@ -110,18 +110,18 @@ public class CardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        arrCards = new ArrayList<>();
-
         cardViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(CardViewModel.class);
         myCardViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(MyCardViewModel.class);
 
         cardViewModel.getCardLiveData().observe(this, new Observer<ArrayList<Card>>() {
             @Override
             public void onChanged(ArrayList<Card> cards) {
+
                 arrCards = cards;
                 mAdapter = new CardAdapter(arrCards);
                 mRecyclerView.setAdapter(mAdapter);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+                mAdapter.notifyDataSetChanged();
             }
         });
 
@@ -145,6 +145,7 @@ public class CardFragment extends Fragment {
         init(view);
         fragmentManager = getActivity().getSupportFragmentManager();
 
+        arrCards = new ArrayList<>();
         cardViewModel.entireCard();
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -397,7 +398,7 @@ public class CardFragment extends Fragment {
 
                 System.out.println("test group " + checkedId);
 
-                if(checkedId != -1){
+                if (checkedId != -1) {
                     mAdapter.getCardGroup().filter(chip.getText().toString());
                 }
                 if(checkedId == -1){
@@ -437,13 +438,31 @@ public class CardFragment extends Fragment {
         ((Activity)getContext()).overridePendingTransition(0, 0); //효과 없애기
     }
 
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        arrCards = new ArrayList<>();
+//        cardViewModel.entireCard();
+//    }
+
     @Override
-    public void onPause() {
-        super.onPause();
-        arrCards.clear();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.cardFragment, CardFragment.class, null)
-//                .addToBackStack(null)
-//                .commit();
+    public void onStart() {
+        super.onStart();
+        arrCards = new ArrayList<>();
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        arrCards.clear();
+    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        arrCards.clear();
+////        fragmentManager.beginTransaction()
+////                .replace(R.id.cardFragment, CardFragment.class, null)
+////                .addToBackStack(null)
+////                .commit();
+//    }
 }
