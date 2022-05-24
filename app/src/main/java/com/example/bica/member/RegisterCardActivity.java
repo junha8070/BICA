@@ -71,7 +71,6 @@ public class RegisterCardActivity extends AppCompatActivity {
     Button btn_complete, btn_later, startBtn, captureBtn;
     ImageView imageView;
     PreviewView previewView;
-    TextView tv_title;
     EditText edt_username, edt_useremail, edt_phonenum, edt_companyname, edt_companyadr, edt_occupation, edt_teamname, edt_position, edt_memo;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
