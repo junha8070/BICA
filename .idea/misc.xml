@@ -37,7 +37,7 @@
         <entry key="app/src/main/res/layout/activity_found_id.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_initial.xml" value="0.4635036496350365" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.24129333496093752" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.11042327880859379" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.4134078212290503" />
         <entry key="app/src/main/res/layout/activity_nfc_read.xml" value="0.1484375" />
         <entry key="app/src/main/res/layout/activity_nfc_write.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_ocr.xml" value="0.1" />
@@ -49,7 +49,7 @@
         <entry key="app/src/main/res/layout/activity_take_photo.xml" value="0.2793594306049822" />
         <entry key="app/src/main/res/layout/chip_view.xml" value="0.6719899495442708" />
         <entry key="app/src/main/res/layout/fragment_add_card.xml" value="0.23358449946178686" />
-        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.3440658569335937" />
+        <entry key="app/src/main/res/layout/fragment_card.xml" value="0.15416666666666667" />
         <entry key="app/src/main/res/layout/fragment_card_call.xml" value="0.17898832684824903" />
         <entry key="app/src/main/res/layout/fragment_card_info.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_edit_mycard.xml" value="0.15520833333333334" />
@@ -59,6 +59,7 @@
         <entry key="app/src/main/res/layout/fragment_scan_q_r.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.17760416666666667" />
         <entry key="app/src/main/res/layout/item_card.xml" value="0.20764728892933246" />
+        <entry key="app/src/main/res/layout/item_empty_favorite_card.xml" value="0.15416666666666667" />
         <entry key="app/src/main/res/layout/item_favorite_card.xml" value="0.21925506591796878" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.27766571044921884" />
         <entry key="app/src/main/res/menu/menu_card.xml" value="0.3333333333333333" />

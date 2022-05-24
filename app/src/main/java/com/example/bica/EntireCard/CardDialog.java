@@ -3,6 +3,9 @@ package com.example.bica.EntireCard;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -35,6 +38,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -62,9 +66,12 @@ public class CardDialog {
     private Spinner spinner_group;
     private Button btn_group;
 
+    private Boolean btn_favor_state = true;
+
     public CardDialog(Context context) {
         this.context = context;
     }
+
     ArrayAdapter<String> arrayAdapter;
     static ArrayList<String> arr;
 
@@ -128,7 +135,7 @@ public class CardDialog {
         cardView_toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.call:
 //                        String number=tv_Phone.getText().toString();
 //                        String tel = "tel:" + number;
@@ -146,13 +153,13 @@ public class CardDialog {
                         firestore.collection("users").document(auth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if(task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         List<Object> list = (List<Object>) document.get("group");
 
                                         //Iterate through the list to get the desired values
-                                        for(Object item : list){
+                                        for (Object item : list) {
                                             System.out.println("chip group object item " + item);
                                             System.out.println("chip group object item to String " + item.toString());
                                             arr.add(item.toString());
@@ -172,9 +179,13 @@ public class CardDialog {
                                     @Override
                                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                         tv_group.setText(arr.get(i));
-                                        Toast.makeText(context.getApplicationContext(),arr.get(i)+"가 선택되었습니다.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context.getApplicationContext(), arr.get(i) + "가 선택되었습니다.", Toast.LENGTH_SHORT).show();
                                     }
-                                    @Override public void onNothingSelected(AdapterView<?> adapterView) { } });
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> adapterView) {
+                                    }
+                                });
 
 
                                 btn_group.setOnClickListener(new View.OnClickListener() {
@@ -192,13 +203,13 @@ public class CardDialog {
 
                         break;
                     case R.id.favorite:
-                        if(cardView_toolbar.getMenu().findItem(R.id.favorite).getIcon().equals(R.drawable.ic_star_filled_24)){
+                        if(btn_favor_state) {
                             cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_empty_24);
+                            delFavorite(cardInfo);
                         }else {
                             cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_filled_24);
+                            addFavorite(cardInfo);
                         }
-                        Toast.makeText(dlg.getContext(), "즐겨찾기 버튼", Toast.LENGTH_SHORT).show();
-                        addFavorite(cardInfo);
                         break;
                 }
                 return false;
@@ -209,7 +220,6 @@ public class CardDialog {
     }
 
 
-
     private void editGroup(Card cardInfo, String groupName) {
         firestore.collection("users").document(auth.getCurrentUser().getUid())
                 .collection("BusinessCard")
@@ -217,57 +227,59 @@ public class CardDialog {
                 .whereEqualTo("name", cardInfo.getName())
                 .whereEqualTo("email", cardInfo.getEmail())
                 .whereEqualTo("company", cardInfo.getCompany()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for(QueryDocumentSnapshot item : queryDocumentSnapshots){
-                            System.out.println("test for path "+ item);
-                            System.out.println("test for path id "+ item.getId());
-                            System.out.println("test for path doc "+ item.get(FieldPath.documentId()));
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot item : queryDocumentSnapshots) {
+                    System.out.println("test for path " + item);
+                    System.out.println("test for path id " + item.getId());
+                    System.out.println("test for path doc " + item.get(FieldPath.documentId()));
 
-                            firestore.collection("users")
-                                    .document(auth.getCurrentUser().getUid()).collection("BusinessCard")
-                                    .document(item.getId())
-                                    .update("group", groupName);
-                        }
+                    firestore.collection("users")
+                            .document(auth.getCurrentUser().getUid()).collection("BusinessCard")
+                            .document(item.getId())
+                            .update("group", groupName);
+                }
 
-                    }
-                });
+            }
+        });
 
         System.out.println("test for path ");
 
 
-
     }
 
-    private void addFavorite(Card cardInfo){
+    private void addFavorite(Card cardInfo) {
         firestore.collection("users")
                 .document(auth.getCurrentUser().getUid())
                 .collection("FavoriteCard")
                 .add(cardInfo)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
-                if(task.isSuccessful()){
-                    cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_filled_24);
-                }else{
-                    Log.e(TAG, task.getException().getMessage());
-                }
-            }
-        });
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if (task.isSuccessful()) {
+                            cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_filled_24);
+                            btn_favor_state = true;
+                        } else {
+                            Log.e(TAG, task.getException().getMessage());
+                        }
+                    }
+                });
     }
 
-    public void isFavorite(Card cardInfo){
+    public void isFavorite(Card cardInfo) {
         firestore.collection("users")
                 .document(auth.getCurrentUser().getUid())
                 .collection("FavoriteCard")
-                .whereEqualTo("image",cardInfo.getImage()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .whereEqualTo("image", cardInfo.getImage()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     if (!task.getResult().isEmpty()) {
                         cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_filled_24);
+                        btn_favor_state = true;
                     } else if (task.getResult().isEmpty()) {
                         cardView_toolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.ic_star_empty_24);
+                        btn_favor_state = false;
                     } else {
                         Log.e(TAG, task.getException().getMessage());
                     }
@@ -276,4 +288,26 @@ public class CardDialog {
         });
     }
 
+    private void delFavorite(Card cardInfo) {
+        CollectionReference colRef = firestore.collection("users").document(auth.getCurrentUser().getUid()).collection("FavoriteCard");
+        colRef.whereEqualTo("image", cardInfo.getImage()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (!task.getResult().isEmpty()) {
+                        colRef.document(task.getResult().getDocuments().get(0).getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(context.getApplicationContext(), "즐겨찾기에서 해제되었습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Log.e(TAG, "삭제과정에서 오류" + task.getException().getMessage());
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
 }

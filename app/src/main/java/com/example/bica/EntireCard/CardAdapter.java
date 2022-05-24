@@ -27,8 +27,8 @@ import java.util.List;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> implements Filterable {
 
     private String TAG = "CardAdapterTAG";
-    ArrayList<Card> cards;
-    ArrayList<Card> initList;
+    ArrayList<Card> cards = new ArrayList<>();
+    ArrayList<Card> initList= new ArrayList<>();
     ArrayList<Card> filteredList = new ArrayList<>();
     ArrayList<Card> groupList = new ArrayList<>();
 
