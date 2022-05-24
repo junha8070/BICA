@@ -8,9 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
+import com.example.bica.CardDao;
+import com.example.bica.CardRoomDB;
 import com.example.bica.model.Card;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -18,6 +23,7 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -27,6 +33,9 @@ public class CardModel {
     private String TAG = "CardModelTAG";
 
     private Application application;
+
+    private Card card;
+    private CardDao mcardDao;
 
     // Firebase
     private FirebaseFirestore firestore;
@@ -47,6 +56,12 @@ public class CardModel {
         arrCard = new ArrayList<>();
         cardMutableLiveData = new MutableLiveData<>();
         del_state = new MutableLiveData<Boolean>();
+        CardRoomDB cardRoomDB = Room.databaseBuilder(application.getApplicationContext(), CardRoomDB.class,"CardRoomDB")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+
+        mcardDao = cardRoomDB.cardDao();
     }
 
     public void delFavorite(Card cardInfo) {
@@ -97,7 +112,8 @@ public class CardModel {
                             break;
 
                         case REMOVED:
-                            arrCard.remove(dc.getOldIndex());
+                            card = dc.getDocument().toObject(Card.class);
+                            arrCard.add(card);
                             Log.d(TAG, "현재 arrCard 사이즈 : "+arrCard.size());
                             cardMutableLiveData.postValue(arrCard);
                             break;
@@ -108,6 +124,63 @@ public class CardModel {
 
                 }
             }
+        });
+    }
+
+    public void delInfo(Card prevCard){
+        CollectionReference sfColRef = firestore.collection("users")
+                .document(auth.getCurrentUser().getUid())
+                .collection("BusinessCard");
+
+        sfColRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot snapshot : task.getResult()){
+                        card=snapshot.toObject(Card.class);
+                        String name=snapshot.get("name").toString();
+
+                        if(snapshot.get("company").equals(prevCard.getCompany())){
+                            if(snapshot.get("depart").equals(prevCard.getDepart())){
+                                if(snapshot.get("email").equals(prevCard.getEmail())){
+                                    if(snapshot.get("memo").equals(prevCard.getMemo())){
+                                        if(snapshot.get("name").equals(prevCard.getName())){
+                                            if(snapshot.get("occupation").equals(prevCard.getOccupation())){
+                                                if(snapshot.get("phone").equals(prevCard.getPhone())){
+                                                    if(snapshot.get("position").equals(prevCard.getPosition())){
+                                                        String doc=snapshot.getId();
+                                                        Log.d(TAG,"삭제");
+
+                                                        Task<Void> sfDocRef = firestore.collection("users")
+                                                                .document(auth.getCurrentUser().getUid())
+                                                                .collection("BusinessCard").document(doc).delete()
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void unused) {
+                                                                        Log.d(TAG, "삭제성공");
+                                                                        //prevCard.setRoomId();
+                                                                        mcardDao.setDeleteCard(prevCard);
+                                                                        Log.d(TAG, "prevCard del in RoomDB");
+                                                                    }
+                                                                })
+                                                                .addOnFailureListener(new OnFailureListener() {
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+                                                                        Log.d(TAG, "삭제실패");
+                                                                    }
+                                                                });
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
         });
     }
 

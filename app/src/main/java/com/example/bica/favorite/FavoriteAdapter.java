@@ -29,6 +29,7 @@ import com.example.bica.EntireCard.CardFragment;
 import com.example.bica.EntireCard.CardViewModel;
 import com.example.bica.R;
 import com.example.bica.model.Card;
+import com.example.bica.mycard.MyCardViewModel;
 import com.google.android.material.card.MaterialCardView;
 
 import org.w3c.dom.Text;
@@ -45,6 +46,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     private ViewPager2 viewPager2;
     private AlertDialog.Builder builder;
     private CardViewModel cardViewModel;
+    private MyCardViewModel myCardViewModel;
     Application application;
 
     RecyclerViewEmptySupport recyclerViewEmptySupport;
@@ -94,6 +96,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             viewPager2.setVisibility(View.GONE);
             recyclerViewEmptySupport = new RecyclerViewEmptySupport(viewPager2.getContext());
             recyclerViewEmptySupport.setEmptyView(default_card);
+            recyclerViewEmptySupport.setVisibility(View.VISIBLE);
             return cardModel.size();
         }else{
             return cardModel.size();
@@ -109,6 +112,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             super(view);
             context = view.getContext();
             cardViewModel = new CardViewModel(application);
+            myCardViewModel = new MyCardViewModel(application);
             iv_profile = view.findViewById(R.id.iv_profile);
             tv_company = view.findViewById(R.id.tv_company);
             tv_depart = view.findViewById(R.id.tv_depart);
@@ -145,13 +149,15 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                         sendSmsIntent(cardModel.get(position).getPhone(), view);
                         break;
                     case 2:
-                        Toast.makeText(builder.getContext(), "3개발중", Toast.LENGTH_SHORT).show();
                         cardViewModel.delFavorite(cardModel.get(position));
                         cardModel.remove(position);
                         notifyDataSetChanged();
                         break;
                     case 3:
-                        Toast.makeText(builder.getContext(), "4개발중", Toast.LENGTH_SHORT).show();
+                        cardViewModel.delFavorite(cardModel.get(position));
+                        cardViewModel.delInfo(cardModel.get(position));
+                        cardModel.remove(position);
+                        notifyDataSetChanged();
                         break;
                     default:
                         break;
