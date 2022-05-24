@@ -20,9 +20,9 @@
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_bica"
+        android:icon="@mipmap/ic_bica_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_bica_round"
+        android:roundIcon="@mipmap/ic_bica_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BICA">
         <activity
@@ -88,6 +88,7 @@
         </activity>
 
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".MainActivity"
             android:exported="false" />
         <activity

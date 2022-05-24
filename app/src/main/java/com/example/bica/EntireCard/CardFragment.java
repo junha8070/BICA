@@ -41,6 +41,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.example.bica.mycard.MyCardViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.api.Distribution;
@@ -87,7 +88,7 @@ public class CardFragment extends Fragment {
 
     public ImageView logo_img;
     public EditText find_edt, edt_group;
-    public Button btn_add_group;
+    public MaterialButton btn_add_group;
     public Spinner spinner_group;
     public TextView edt_tv, tv_group;
     ArrayList<String> arrayList;
@@ -332,7 +333,7 @@ public class CardFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cardFragment_recyclerview);
         linear = (LinearLayout) view.findViewById(R.id.linear);
         edt_group = (EditText) view.findViewById(R.id.edt_group);
-        btn_add_group = (Button) view.findViewById(R.id.btn_add_group);
+        btn_add_group = (MaterialButton) view.findViewById(R.id.btn_add_group);
         tv_group = (TextView) view.findViewById(R.id.tv_group);
         filter_group_view = (HorizontalScrollView) view.findViewById(R.id.filter_group_view);
     }
