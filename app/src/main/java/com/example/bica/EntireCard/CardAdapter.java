@@ -40,7 +40,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     ArrayList<Card> initList = new ArrayList<>();
     ArrayList<Card> filteredList = new ArrayList<>();
     ArrayList<Card> groupList = new ArrayList<>();
-    FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public CardAdapter(ArrayList<Card> cards) {
         this.cards = cards;
@@ -93,18 +92,22 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         return exampleFilter;
     }
 
-    // 검색기능중 필터링 작업
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             filteredList.clear();
 
             String filterPattern = constraint.toString().toLowerCase().trim();
+            System.out.println("검색 0 " + filterPattern);
 
             for (Card item : cards) {
                 //TODO filter 대상 setting
                 if (item.getEmail().toLowerCase().contains(filterPattern)) {
                     filteredList.add(item);
+                    System.out.println("검색 1 " + item);
+                    System.out.println("검색 2 " + filteredList.toString());
+
+
                 }
             }
             FilterResults results = new FilterResults();

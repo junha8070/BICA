@@ -88,7 +88,7 @@ public class CardDialog{
     public void callFunction(Card cardInfo) {
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
         final Dialog dlg = new Dialog(context);
-
+        dlg.setCanceledOnTouchOutside(false);
         // 액티비티의 타이틀바를 숨긴다.
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -134,6 +134,7 @@ public class CardDialog{
             @Override
             public void onClick(View view) {
                 dlg.dismiss();
+                reset();
             }
         });
 
@@ -373,6 +374,14 @@ public class CardDialog{
                 }
             }
         });
+    }
+
+    public void reset(){
+        Intent intent = ((Activity)context).getIntent();
+        ((Activity)context).finish(); //현재 액티비티 종료 실시
+        ((Activity)context).overridePendingTransition(0, 0); //효과 없애기
+        ((Activity)context).startActivity(intent); //현재 액티비티 재실행 실시
+        ((Activity)context).overridePendingTransition(0, 0); //효과 없애기
     }
 
     private void delFavorite(Card cardInfo) {
