@@ -13,11 +13,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bica.R;
 import com.example.bica.model.Card;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -28,10 +37,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     private String TAG = "CardAdapterTAG";
     ArrayList<Card> cards = new ArrayList<>();
-    ArrayList<Card> initList= new ArrayList<>();
+    ArrayList<Card> initList = new ArrayList<>();
     ArrayList<Card> filteredList = new ArrayList<>();
     ArrayList<Card> groupList = new ArrayList<>();
-
+    FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public CardAdapter(ArrayList<Card> cards) {
         this.cards = cards;
@@ -107,12 +116,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             initList.clear();
-            initList.addAll((ArrayList)results.values);
+            initList.addAll((ArrayList) results.values);
             notifyDataSetChanged();
         }
     };
 
-    public Filter getCardGroup(){
+    public Filter getCardGroup() {
         return cardGroup;
     }
 
@@ -120,57 +129,59 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             groupList.clear();
-            System.out.println("group test 4 "+ initList.size());
-            if(constraint==""){
+            System.out.println("group test 4 " + initList.size());
+            if (constraint == "") {
                 initList.clear();
-                System.out.println("gp test 1 "+ cards.size());
-                System.out.println("gp test 2 "+ initList.size());
+                System.out.println("gp test 1 " + cards.size());
+                System.out.println("gp test 2 " + initList.size());
                 initList.addAll(cards);
-                System.out.println("gp test 3 "+ initList.size());
-                for(Card item : initList){
+                System.out.println("gp test 3 " + initList.size());
+                for (Card item : initList) {
                     groupList.add(item);
                 }
-            }
-            else{
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Card item : cards) {
-                    //TODO filter 대상 setting
+                    System.out.println("그룹 이름 filterP : " + filterPattern);
+                    System.out.println("그룹 이름 cards : " + item.getGroup());
 
-                    String filterPattern = constraint.toString().toLowerCase().trim();
-                    if(item.getGroup()!=null){
-                        if (item.getGroup().toLowerCase().contains(filterPattern)) {
+                    if (item.getGroup() != null) {
+                        if (item.getGroup().equals(filterPattern)) {
+                            System.out.println("그룹 email : " + item.getEmail());
+
                             groupList.add(item);
-                            System.out.println("group test 1 "+ groupList.size());
-                            System.out.println("group test 2 "+ groupList);
+                            System.out.println("그룹 1 " + groupList.size());
+                            System.out.println("그룹 2 " + groupList);
                         }
-                    }
-                    else{
+                    } else {
                         System.out.println("group null");
                     }
                 }
             }
-            System.out.println("test group1 "+ groupList);
-            System.out.println("test group2 "+ groupList.size());
+            System.out.println("test group1 " + groupList);
+            System.out.println("test group2 " + groupList.size());
 
 
             FilterResults results = new FilterResults();
+
             results.values = groupList;
-            System.out.println("group 1 "+ groupList.size());
-            for(Card item : groupList){
-                System.out.println("group 2 "+ item.getEmail());
+            System.out.println("grr 1 " + groupList.size());
+            for (Card item : groupList) {
+                System.out.println("grr 2 " + item.getEmail());
             }
-            System.out.println("group 3 "+ results.values);
+            System.out.println("grr " + results.values);
             return results;
         }
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             initList.clear();
-            initList.addAll((ArrayList)results.values);
+            initList.addAll((ArrayList) results.values);
             notifyDataSetChanged();
         }
     };
 
-    class CardViewHolder extends RecyclerView.ViewHolder{
+    class CardViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_company, tv_jobTitle, tv_name, tv_position, tv_phone, tv_email;
         private ImageView iv_img;

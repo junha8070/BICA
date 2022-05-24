@@ -125,7 +125,6 @@ public class CardDialog{
         tv_Email.setText(cardInfo.getEmail());
         tv_Address.setText(cardInfo.getAddress());
         tv_group.setText(cardInfo.getGroup());
-        btn_group.setText(cardInfo.getGroup());
 
         spinner_group.setVisibility(View.GONE);
 
