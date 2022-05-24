@@ -120,29 +120,45 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             groupList.clear();
-            for (Card item : cards) {
-                //TODO filter 대상 setting
-
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                if(item.getGroup()!=null){
-                    if (item.getGroup().toLowerCase().contains(filterPattern)) {
-                        groupList.add(item);
-                        System.out.println("group test 1 "+ groupList.size());
-                        System.out.println("group test 2 "+ groupList);
-                    }
-                }
-                else{
-                    System.out.println("group null");
+            System.out.println("group test 4 "+ initList.size());
+            if(constraint==""){
+                initList.clear();
+                System.out.println("gp test 1 "+ cards.size());
+                System.out.println("gp test 2 "+ initList.size());
+                initList.addAll(cards);
+                System.out.println("gp test 3 "+ initList.size());
+                for(Card item : initList){
+                    groupList.add(item);
                 }
             }
+            else{
+                for (Card item : cards) {
+                    //TODO filter 대상 setting
+
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+                    if(item.getGroup()!=null){
+                        if (item.getGroup().toLowerCase().contains(filterPattern)) {
+                            groupList.add(item);
+                            System.out.println("group test 1 "+ groupList.size());
+                            System.out.println("group test 2 "+ groupList);
+                        }
+                    }
+                    else{
+                        System.out.println("group null");
+                    }
+                }
+            }
+            System.out.println("test group1 "+ groupList);
+            System.out.println("test group2 "+ groupList.size());
+
 
             FilterResults results = new FilterResults();
             results.values = groupList;
-            System.out.println("group 1"+ groupList.size());
+            System.out.println("group 1 "+ groupList.size());
             for(Card item : groupList){
-                System.out.println("group 2"+ item.getEmail());
+                System.out.println("group 2 "+ item.getEmail());
             }
-            System.out.println("group 3"+ results.values);
+            System.out.println("group 3 "+ results.values);
             return results;
         }
 

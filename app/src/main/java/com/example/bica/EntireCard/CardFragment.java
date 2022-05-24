@@ -316,10 +316,14 @@ public class CardFragment extends Fragment {
             @Override
             public void onCheckedChanged(ChipGroup group, int checkedId) {
                 Chip chip = chipGroup.findViewById(checkedId);
+                System.out.println("test group " + checkedId);
 
                 if(checkedId != -1){
                     mAdapter.getCardGroup().filter(chip.getText().toString());
-
+                }
+                if(checkedId == -1){
+                    System.out.println("test group = " + checkedId);
+                    mAdapter.getCardGroup().filter("");
                 }
             }
         });
