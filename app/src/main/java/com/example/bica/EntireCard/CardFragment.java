@@ -157,7 +157,22 @@ public class CardFragment extends Fragment {
                             searchView.setVisibility(View.VISIBLE);
                             filter_group_view.setVisibility(View.GONE);
                             linear.setVisibility(View.GONE);
+                            System.out.println("test test test ");
 
+                            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                @Override
+                                public boolean onQueryTextSubmit(String query) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onQueryTextChange(String newText) {
+                                    mAdapter.getFilter().filter(newText);
+                                    System.out.println("test test test " + newText);
+
+                                    return false;
+                                }
+                            });
                         } else {
                             searchView.setQuery("", true);
                             searchView.setVisibility(View.GONE);
@@ -203,7 +218,7 @@ public class CardFragment extends Fragment {
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     mAdapter.getFilter().filter(newText);
-                    System.out.println("test test test "+newText);
+                    System.out.println("test test test " + newText);
 
                     return false;
                 }
@@ -253,10 +268,10 @@ public class CardFragment extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     chipGroup.removeView(chip);
-                                    if(chipArr.contains(chip.getText().toString())){
+                                    if (chipArr.contains(chip.getText().toString())) {
                                         chipArr.remove(chip.getText().toString());
                                     }
-                                    System.out.println("chipArr removed "+ chipArr);
+                                    System.out.println("chipArr removed " + chipArr);
                                     CollectionReference sfColRef = FirebaseFirestore.getInstance().collection("users")
                                             .document(auth.getCurrentUser().getUid()).collection("BusinessCard");
                                     FirebaseFirestore.getInstance().collection("users")
@@ -264,17 +279,16 @@ public class CardFragment extends Fragment {
                                     sfColRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                         @Override
                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                            for(QueryDocumentSnapshot item : queryDocumentSnapshots){
+                                            for (QueryDocumentSnapshot item : queryDocumentSnapshots) {
                                                 mChipData = item.toObject(ChipData.class);
-                                                if(item.getData().get("group")!= null){
-                                                    if(item.getData().get("group").toString().contains(chip.getText().toString())){
+                                                if (item.getData().get("group") != null) {
+                                                    if (item.getData().get("group").toString().contains(chip.getText().toString())) {
                                                         System.out.println("remove chip " + item.getId());
                                                         sfColRef.document(item.getId()).update("group", null);
                                                         reset();
 
                                                     }
-                                                }
-                                                else{
+                                                } else {
                                                     System.out.println("remove chip null");
 
                                                 }
@@ -318,7 +332,7 @@ public class CardFragment extends Fragment {
                         chipArr.add(str_group_name);
                         edt_group.setText("");
                         chipData.setChip(chipArr);
-                        System.out.println("chipArr "+ chipArr);
+                        System.out.println("chipArr " + chipArr);
 
                         db.collection("users").document(auth.getCurrentUser().getUid()).update("group", chipData.getChip());
 
@@ -344,10 +358,10 @@ public class CardFragment extends Fragment {
                                                 @Override
                                                 public void onClick(View v) {
                                                     chipGroup.removeView(chip);
-                                                    if(chipArr.contains(chip.getText().toString())){
+                                                    if (chipArr.contains(chip.getText().toString())) {
                                                         chipArr.remove(chip.getText().toString());
                                                     }
-                                                    System.out.println("chipArr removed "+ chipArr);
+                                                    System.out.println("chipArr removed " + chipArr);
                                                     CollectionReference sfColRef = FirebaseFirestore.getInstance().collection("users")
                                                             .document(auth.getCurrentUser().getUid()).collection("BusinessCard");
                                                     FirebaseFirestore.getInstance().collection("users")
@@ -355,17 +369,16 @@ public class CardFragment extends Fragment {
                                                     sfColRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                                         @Override
                                                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                            for(QueryDocumentSnapshot item : queryDocumentSnapshots){
+                                                            for (QueryDocumentSnapshot item : queryDocumentSnapshots) {
                                                                 mChipData = item.toObject(ChipData.class);
-                                                                if(item.getData().get("group")!= null){
-                                                                    if(item.getData().get("group").toString().contains(chip.getText().toString())){
+                                                                if (item.getData().get("group") != null) {
+                                                                    if (item.getData().get("group").toString().contains(chip.getText().toString())) {
                                                                         System.out.println("remove chip " + item.getId());
                                                                         sfColRef.document(item.getId()).update("group", null);
                                                                         reset();
 
                                                                     }
-                                                                }
-                                                                else{
+                                                                } else {
                                                                     System.out.println("remove chip null");
 
                                                                 }
@@ -401,12 +414,11 @@ public class CardFragment extends Fragment {
                 if (checkedId != -1) {
                     mAdapter.getCardGroup().filter(chip.getText().toString());
                 }
-                if(checkedId == -1){
+                if (checkedId == -1) {
                     System.out.println("test group = " + checkedId);
                     mAdapter.getCardGroup().filter("");
                 }
             }
-
 
 
         });
@@ -430,12 +442,12 @@ public class CardFragment extends Fragment {
         filter_group_view = (HorizontalScrollView) view.findViewById(R.id.filter_group_view);
     }
 
-    public void reset(){
-        Intent intent = ((Activity)getContext()).getIntent();
-        ((Activity)getContext()).finish(); //현재 액티비티 종료 실시
-        ((Activity)getContext()).overridePendingTransition(0, 0); //효과 없애기
-        ((Activity)getContext()).startActivity(intent); //현재 액티비티 재실행 실시
-        ((Activity)getContext()).overridePendingTransition(0, 0); //효과 없애기
+    public void reset() {
+        Intent intent = ((Activity) getContext()).getIntent();
+        ((Activity) getContext()).finish(); //현재 액티비티 종료 실시
+        ((Activity) getContext()).overridePendingTransition(0, 0); //효과 없애기
+        ((Activity) getContext()).startActivity(intent); //현재 액티비티 재실행 실시
+        ((Activity) getContext()).overridePendingTransition(0, 0); //효과 없애기
     }
 
 //    @Override
