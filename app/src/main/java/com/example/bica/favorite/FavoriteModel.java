@@ -44,6 +44,7 @@ public class FavoriteModel {
 
     public void cardInfo(String email) {
         Log.d(TAG,"확인");
+        arrCard = new ArrayList<>();
         firestore.collection("users")
                 .document(auth.getCurrentUser().getUid())
                 .collection("FavoriteCard")
@@ -55,6 +56,7 @@ public class FavoriteModel {
                                 case ADDED:
                                     card = dc.getDocument().toObject(Card.class);
                                     arrCard.add(card);
+                                    Log.d(TAG, "현재 arrCard 사이즈 : "+arrCard.size());
                                     break;
                                 case MODIFIED:
                                     arrCard.remove(dc.getOldIndex());
@@ -63,7 +65,9 @@ public class FavoriteModel {
                                     Log.d(TAG, "Modified city: " + dc.getOldIndex());
                                     break;
                                 case REMOVED:
-                                    Log.d(TAG, "Removed city: " + dc.getDocument().getData());
+//                                    Log.d(TAG, "현재 arrCard 사이즈 : "+dc.getOldIndex());
+//                                    arrCard.remove(dc.getOldIndex());
+//                                    Log.d(TAG, "현재 arrCard 사이즈 : "+arrCard.size());
                                     break;
                             }
                         }

@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.example.bica.ChipData;
 import com.example.bica.CardRepository;
 import com.example.bica.R;
+import com.example.bica.favorite.FavoriteFragment;
 import com.example.bica.model.Card;
 import com.example.bica.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -72,6 +74,7 @@ public class CardFragment extends Fragment {
 
     private CardRepository cardRepository;
 
+    FragmentManager fragmentManager;
 
     // UI
     MaterialToolbar toolbar;
@@ -136,6 +139,8 @@ public class CardFragment extends Fragment {
 
         init(view);
 
+        fragmentManager = getActivity().getSupportFragmentManager();
+
         cardViewModel.entireCard();
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -181,18 +186,21 @@ public class CardFragment extends Fragment {
             }
         });
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        if (searchView.getVisibility() == View.VISIBLE) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    mAdapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+        }
+
 
         ArrayList<String> chipArr = new ArrayList<>();
         ArrayList<String> tempArr = new ArrayList<>();
@@ -206,7 +214,7 @@ public class CardFragment extends Fragment {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            System.out.println("chip group docu " + document.get("group").toString());
+//                            System.out.println("chip group docu " + document.get("group").toString());
 
                             if (document.exists()) {
                                 List<Object> list = (List<Object>) document.get("group");
@@ -288,6 +296,7 @@ public class CardFragment extends Fragment {
 //                                            }
                                             Chip chip = new Chip(getContext());
                                             chip.setText(str_group_name);
+                                            chip.setCheckable(true);
                                             chipGroup.addView(chip);
                                         }
                                     }
@@ -307,18 +316,14 @@ public class CardFragment extends Fragment {
             @Override
             public void onCheckedChanged(ChipGroup group, int checkedId) {
                 Chip chip = chipGroup.findViewById(checkedId);
-                if (chip.isChecked() == true) {
-                    System.out.println("chip changed check 1 " + chip.isChecked());
-                    System.out.println("chip changed check 2 " + chip.isCheckable());
-                } else {
-                    chip.setChecked(false);
+
+                if(checkedId != -1){
+                    mAdapter.getCardGroup().filter(chip.getText().toString());
+
                 }
-                mAdapter.getCardGroup().filter(chip.getText().toString());
-                System.out.println("chip data test 1 " + chip.getText().toString());
-                System.out.println("chip data test 2 " + chip.getId());
-                System.out.println("chip data test 3 " + chip.isChecked());
             }
         });
+
 
         System.out.println("chip group tempArr 3 " + tempArr);
         System.out.println("chip group chipArr 3 " + chipArr);
@@ -342,5 +347,9 @@ public class CardFragment extends Fragment {
     public void onPause() {
         super.onPause();
         arrCards.clear();
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.cardFragment, CardFragment.class, null)
+//                .addToBackStack(null)
+//                .commit();
     }
 }
