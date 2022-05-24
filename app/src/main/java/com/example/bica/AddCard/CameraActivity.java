@@ -2,6 +2,8 @@ package com.example.bica.AddCard;
 
 import static androidx.camera.core.AspectRatio.RATIO_16_9;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -53,6 +55,7 @@ import com.example.bica.member.LoginActivity;
 import com.example.bica.member.MemberViewModel;
 import com.example.bica.member.RegisterCardActivity;
 import com.example.bica.model.Card;
+import com.example.bica.mycard.SearchAddressActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -197,7 +200,6 @@ public class CameraActivity extends AppCompatActivity {
                                 System.out.println("test bitmap " + bitmap.getHeight());
                                 bitmap = Bitmap.createBitmap(bitmap, bitmap.getWidth() / 3, 0, 1500, bitmap.getHeight());
 
-
                                 // bitmap이미지 회전
                                 bitmap = rotateImage(bitmap, 90);
                                 inputImage = InputImage.fromBitmap(bitmap, 0);
@@ -210,6 +212,24 @@ public class CameraActivity extends AppCompatActivity {
                             }
                         }
                 );
+            }
+        });
+
+        company_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent=new Intent(CameraActivity.this, SearchAddressActivity.class);
+                getSearchResult.launch(intent);
+            }
+        });
+
+        company_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent=new Intent(CameraActivity.this, SearchAddressActivity.class);
+                getSearchResult.launch(intent);
             }
         });
 
@@ -289,6 +309,17 @@ public class CameraActivity extends AppCompatActivity {
         });
     }
 
+    private final ActivityResultLauncher<Intent> getSearchResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result.getResultCode()==RESULT_OK){
+                    if(result.getData()!=null){
+                        String data=result.getData().getStringExtra("data");
+                        company_address.setText(data);
+                    }
+                }
+            }
+    );
 
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
