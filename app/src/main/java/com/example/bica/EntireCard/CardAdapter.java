@@ -102,7 +102,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
             for (Card item : cards) {
                 //TODO filter 대상 setting
-                if (item.getEmail().toLowerCase().contains(filterPattern)) {
+                if (item.getEmail().toLowerCase().contains(filterPattern)||item.getName().toLowerCase().contains(filterPattern)) {
                     filteredList.add(item);
                     System.out.println("검색 1 " + item);
                     System.out.println("검색 2 " + filteredList.toString());
