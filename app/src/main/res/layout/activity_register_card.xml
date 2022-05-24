@@ -10,20 +10,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="25dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="180dp"
-                android:layout_height="80dp"
-                android:src="@drawable/logo"/>
+            <TextView
+                android:id="@+id/register_card_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="30dp"
+                android:text="@string/RegisterCard_Activity_title"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
 
         </LinearLayout>
 
@@ -35,15 +38,15 @@
 
             <androidx.camera.view.PreviewView
                 android:id="@+id/previewView"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="315dp"
+                android:layout_height="175dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp" />
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:background="@color/brown"
@@ -61,23 +64,19 @@
 
             <Button
                 android:id="@+id/startBtn"
-                android:background="@drawable/edge_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:textSize="18dp"
-                android:layout_weight="1"
-                android:text="CAMERA ON" />
-
-            <Button
-                android:id="@+id/captureBtn"
-                android:background="@drawable/edge_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:textSize="18dp"
                 android:layout_weight="1"
-                android:text="TAKE" />
+                android:text="카메라 ON" />
+
+            <Button
+                android:id="@+id/captureBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:text="명함 촬영하기" />
         </LinearLayout>
 
         <LinearLayout
@@ -88,25 +87,25 @@
 
             <EditText
                 android:id="@+id/user_name"
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:hint="@string/Card_Username"
                 android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/user_email"
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:hint="@string/Card_email"
                 android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/user_phonenum"
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:hint="@string/Card_Phonenum"
 
                 android:maxLength="13" />
@@ -115,7 +114,7 @@
                 android:id="@+id/company_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_margin="20dp"
                 android:hint="@string/Company_Name"
                 android:inputType="text" />
 
@@ -123,7 +122,7 @@
                 android:id="@+id/company_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_margin="20dp"
                 android:hint="@string/Company_Address"
                 android:inputType="textPostalAddress" />
 
@@ -131,7 +130,7 @@
                 android:id="@+id/occupation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_margin="20dp"
                 android:hint="@string/Occupation"
                 android:inputType="text" />
 
@@ -139,7 +138,7 @@
                 android:id="@+id/teamname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_margin="20dp"
                 android:hint="@string/TeamName"
                 android:inputType="text" />
 
@@ -147,7 +146,7 @@
                 android:id="@+id/position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_margin="20dp"
                 android:hint="@string/Position"
                 android:inputType="text" />
 
@@ -155,15 +154,13 @@
                 android:id="@+id/memo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_margin="20dp"
                 android:hint="@string/Memo"
                 android:inputType="text" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -175,20 +172,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/edge_btn"
-                android:textSize="18dp"
-                android:layout_marginBottom="15dp"
-                android:text="COMPLETE" />
+                android:backgroundTint="@color/brown"
+                android:text="@string/Complete" />
 
             <Button
                 android:id="@+id/btn_later"
-                android:layout_marginBottom="25dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/edge_btn"
-                android:textSize="18dp"
-                android:text="LATER"
+                android:background="#00ff0000"
+                android:text="@string/Choose_Later"
                 android:textColor="@color/black" />
         </LinearLayout>
 

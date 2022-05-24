@@ -111,6 +111,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             notifyDataSetChanged();
         }
     };
+
     public Filter getCardGroup(){
         return cardGroup;
     }
@@ -123,13 +124,25 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
                 //TODO filter 대상 setting
 
                 String filterPattern = constraint.toString().toLowerCase().trim();
-
-                if (item.getGroup().toLowerCase().contains(filterPattern)) {
-                    groupList.add(item);
+                if(item.getGroup()!=null){
+                    if (item.getGroup().toLowerCase().contains(filterPattern)) {
+                        groupList.add(item);
+                        System.out.println("group test 1 "+ groupList.size());
+                        System.out.println("group test 2 "+ groupList);
+                    }
+                }
+                else{
+                    System.out.println("group null");
                 }
             }
+
             FilterResults results = new FilterResults();
             results.values = groupList;
+            System.out.println("group 1"+ groupList.size());
+            for(Card item : groupList){
+                System.out.println("group 2"+ item.getEmail());
+            }
+            System.out.println("group 3"+ results.values);
             return results;
         }
 

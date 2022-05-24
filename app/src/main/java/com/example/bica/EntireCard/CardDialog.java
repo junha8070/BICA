@@ -287,6 +287,7 @@ public class CardDialog{
         System.out.println("test for path ");
 
 
+
     }
 
     private void addFavorite(Card cardInfo) {

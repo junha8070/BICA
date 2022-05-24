@@ -185,7 +185,7 @@ public class CardFragment extends Fragment {
             }
         });
 
-        if(searchView.getVisibility()==View.VISIBLE){
+        if (searchView.getVisibility() == View.VISIBLE) {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
@@ -295,6 +295,7 @@ public class CardFragment extends Fragment {
 //                                            }
                                             Chip chip = new Chip(getContext());
                                             chip.setText(str_group_name);
+                                            chip.setCheckable(true);
                                             chipGroup.addView(chip);
                                         }
                                     }
@@ -314,18 +315,14 @@ public class CardFragment extends Fragment {
             @Override
             public void onCheckedChanged(ChipGroup group, int checkedId) {
                 Chip chip = chipGroup.findViewById(checkedId);
-                if (chip.isChecked() == true) {
-                    System.out.println("chip changed check 1 " + chip.isChecked());
-                    System.out.println("chip changed check 2 " + chip.isCheckable());
-                } else {
-                    chip.setChecked(false);
+
+                if(checkedId != -1){
+                    mAdapter.getCardGroup().filter(chip.getText().toString());
+
                 }
-                mAdapter.getCardGroup().filter(chip.getText().toString());
-                System.out.println("chip data test 1 " + chip.getText().toString());
-                System.out.println("chip data test 2 " + chip.getId());
-                System.out.println("chip data test 3 " + chip.isChecked());
             }
         });
+
 
         System.out.println("chip group tempArr 3 " + tempArr);
         System.out.println("chip group chipArr 3 " + chipArr);

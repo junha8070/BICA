@@ -43,7 +43,6 @@ public class MyCardAdapter extends RecyclerView.Adapter<MyCardAdapter.MycardView
     public void onBindViewHolder(@NonNull MyCardAdapter.MycardViewHolder holder, int position) {
         int i = position;
 
-
         if (cardModel.get(i).getImage().equals("")){
             holder.iv_mycard.setVisibility(View.GONE);
             holder.tv_company.setText(cardModel.get(i).getCompany());
