@@ -1,5 +1,6 @@
 package com.example.bica.EntireCard;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -7,6 +8,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.bica.R;
@@ -47,7 +51,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardDialog {
+public class CardDialog{
 
     private String TAG = "CardDialogTAG";
 
@@ -130,10 +134,47 @@ public class CardDialog {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.call:
-//                        String number=tv_Phone.getText().toString();
-//                        String tel = "tel:" + number;
-//                        Intent intent =new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
-//                        startActivity(intent);
+                        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View popupView = inflater.inflate(R.layout.fragment_card_call,null);
+
+
+//                        final View popupView = getLayoutInflater().inflate(R.layout.fragment_card_call, null);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                        builder.setView(popupView);
+
+                        final AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+                        TextView tv_Pnum = alertDialog.findViewById(R.id.tv_Pnum);
+                        tv_Pnum.setText(tv_Phone.getText());
+                        String number=tv_Phone.getText().toString();
+
+                        Button pnum_call = popupView.findViewById(R.id.pnum_call);
+
+                        pnum_call.setOnClickListener(new Button.OnClickListener(){
+                            public void onClick(View v){
+                                String tel = "tel:" + number;
+                                Intent intent =new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
+
+                                context.startActivity(intent);
+
+//                                startActivity(intent);
+                            }
+                        });
+
+                        Button pnum_save = popupView.findViewById(R.id.pnum_save);
+                        pnum_save.setOnClickListener(new Button.OnClickListener(){
+                            public void onClick(View v){
+                                Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+                                intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                                intent.putExtra(ContactsContract.Intents.Insert.PHONE, number);
+
+                                context.startActivity(intent);
+//                                startActivity(intent);
+                            }
+                        });
+
                         break;
                     case R.id.delete:
                         Toast.makeText(dlg.getContext(), "삭제 버튼", Toast.LENGTH_SHORT).show();
