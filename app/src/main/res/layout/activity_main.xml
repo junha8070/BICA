@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:backgroundTint="@color/brown"
+            android:backgroundTint="@color/white"
             android:src="@drawable/ic_swap_vert_24"
             app:borderWidth="0dp"
             app:fabSize="mini"
@@ -66,31 +66,31 @@
         android:id="@+id/fab_qrcode"
         android:layout_width="102dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/brown"
+        android:backgroundTint="@color/white"
         android:src="@drawable/ic_qrcode"
-        android:visibility="invisible"
-        app:borderWidth="0dp"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@+id/fab_nfc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_nfc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/brown"
-        android:src="@drawable/ic_nfc_24"
         android:visibility="invisible"
         app:borderWidth="0dp"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/coordinator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab_nfc"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:backgroundTint="@color/brown"-->
+<!--        android:src="@drawable/ic_nfc_24"-->
+<!--        android:visibility="invisible"-->
+<!--        app:borderWidth="0dp"-->
+<!--        app:fabSize="mini"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/coordinator"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_camera"
         android:layout_width="102dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/brown"
+        android:backgroundTint="@color/white"
         android:src="@drawable/ic_camera_24"
         android:visibility="invisible"
         app:borderWidth="0dp"
@@ -103,8 +103,8 @@
         android:id="@+id/fab_direct"
         android:layout_width="102dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/brown"
-        android:src="@drawable/ic_create_24"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_person_24"
         android:visibility="invisible"
         app:borderWidth="0dp"
         app:fabSize="mini"
