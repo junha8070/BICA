@@ -78,11 +78,19 @@ public class FindIDActivity extends AppCompatActivity {
                                             System.out.println("test FindIDActivity foundID "+ foundId);
 
                                         }
-                                        Intent startMain = new Intent(FindIDActivity.this, FoundIDActivity.class);
-                                        startMain.putExtra("email", foundId);
-                                        startActivity(startMain);
-                                        finish();
-                                        Toast.makeText(FindIDActivity.this, "아이디 찾기 성공", Toast.LENGTH_SHORT).show();
+                                        if(foundId == null){
+                                            Log.d(TAG, "일치하는 회원정보가 없습니다.");
+                                            Toast.makeText(FindIDActivity.this, "일치하는 회원정보가 없습니다.", Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+                                        else{
+                                            Intent startMain = new Intent(FindIDActivity.this, FoundIDActivity.class);
+                                            startMain.putExtra("email", foundId);
+                                            startActivity(startMain);
+                                            finish();
+                                            Toast.makeText(FindIDActivity.this, "아이디 찾기 성공", Toast.LENGTH_SHORT).show();
+                                        }
+
                                     }
                                     else{
                                         Log.d(TAG, "일치하는 회원정보가 없습니다.");
