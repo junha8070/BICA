@@ -115,6 +115,7 @@ public class CardFragment extends Fragment {
             public void onChanged(ArrayList<Card> cards) {
                 arrCards = cards;
                 mAdapter = new CardAdapter(arrCards);
+                mAdapter.notifyDataSetChanged();
                 mRecyclerView.setAdapter(mAdapter);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
             }
