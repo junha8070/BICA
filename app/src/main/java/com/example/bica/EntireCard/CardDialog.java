@@ -32,6 +32,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.example.bica.CardDao;
 import com.example.bica.R;
 import com.example.bica.model.Card;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -78,6 +79,7 @@ public class CardDialog{
 
     ArrayAdapter<String> arrayAdapter;
     static ArrayList<String> arr;
+    private CardDao mCardDao;
 
 
     CardViewModel cardViewModel;
@@ -184,13 +186,17 @@ public class CardDialog{
                         break;
                     case R.id.delete:
                         Toast.makeText(dlg.getContext(), "삭제 버튼", Toast.LENGTH_SHORT).show();
+                        delInfo(cardInfo);
+
+
                         break;
                     case R.id.edit:
                         tv_group.setVisibility(View.GONE);
                         Toast.makeText(dlg.getContext(), "수정 버튼", Toast.LENGTH_SHORT).show();
 
                         arr = new ArrayList<>();
-                        firestore.collection("users").document(auth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        firestore.collection("users").document(auth.getCurrentUser().getUid()).get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
@@ -259,7 +265,47 @@ public class CardDialog{
         });
     }
 
+    public void delInfo(Card prevCard) {
+        CollectionReference sfColRef = firestore.collection("users")
+                .document(auth.getCurrentUser().getUid())
+                .collection("BusinessCard");
 
+        sfColRef
+                .whereEqualTo("company", prevCard.getCompany())
+                .whereEqualTo("depart", prevCard.getDepart())
+                .whereEqualTo("email", prevCard.getEmail())
+                .whereEqualTo("memo", prevCard.getMemo())
+                .whereEqualTo("name", prevCard.getName())
+                .whereEqualTo("occupation", prevCard.getOccupation())
+                .whereEqualTo("phone", prevCard.getPhone())
+                .whereEqualTo("position", prevCard.getPosition())
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot item : task.getResult()) {
+                        System.out.println("test for path " + item);
+                        System.out.println("test for path id " + item.getId());
+                        System.out.println("test for path doc " + item.get(FieldPath.documentId()));
+
+                        firestore.collection("users")
+                                .document(auth.getCurrentUser().getUid()).collection("BusinessCard")
+                                .document(item.getId())
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(context.getApplicationContext(), "명함 리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+
+                }
+
+            }
+
+        });
+    }
     private void editGroup(Card cardInfo, String groupName) {
         firestore.collection("users").document(auth.getCurrentUser().getUid())
                 .collection("BusinessCard")

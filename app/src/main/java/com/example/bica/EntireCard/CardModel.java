@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -56,7 +57,7 @@ public class CardModel {
         arrCard = new ArrayList<>();
         cardMutableLiveData = new MutableLiveData<>();
         del_state = new MutableLiveData<Boolean>();
-        CardRoomDB cardRoomDB = Room.databaseBuilder(application.getApplicationContext(), CardRoomDB.class,"CardRoomDB")
+        CardRoomDB cardRoomDB = Room.databaseBuilder(application.getApplicationContext(), CardRoomDB.class, "CardRoomDB")
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
@@ -93,7 +94,7 @@ public class CardModel {
                 .collection("BusinessCard").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(value.isEmpty()){
+                if (value.isEmpty()) {
                     Toast.makeText(application, "값이 없습니다.", Toast.LENGTH_SHORT).show();
                 }
                 for (DocumentChange dc : value.getDocumentChanges()) {
@@ -101,7 +102,7 @@ public class CardModel {
                         case ADDED:
                             Card card = dc.getDocument().toObject(Card.class);
                             arrCard.add(card);
-                            Log.d(TAG, "현재 arrCard 사이즈 : "+arrCard.size());
+                            Log.d(TAG, "현재 arrCard 사이즈 : " + arrCard.size());
                             cardMutableLiveData.postValue(arrCard);
                             break;
 
@@ -113,8 +114,8 @@ public class CardModel {
 
                         case REMOVED:
 //                            arrCard.remove(dc.getOldIndex());
-                            Log.d(TAG, "현재 arrCard 사이즈 : "+arrCard.size());
-                            Log.d(TAG, "현재 arrCard 사이즈 : "+dc.getOldIndex());
+                            Log.d(TAG, "현재 arrCard 사이즈 : " + arrCard.size());
+                            Log.d(TAG, "현재 arrCard 사이즈 : " + dc.getOldIndex());
                             cardMutableLiveData.postValue(arrCard);
                             break;
 
@@ -127,58 +128,43 @@ public class CardModel {
         });
     }
 
-    public void delInfo(Card prevCard){
+    public void delInfo(Card prevCard) {
         CollectionReference sfColRef = firestore.collection("users")
                 .document(auth.getCurrentUser().getUid())
                 .collection("BusinessCard");
 
-        sfColRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        sfColRef
+                .whereEqualTo("company", prevCard.getCompany())
+                .whereEqualTo("depart", prevCard.getDepart())
+                .whereEqualTo("email", prevCard.getEmail())
+                .whereEqualTo("memo", prevCard.getMemo())
+                .whereEqualTo("name", prevCard.getName())
+                .whereEqualTo("occupation", prevCard.getOccupation())
+                .whereEqualTo("phone", prevCard.getPhone())
+                .whereEqualTo("position", prevCard.getPosition())
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot snapshot : task.getResult()){
-                        card=snapshot.toObject(Card.class);
-                        String name=snapshot.get("name").toString();
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot item : task.getResult()) {
+                        System.out.println("test for path " + item);
+                        System.out.println("test for path id " + item.getId());
+                        System.out.println("test for path doc " + item.get(FieldPath.documentId()));
 
-                        if(snapshot.get("company").equals(prevCard.getCompany())){
-                            if(snapshot.get("depart").equals(prevCard.getDepart())){
-                                if(snapshot.get("email").equals(prevCard.getEmail())){
-                                    if(snapshot.get("memo").equals(prevCard.getMemo())){
-                                        if(snapshot.get("name").equals(prevCard.getName())){
-                                            if(snapshot.get("occupation").equals(prevCard.getOccupation())){
-                                                if(snapshot.get("phone").equals(prevCard.getPhone())){
-                                                    if(snapshot.get("position").equals(prevCard.getPosition())){
-                                                        String doc=snapshot.getId();
-                                                        Log.d(TAG,"삭제");
-
-                                                        Task<Void> sfDocRef = firestore.collection("users")
-                                                                .document(auth.getCurrentUser().getUid())
-                                                                .collection("BusinessCard").document(doc).delete()
-                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                    @Override
-                                                                    public void onSuccess(Void unused) {
-                                                                        Log.d(TAG, "삭제성공");
-                                                                        //prevCard.setRoomId();
-                                                                        mcardDao.setDeleteCard(prevCard);
-                                                                        Log.d(TAG, "prevCard del in RoomDB");
-                                                                    }
-                                                                })
-                                                                .addOnFailureListener(new OnFailureListener() {
-                                                                    @Override
-                                                                    public void onFailure(@NonNull Exception e) {
-                                                                        Log.d(TAG, "삭제실패");
-                                                                    }
-                                                                });
-                                                    }
-                                                }
-                                            }
-                                        }
+                        firestore.collection("users")
+                                .document(auth.getCurrentUser().getUid()).collection("BusinessCard")
+                                .document(item.getId())
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        mcardDao.setDeleteCard(prevCard);
                                     }
-                                }
-                            }
-                        }
+                                });
                     }
+
                 }
+
             }
 
         });

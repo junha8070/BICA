@@ -88,8 +88,6 @@ public class MyCardFragment extends Fragment {
                         arrCard = cards;
                         adapter = new MyCardAdapter(cards, viewPager2);
                         viewPager2.setAdapter(adapter);
-
-
                     }
                 });
 

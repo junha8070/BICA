@@ -73,7 +73,6 @@ public class BusinessCardModel {
                 });
     }
 
-
     public void chageInfo(Card prevCard, Card newCard){
         Log.d(TAG, cardId.getValue());
         DocumentReference sfDocRef= firestore.collection("users")
