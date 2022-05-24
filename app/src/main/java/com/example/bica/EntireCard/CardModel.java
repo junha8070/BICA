@@ -112,9 +112,9 @@ public class CardModel {
                             break;
 
                         case REMOVED:
-                            card = dc.getDocument().toObject(Card.class);
-                            arrCard.add(card);
+//                            arrCard.remove(dc.getOldIndex());
                             Log.d(TAG, "현재 arrCard 사이즈 : "+arrCard.size());
+                            Log.d(TAG, "현재 arrCard 사이즈 : "+dc.getOldIndex());
                             cardMutableLiveData.postValue(arrCard);
                             break;
 
