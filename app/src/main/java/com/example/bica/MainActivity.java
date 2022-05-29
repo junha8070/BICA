@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 초기화
         init();
 
-        System.out.println("test for commit 5");
+        System.out.println("test for commit 6");
 
         myCardViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(this.getApplication())).get(MyCardViewModel.class);
 
