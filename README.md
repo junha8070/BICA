@@ -9,9 +9,11 @@
     - 전화 수신시 명함 보여주기
     
 - 역할
-    - zxing 라이브러리를 활용하여 QR코드로 명함 공유 기능
-    - Material 디자인 적용
-    - BroadcastReceiver를 활용하여 전화 수신시 명함 정보 띄우기
+    - 준하
+        - 명함 보여주기
+        - zxing 라이브러리를 활용하여 QR코드로 명함 공유 기능
+        - Material 디자인 적용
+        - BroadcastReceiver를 활용하여 전화 수신시 명함 정보 띄우기
 
 - 사용기술
     - Firebase Authentication을 이용한 회원가입 및 로그인
